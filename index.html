@@ -64,6 +64,12 @@ body.surukleniyor .birak { background: color-mix(in srgb, var(--sari) 22%, var(-
 .son:active { background: var(--kart2); }
 .rozet { flex: none; min-width: 46px; padding: 5px 6px; border-radius: 9px; background: var(--sari); color: var(--sari-yazi); font-size: 11px; font-weight: 800; text-align: center; text-transform: uppercase; }
 .son-ad { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.son-satir { display: flex; align-items: stretch; }
+.son-satir .son { flex: 1; min-width: 0; }
+.son-kaldir { flex: none; width: 52px; border: 0; border-left: 1px solid var(--cizgi); background: none; color: var(--soluk); font-size: 16px; }
+.son-kaldir:hover { color: #dc2626; background: var(--kart2); }
+.son-baslik { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.kucuk { min-height: 32px; padding: 0 12px; border: 1px solid var(--cizgi); border-radius: 9px; background: var(--kart); color: var(--soluk); font-size: 12px; font-weight: 600; text-transform: none; letter-spacing: 0; }
 .son-bilgi { flex: none; color: var(--soluk); font-size: 13px; }
 #surum { text-align: center; }
 
@@ -81,7 +87,8 @@ body.surukleniyor .birak { background: color-mix(in srgb, var(--sari) 22%, var(-
 .govde { flex: 1; min-height: 0; overflow: auto; -webkit-overflow-scrolling: touch; background: var(--kart2); padding-bottom: env(safe-area-inset-bottom); }
 .pdf-sayfa { position: relative; margin: 14px auto; background: #fff; box-shadow: 0 2px 10px rgba(0, 0, 0, .25); }
 .pdf-sayfa canvas { display: block; width: 100%; height: 100%; }
-.pdf-sayfa.bulundu { outline: 4px solid var(--sari); }
+.pdf-sayfa.bulundu { outline: 4px solid #2563eb; }
+.pdf-sayfa .isaret { position: absolute; background: rgba(37, 99, 235, .38); border-radius: 2px; pointer-events: none; mix-blend-mode: multiply; }
 .resim-govde { display: grid; place-items: center; min-height: 100%; padding: 14px; }
 .resim-govde img { display: block; max-width: none; background: repeating-conic-gradient(#d9d4c7 0% 25%, #f4f1e8 0% 50%) 50% / 20px 20px; box-shadow: 0 2px 10px rgba(0, 0, 0, .25); }
 .medya-govde { display: grid; place-items: center; height: 100%; background: #000; padding: 0; }
@@ -93,6 +100,32 @@ body.surukleniyor .birak { background: color-mix(in srgb, var(--sari) 22%, var(-
 .metin-alan { width: 100%; height: 100%; display: block; padding: 14px 16px; border: 0; outline: none; resize: none; background: var(--kart); color: var(--yazi); font: 15px/1.5 ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace; tab-size: 4; }
 .metin-alan.kaydirmasiz { white-space: pre; overflow-wrap: normal; }
 .ham { margin: 0; padding: 14px 16px; font: 13px/1.5 ui-monospace, Consolas, Menlo, monospace; white-space: pre; }
+/* Tablo (Excel, CSV) */
+.tablo-sar { background: var(--kart); }
+.tablo { border-collapse: separate; border-spacing: 0; font-size: 14px; font-variant-numeric: tabular-nums; }
+.tablo th, .tablo td { border-right: 1px solid var(--cizgi); border-bottom: 1px solid var(--cizgi); padding: 5px 9px; height: 30px; }
+.tablo td { max-width: 340px; min-width: 56px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; background: var(--kart); }
+.tablo td.sayi { text-align: right; }
+.tablo td.birlesik { white-space: normal; vertical-align: middle; text-align: center; }
+.tablo th { position: sticky; background: var(--kart2); color: var(--soluk); font-weight: 600; font-size: 12px; text-align: center; -webkit-user-select: none; user-select: none; }
+.tablo thead th { top: 0; z-index: 2; min-width: 56px; }
+.tablo th.sn { left: 0; z-index: 1; min-width: 44px; }
+.tablo th.kose { left: 0; z-index: 3; min-width: 44px; }
+.tablo td.bulundu, .tablo tbody tr:hover td.bulundu { background: #bfdbfe; color: #0f172a; box-shadow: inset 0 0 0 1px #2563eb; }
+.tablo tbody tr:hover td { background: color-mix(in srgb, var(--sari) 12%, var(--kart)); }
+.tablo-son { padding: 14px; text-align: center; color: var(--soluk); font-size: 13px; }
+.sayfalar { flex: none; display: flex; gap: 6px; padding: 6px 10px calc(env(safe-area-inset-bottom) + 6px); overflow-x: auto; background: var(--kart); border-top: 1px solid var(--cizgi); scrollbar-width: thin; }
+.sayfalar button { flex: none; min-height: 36px; max-width: 220px; padding: 0 14px; border: 1px solid var(--cizgi); border-radius: 10px; background: var(--kart2); font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sayfalar button.secili { background: var(--sari); border-color: var(--sari); color: var(--sari-yazi); font-weight: 700; }
+/* Klasör listesi */
+.klasor { background: var(--zemin); }
+.klasor-ic { max-width: 860px; margin: 0 auto; padding: 4px 14px 30px; }
+.klasor .bolum { display: flex; align-items: center; gap: 8px; }
+.sayac { padding: 1px 9px; border-radius: 999px; background: var(--kart2); font-size: 12px; letter-spacing: 0; }
+.son-ad .yol { display: block; color: var(--soluk); font-size: 12px; font-weight: 400; overflow: hidden; text-overflow: ellipsis; }
+.arac select { max-width: 190px; }
+.web-govde { background: #fff; overflow: hidden; }
+.web-cerceve { display: block; width: 100%; height: 100%; border: 0; background: #fff; }
 .bilgi-kutu { max-width: 640px; margin: 20px auto; padding: 20px; border-radius: 18px; background: var(--kart); box-shadow: var(--golge); }
 .bilgi-kutu dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin: 10px 0 16px; }
 .bilgi-kutu dt { color: var(--soluk); } .bilgi-kutu dd { margin: 0; word-break: break-word; }
@@ -115,19 +148,21 @@ body.surukleniyor .birak { background: color-mix(in srgb, var(--sari) 22%, var(-
     <div class="birak" id="birak">
       <img src="ikon-192.png" alt="">
       <h1>Dosyanı aç</h1>
-      <p id="birak-metin">Dosyayı buraya sürükleyip bırak ya da cihazından seç. Dosyaların bu cihazdan çıkmaz.</p>
+      <p id="birak-metin">Dosyayı ya da klasörü buraya sürükleyip bırak ya da cihazından seç. Dosyaların bu cihazdan çıkmaz.</p>
       <button type="button" class="dugme" id="ac2">Dosya seç</button>
+      <button type="button" class="dugme ikincil" id="klasor-sec" hidden>Klasör seç</button>
+      <input type="file" id="klasor-secici" webkitdirectory multiple hidden>
     </div>
 
     <div id="son-bolum" hidden>
-      <h2 class="bolum">Son açılanlar</h2>
+      <h2 class="bolum son-baslik">Son açılanlar <button type="button" id="son-temizle" class="kucuk">Tümünü kaldır</button></h2>
       <ul class="sonlar" id="sonlar"></ul>
     </div>
 
     <h2 class="bolum">Açabildiklerim</h2>
     <div class="kart">
       <div class="turler">
-        <span class="tur">PDF</span><span class="tur">Resim</span><span class="tur">Video</span><span class="tur">Ses</span><span class="tur">Metin ve not</span><span class="tur">Diğer dosyalar: bilgi ve ham içerik</span>
+        <span class="tur">PDF</span><span class="tur">Excel ve CSV</span><span class="tur">Web sayfası (HTML)</span><span class="tur">Klasör</span><span class="tur">Resim</span><span class="tur">Video</span><span class="tur">Ses</span><span class="tur">Metin ve not</span><span class="tur">Diğer dosyalar: bilgi ve ham içerik</span>
       </div>
     </div>
 
@@ -136,7 +171,7 @@ body.surukleniyor .birak { background: color-mix(in srgb, var(--sari) 22%, var(-
       <p class="not" id="kur-bilgi">Bilgisayar ve Android: tarayıcı menüsünden "Uygulamayı yükle". iPhone: Safari'de Paylaş → "Ana Ekrana Ekle". Yüklendikten sonra internet gerekmez.</p>
       <button type="button" class="dugme" id="kur" hidden>Uygulamayı yükle</button>
     </div>
-    <p class="not" id="surum">Sürüm 1 · temel görüntüleyiciler</p>
+    <p class="not" id="surum">Sürüm 2 · Excel, HTML, klasör, mavi arama</p>
   </div>
 </main>
 
@@ -172,12 +207,14 @@ function bildir(metin) {
 // ---------- dosya türü ----------
 const UZANTILAR = {
   pdf: ['pdf'],
+  web: ['html', 'htm', 'xhtml', 'mht'],
+  tablo: ['xls', 'xlsx', 'xlsm', 'xlsb', 'xlt', 'xltx', 'ods', 'csv', 'tsv'],
   resim: ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg', 'bmp', 'ico', 'avif', 'jfif'],
   video: ['mp4', 'webm', 'mov', 'm4v', 'ogv', 'mkv'],
   ses: ['mp3', 'wav', 'ogg', 'oga', 'm4a', 'aac', 'flac', 'opus'],
-  metin: ['txt', 'md', 'csv', 'tsv', 'log', 'json', 'xml', 'html', 'htm', 'css', 'js', 'mjs', 'ts', 'ini', 'cfg', 'conf', 'srt', 'vtt', 'yaml', 'yml', 'bat', 'cmd', 'ps1', 'sh', 'py', 'java', 'c', 'h', 'cpp', 'cs', 'php', 'sql', 'rtf', 'tex', 'm3u', 'm3u8', 'reg', 'properties', 'gitignore', 'env'],
+  metin: ['txt', 'md', 'log', 'json', 'xml', 'css', 'js', 'mjs', 'ts', 'ini', 'cfg', 'conf', 'srt', 'vtt', 'yaml', 'yml', 'bat', 'cmd', 'ps1', 'sh', 'py', 'java', 'c', 'h', 'cpp', 'cs', 'php', 'sql', 'rtf', 'tex', 'm3u', 'm3u8', 'reg', 'properties', 'gitignore', 'env'],
 };
-const TUR_ADI = { pdf: 'PDF', resim: 'Resim', video: 'Video', ses: 'Ses', metin: 'Metin', diger: 'Dosya' };
+const TUR_ADI = { web: 'Web sayfası', tablo: 'Tablo', pdf: 'PDF', resim: 'Resim', video: 'Video', ses: 'Ses', metin: 'Metin', diger: 'Dosya' };
 
 // Dosyanın ilk baytlarına bakar: uzantısı yanlış ya da eksik dosyaları da tanır
 async function imzaBul(dosya) {
@@ -279,7 +316,7 @@ async function pdfGor(sekme) {
   function yerlestir() {
     if (sigdir) olcek = sigdirOlcegi();
     cizim++;
-    kutular.forEach((k, i) => { k.style.width = boyutlar[i][0] * olcek + 'px'; k.style.height = boyutlar[i][1] * olcek + 'px'; k.replaceChildren(); delete k.dataset.cizildi; });
+    kutular.forEach((k, i) => { k.style.width = boyutlar[i][0] * olcek + 'px'; k.style.height = boyutlar[i][1] * olcek + 'px'; k.replaceChildren(); delete k.dataset.cizildi; try { isaretle(k); } catch (e) { /* arama henüz kurulmadı */ } });
     yuzde.textContent = Math.round(olcek * 100) + '%';
     gozcu.disconnect(); kutular.forEach((k) => gozcu.observe(k));
   }
@@ -292,7 +329,7 @@ async function pdfGor(sekme) {
     const v = s.getViewport({ scale: olcek * dpr });
     const c = el('canvas'); c.width = Math.floor(v.width); c.height = Math.floor(v.height);
     await s.render({ canvasContext: c.getContext('2d'), viewport: v }).promise;
-    if (benim === cizim) k.replaceChildren(c);
+    if (benim === cizim) { k.replaceChildren(c); isaretle(k); }
   }
   const gozcu = new IntersectionObserver((kayitlar) => {
     for (const k of kayitlar) if (k.isIntersecting) ciz(k.target).catch(() => {});
@@ -307,22 +344,48 @@ async function pdfGor(sekme) {
   const yakinlas = (c) => { sigdir = false; olcek = Math.min(5, Math.max(0.2, olcek * c)); const oran = govde.scrollTop / Math.max(1, govde.scrollHeight); yerlestir(); govde.scrollTop = oran * govde.scrollHeight; };
 
   // Arama: sayfa metinleri bir kez okunur, eşleşen sayfalar arasında gezilir
-  let metinler = null, bulunan = [], sira = -1;
+  let metinler = null, parcalar = null, bulunan = [], sira = -1, isaretler = new Map();
   const sade = (s) => s.toLocaleLowerCase('tr');
+  // Bulunan sözcüklerin sayfadaki yerini mavi gölgeyle gösterir (yerler yüzde olarak tutulur, yakınlaştırmadan etkilenmez)
+  function isaretle(k) {
+    k.querySelectorAll('.isaret').forEach((e) => e.remove());
+    for (const r of isaretler.get(Number(k.dataset.no)) || []) k.append(el('div', { sinif: 'isaret', style: `left:${r[0]}%;top:${r[1]}%;width:${r[2]}%;height:${r[3]}%` }));
+  }
+  function yerleriBul(q) {
+    isaretler = new Map(); let toplam = 0;
+    for (const no of bulunan) {
+      const [gen, yuk] = boyutlar[no - 1]; const liste = [];
+      for (const p of parcalar[no - 1]) {
+        let i = -1;
+        while ((i = p.s.indexOf(q, i + 1)) !== -1) {
+          const oran = p.s.length ? i / p.s.length : 0, pay = p.s.length ? q.length / p.s.length : 1;
+          liste.push([(p.x + oran * p.w) / gen * 100, (p.y - p.h) / yuk * 100, Math.max(0.6, pay * p.w / gen * 100), p.h * 1.25 / yuk * 100]); toplam++;
+        }
+      }
+      isaretler.set(no, liste);
+    }
+    kutular.forEach(isaretle);
+    return toplam;
+  }
   async function aramaYap(ileri) {
     const q = sade(ara.value.trim());
     kutular.forEach((k) => k.classList.remove('bulundu'));
-    if (!q) { araBilgi.textContent = ''; bulunan = []; return; }
+    if (!q) { araBilgi.textContent = ''; bulunan = []; isaretler = new Map(); kutular.forEach(isaretle); return; }
     if (!metinler) {
-      araBilgi.textContent = 'Okunuyor…'; metinler = [];
-      for (let i = 1; i <= n; i++) { const t = await (await belge.getPage(i)).getTextContent(); metinler.push(sade(t.items.map((x) => x.str).join(' '))); }
+      araBilgi.textContent = 'Okunuyor…'; metinler = []; parcalar = [];
+      for (let i = 1; i <= n; i++) {
+        const sayfa = await belge.getPage(i); const t = await sayfa.getTextContent(); const v1 = sayfa.getViewport({ scale: 1 });
+        metinler.push(sade(t.items.map((x) => x.str).join(' ')));
+        parcalar.push(t.items.filter((x) => x.str && x.transform).map((x) => { const [px, py] = v1.convertToViewportPoint(x.transform[4], x.transform[5]); const h = x.height || Math.hypot(x.transform[2], x.transform[3]) || 10; return { s: sade(x.str), x: px, y: py, w: x.width || 0, h }; }));
+      }
     }
     const yeni = metinler.map((m, i) => (m.includes(q) ? i + 1 : 0)).filter(Boolean);
     if (yeni.join() !== bulunan.join()) { bulunan = yeni; sira = -1; }
+    const esleme = yerleriBul(q);
     if (!bulunan.length) { araBilgi.textContent = 'Bulunamadı'; return; }
     sira = (sira + (ileri === false ? -1 : 1) + bulunan.length) % bulunan.length;
     kutular[bulunan[sira] - 1].classList.add('bulundu'); git(bulunan[sira]);
-    araBilgi.textContent = `${sira + 1} / ${bulunan.length} sayfa`;
+    araBilgi.textContent = `${sira + 1} / ${bulunan.length} sayfa · ${esleme} eşleşme`;
   }
   ara.addEventListener('keydown', (e) => { if (e.key === 'Enter') aramaYap(!e.shiftKey); });
   ara.addEventListener('search', () => { if (!ara.value) aramaYap(); });
@@ -465,7 +528,211 @@ async function digerGor(sekme) {
     el('button', { type: 'button', sinif: 'dugme', metin: 'Metin olarak aç', onclick: () => turDegistir(sekme, 'metin') }));
   return { kok: el('div', { sinif: 'gor' }, el('div', { sinif: 'arac' }, ...ortakDugmeler(sekme)), el('div', { sinif: 'govde' }, kutu, el('h2', { sinif: 'bolum', style: 'margin-left:16px', metin: 'Ham içerik (ilk 2 KB)' }), el('pre', { sinif: 'ham', metin: ham || '(boş dosya)' }))), temizle: () => {} };
 }
-const GORUCULER = { pdf: pdfGor, resim: resimGor, video: videoGor, ses: sesGor, metin: metinGor, diger: digerGor };
+// ---------- tablo (Excel, CSV) ----------
+let tabloKitapligi = null;
+function tabloYukle() {
+  if (!tabloKitapligi) tabloKitapligi = new Promise((coz, red) => {
+    const s = el('script', { src: 'xlsx.full.min.js' });
+    s.onload = () => coz(window.XLSX);
+    s.onerror = () => { tabloKitapligi = null; red(new Error('Tablo parçası yüklenemedi')); };
+    document.head.append(s);
+  });
+  return tabloKitapligi;
+}
+const TABLO_PARCA = 300;      // bir seferde çizilen satır
+const TABLO_SUTUN_SINIRI = 256;
+async function tabloGor(sekme) {
+  const X = await tabloYukle();
+  const tampon = await sekme.dosya.arrayBuffer();
+  const u = uzanti(sekme.ad);
+  const kitap = (u === 'csv' || u === 'tsv' || u === 'txt')
+    ? X.read(metinCoz(tampon), { type: 'string', raw: false, cellNF: true })
+    : X.read(new Uint8Array(tampon), { type: 'array', cellNF: true });
+  const adlar = kitap.SheetNames || [];
+  if (!adlar.length) throw new Error('dosyada sayfa bulunamadı');
+
+  const sar = el('div', { sinif: 'govde tablo-sar' });
+  const sayfalar = el('div', { sinif: 'sayfalar', role: 'tablist', 'aria-label': 'Sayfalar' });
+  const durum = el('span', { sinif: 'bilgi' });
+  const ara = el('input', { type: 'search', placeholder: 'Tabloda ara', 'aria-label': 'Tabloda ara', autocomplete: 'off' });
+  let secili = 0, gozcu = null, zamanlayici = null;
+
+  const hucreMetni = (h) => {
+    if (!h || h.v == null) return '';
+    // Tarihler seri numarasından doğrudan çözülür (saat dilimi kayması olmaz) ve gün.ay.yıl yazılır
+    if (h.t === 'n' && typeof h.v === 'number' && h.z && X.SSF.is_date(h.z)) {
+      const p = X.SSF.parse_date_code(h.v);
+      if (p) {
+        const iki = (n) => String(n).padStart(2, '0');
+        const saat = (p.H || p.M) ? iki(p.H) + ':' + iki(p.M) : '';
+        if (h.v < 1) return saat || '00:00';
+        return iki(p.d) + '.' + iki(p.m) + '.' + p.y + (saat ? ' ' + saat : '');
+      }
+    }
+    if (h.v instanceof Date) return h.v.toLocaleDateString('tr-TR');
+    // Biçimsiz sayılar Türkçe ondalık virgülüyle gösterilir (45.5 → 45,5)
+    if (h.t === 'n' && typeof h.v === 'number' && (h.w == null || h.w === String(h.v))) return h.v.toLocaleString('tr-TR', { useGrouping: false, maximumFractionDigits: 10 });
+    if (h.w != null) return String(h.w);
+    if (typeof h.v === 'boolean') return h.v ? 'DOĞRU' : 'YANLIŞ';
+    return String(h.v);
+  };
+
+  function sayfaCiz() {
+    if (gozcu) { gozcu.disconnect(); gozcu = null; }
+    const sayfa = kitap.Sheets[adlar[secili]];
+    [...sayfalar.children].forEach((b, i) => { b.classList.toggle('secili', i === secili); b.setAttribute('aria-selected', i === secili); });
+    if (!sayfa || !sayfa['!ref'] || !Object.keys(sayfa).some((k) => k[0] !== '!' && sayfa[k] && sayfa[k].v != null && sayfa[k].v !== '')) { sar.replaceChildren(el('div', { sinif: 'yukleniyor', metin: 'Bu sayfa boş.' })); durum.textContent = 'boş sayfa'; return; }
+    const alan = X.utils.decode_range(sayfa['!ref']);
+    const sutunSon = Math.min(alan.e.c, alan.s.c + TABLO_SUTUN_SINIRI - 1);
+    const kesildi = alan.e.c > sutunSon;
+    // Birleştirilmiş hücreler: sol üst hücre genişler, kapsadığı diğer hücreler çizilmez
+    const birlesik = new Map(), ortulu = new Set();
+    for (const m of sayfa['!merges'] || []) {
+      birlesik.set(m.s.r + ':' + m.s.c, m);
+      for (let r = m.s.r; r <= m.e.r; r++) for (let c = m.s.c; c <= m.e.c; c++) if (r !== m.s.r || c !== m.s.c) ortulu.add(r + ':' + c);
+    }
+    // Arama: eşleşen satırlar. Arama varken birleştirme uygulanmaz (satırlar ardışık değil).
+    const aranan = ara.value.trim().toLocaleLowerCase('tr');
+    let satirlar = [];
+    for (let r = alan.s.r; r <= alan.e.r; r++) {
+      if (!aranan) { satirlar.push(r); continue; }
+      for (let c = alan.s.c; c <= sutunSon; c++) {
+        const t = hucreMetni(sayfa[X.utils.encode_cell({ r, c })]);
+        if (t && t.toLocaleLowerCase('tr').includes(aranan)) { satirlar.push(r); break; }
+      }
+    }
+    const toplamSatir = alan.e.r - alan.s.r + 1, toplamSutun = alan.e.c - alan.s.c + 1;
+    durum.textContent = (aranan ? satirlar.length + ' eşleşen satır · ' : '') + toplamSatir + ' satır × ' + toplamSutun + ' sütun' + (kesildi ? ' (ilk ' + TABLO_SUTUN_SINIRI + ' sütun gösteriliyor)' : '');
+    if (!satirlar.length) { sar.replaceChildren(el('div', { sinif: 'yukleniyor', metin: 'Aramana uyan satır yok.' })); return; }
+
+    const baslik = el('tr', {}, el('th', { sinif: 'kose' }));
+    for (let c = alan.s.c; c <= sutunSon; c++) baslik.append(el('th', { metin: X.utils.encode_col(c), scope: 'col' }));
+    const govde = el('tbody');
+    const tablo = el('table', { sinif: 'tablo' }, el('thead', {}, baslik), govde);
+    const dahaFazla = el('div', { sinif: 'tablo-son' });
+    let cizilen = 0;
+    function parcaCiz() {
+      const parca = document.createDocumentFragment();
+      const son = Math.min(cizilen + TABLO_PARCA, satirlar.length);
+      for (; cizilen < son; cizilen++) {
+        const r = satirlar[cizilen];
+        const tr = el('tr', {}, el('th', { sinif: 'sn', metin: String(r + 1), scope: 'row' }));
+        for (let c = alan.s.c; c <= sutunSon; c++) {
+          const anahtar = r + ':' + c;
+          if (!aranan && ortulu.has(anahtar)) continue;
+          const h = sayfa[X.utils.encode_cell({ r, c })];
+          const metin = hucreMetni(h);
+          const td = el('td', { metin });
+          if (h && (h.t === 'n' || h.t === 'd')) td.className = 'sayi';
+          if (metin.length > 28) td.title = metin;
+          if (aranan && metin.toLocaleLowerCase('tr').includes(aranan)) td.classList.add('bulundu');
+          const m = !aranan && birlesik.get(anahtar);
+          if (m) { if (m.e.r > m.s.r) td.rowSpan = m.e.r - m.s.r + 1; if (m.e.c > m.s.c) td.colSpan = Math.min(m.e.c, sutunSon) - m.s.c + 1; td.classList.add('birlesik'); }
+          tr.append(td);
+        }
+        parca.append(tr);
+      }
+      govde.append(parca);
+      dahaFazla.textContent = cizilen < satirlar.length ? cizilen + ' / ' + satirlar.length + ' satır gösteriliyor, kaydırdıkça devamı gelir' : '';
+      if (cizilen >= satirlar.length && gozcu) { gozcu.disconnect(); gozcu = null; }
+    }
+    sar.replaceChildren(tablo, dahaFazla);
+    sar.scrollTop = 0; sar.scrollLeft = 0;
+    parcaCiz();
+    if (cizilen < satirlar.length && 'IntersectionObserver' in window) {
+      gozcu = new IntersectionObserver((g) => { if (g.some((x) => x.isIntersecting)) parcaCiz(); }, { root: sar, rootMargin: '600px' });
+      gozcu.observe(dahaFazla);
+    } else if (cizilen < satirlar.length) {
+      dahaFazla.replaceChildren(el('button', { type: 'button', sinif: 'dugme', metin: 'Devamını göster', onclick: () => { parcaCiz(); if (cizilen >= satirlar.length) dahaFazla.replaceChildren(); } }));
+    }
+  }
+
+  adlar.forEach((ad, i) => sayfalar.append(el('button', { type: 'button', role: 'tab', metin: ad, title: ad, onclick: () => { secili = i; sayfaCiz(); } })));
+  ara.addEventListener('input', () => { clearTimeout(zamanlayici); zamanlayici = setTimeout(sayfaCiz, 200); });
+  sayfaCiz();
+  const arac = el('div', { sinif: 'arac' }, ara, durum,
+    ...ortakDugmeler(sekme).slice(0, 2),
+    el('button', { type: 'button', metin: 'Metin olarak aç', title: 'Dosyanın ham içeriğini göster', onclick: () => turDegistir(sekme, 'metin') }),
+    ...ortakDugmeler(sekme).slice(2));
+  return { kok: el('div', { sinif: 'gor' }, arac, sar, sayfalar), temizle: () => { if (gozcu) gozcu.disconnect(); clearTimeout(zamanlayici); } };
+}
+
+// ---------- klasör: içindeki dosyaları türüne göre ayırıp listeler ----------
+const KLASOR_SINIRI = 3000;
+const uzantiTuru = (ad) => { const u = uzanti(ad); for (const [tur, liste] of Object.entries(UZANTILAR)) if (liste.includes(u)) return tur; return 'diger'; };
+// Tutamakla (Chrome, Edge) klasörü gezer
+async function klasorGezTutamak(tutamak, yol, cikti) {
+  for await (const [ad, t] of tutamak.entries()) {
+    if (cikti.length >= KLASOR_SINIRI) return;
+    if (t.kind === 'directory') await klasorGezTutamak(t, yol + ad + '/', cikti);
+    else { try { cikti.push({ dosya: await t.getFile(), tutamak: t, yol }); } catch (e) { /* okunamayan dosya atlanır */ } }
+  }
+}
+// Tutamak yoksa (Safari, Firefox) sürüklenen klasör girişini gezer
+async function klasorGezGiris(giris, yol, cikti) {
+  if (cikti.length >= KLASOR_SINIRI) return;
+  if (giris.isFile) { try { cikti.push({ dosya: await new Promise((coz, red) => giris.file(coz, red)), tutamak: null, yol }); } catch (e) { /* atla */ } return; }
+  const okuyucu = giris.createReader();
+  for (;;) {
+    const parca = await new Promise((coz, red) => okuyucu.readEntries(coz, red)).catch(() => []);
+    if (!parca.length) break;
+    for (const g of parca) await klasorGezGiris(g, giris.isDirectory && yol !== null ? yol + (g.isDirectory ? g.name + '/' : '') : '', cikti);
+  }
+}
+function klasorAc(ad, ogeler) {
+  if (!ogeler.length) return bildir('Klasörde dosya bulunamadı: ' + ad);
+  const s = { id: ++sayac, ad: '📁 ' + ad, dosya: new File([], ad), tutamak: null, tur: 'klasor', klasor: { ad, ogeler }, kok: null, degisti: false };
+  sekmeler.push(s); sekmeSec(s); gorucuKur(s);
+  if (ogeler.length >= KLASOR_SINIRI) bildir('Klasör çok büyük: ilk ' + KLASOR_SINIRI + ' dosya listelendi.');
+}
+const TUR_SIRASI = ['tablo', 'pdf', 'web', 'resim', 'video', 'ses', 'metin', 'diger'];
+const TUR_COGUL = { web: 'Web sayfaları', tablo: 'Tablolar', pdf: 'PDF dosyaları', resim: 'Resimler', video: 'Videolar', ses: 'Ses dosyaları', metin: 'Metin dosyaları', diger: 'Diğer dosyalar' };
+async function klasorGor(sekme) {
+  const ogeler = sekme.klasor.ogeler.map((o) => ({ ...o, ad: o.dosya.name, tur: uzantiTuru(o.dosya.name) }));
+  const toplam = ogeler.reduce((t, o) => t + o.dosya.size, 0);
+  const govde = el('div', { sinif: 'govde klasor' });
+  const ara = el('input', { type: 'search', placeholder: 'Dosya ara', 'aria-label': 'Klasörde dosya ara', autocomplete: 'off' });
+  const sira = el('select', { 'aria-label': 'Sıralama' }, el('option', { value: 'tur', metin: 'Türe göre ayır' }), el('option', { value: 'ad', metin: 'Ada göre' }), el('option', { value: 'boyut', metin: 'Boyuta göre' }), el('option', { value: 'tarih', metin: 'Tarihe göre' }), el('option', { value: 'yol', metin: 'Alt klasöre göre ayır' }));
+  const durum = el('span', { sinif: 'bilgi' });
+  const satir = (o) => el('li', {}, el('button', { type: 'button', sinif: 'son', title: o.yol + o.ad, onclick: () => ac([{ dosya: o.dosya, tutamak: o.tutamak }]) },
+    el('span', { sinif: 'rozet', metin: uzanti(o.ad) || 'dosya' }),
+    el('span', { sinif: 'son-ad' }, o.ad, o.yol ? el('small', { sinif: 'yol', metin: o.yol }) : null),
+    el('span', { sinif: 'son-bilgi', metin: boyutYaz(o.dosya.size) })));
+  const adSirasi = (a, b) => a.ad.localeCompare(b.ad, 'tr', { numeric: true, sensitivity: 'base' });
+  function ciz() {
+    const q = ara.value.trim().toLocaleLowerCase('tr');
+    const liste = q ? ogeler.filter((o) => (o.yol + o.ad).toLocaleLowerCase('tr').includes(q)) : ogeler;
+    durum.textContent = (q ? liste.length + ' / ' : '') + ogeler.length + ' dosya · ' + boyutYaz(toplam);
+    if (!liste.length) return govde.replaceChildren(el('div', { sinif: 'yukleniyor', metin: 'Aramana uyan dosya yok.' }));
+    const bolumler = [];
+    const bolum = (baslik, dosyalar) => bolumler.push(el('h2', { sinif: 'bolum' }, baslik, el('span', { sinif: 'sayac', metin: String(dosyalar.length) })), el('ul', { sinif: 'sonlar' }, ...dosyalar.map(satir)));
+    if (sira.value === 'tur') { for (const t of TUR_SIRASI) { const d = liste.filter((o) => o.tur === t).sort(adSirasi); if (d.length) bolum(TUR_COGUL[t], d); } }
+    else if (sira.value === 'yol') { const g = new Map(); for (const o of liste) { const k = o.yol || '(klasörün kendisi)'; if (!g.has(k)) g.set(k, []); g.get(k).push(o); } for (const k of [...g.keys()].sort((a, b) => a.localeCompare(b, 'tr', { numeric: true }))) bolum(k, g.get(k).sort(adSirasi)); }
+    else { const d = [...liste].sort(sira.value === 'ad' ? adSirasi : sira.value === 'boyut' ? (a, b) => b.dosya.size - a.dosya.size : (a, b) => b.dosya.lastModified - a.dosya.lastModified); bolum(sira.value === 'ad' ? 'Tüm dosyalar' : sira.value === 'boyut' ? 'Büyükten küçüğe' : 'Yeniden eskiye', d); }
+    govde.replaceChildren(el('div', { sinif: 'klasor-ic' }, ...bolumler));
+  }
+  let z = null;
+  ara.addEventListener('input', () => { clearTimeout(z); z = setTimeout(ciz, 150); });
+  sira.addEventListener('change', ciz);
+  ciz();
+  return { kok: el('div', { sinif: 'gor' }, el('div', { sinif: 'arac' }, ara, sira, el('span', { sinif: 'bosluk' }), durum), govde), temizle: () => clearTimeout(z) };
+}
+
+// ---------- web sayfası (HTML) ----------
+// Sayfa, uygulamadan yalıtılmış bir çerçevede gösterilir: içindeki kodlar ZABAC'a ve diğer dosyalara erişemez.
+async function webGor(sekme) {
+  const metin = metinCoz(await sekme.dosya.slice(0, METIN_SINIRI).arrayBuffer());
+  const adres = URL.createObjectURL(new Blob([metin], { type: 'text/html;charset=utf-8' }));
+  const cerceve = el('iframe', { sinif: 'web-cerceve', sandbox: 'allow-scripts allow-forms allow-popups allow-modals', referrerpolicy: 'no-referrer', title: sekme.ad, src: adres });
+  const arac = el('div', { sinif: 'arac' },
+    el('span', { sinif: 'bilgi', metin: 'Sayfa görünümü' }),
+    el('button', { type: 'button', metin: 'Yenile', onclick: () => { cerceve.src = adres; } }),
+    el('button', { type: 'button', metin: 'Kaynağı göster', title: 'HTML kodunu metin olarak aç ve düzenle', onclick: () => turDegistir(sekme, 'metin') }),
+    ...ortakDugmeler(sekme));
+  return { kok: el('div', { sinif: 'gor' }, arac, el('div', { sinif: 'govde web-govde' }, cerceve)), temizle: () => URL.revokeObjectURL(adres) };
+}
+
+const GORUCULER = { web: webGor, klasor: klasorGor, tablo: tabloGor, pdf: pdfGor, resim: resimGor, video: videoGor, ses: sesGor, metin: metinGor, diger: digerGor };
 
 // ---------- sekmeler ----------
 const sekmeler = [];
@@ -538,9 +805,11 @@ async function sonlariCiz() {
   let hepsi = [];
   try { hepsi = (await islem('readonly', (d) => d.getAll())).sort((a, b) => b.tarih - a.tarih); } catch (e) { /* depolama kapalı */ }
   $('#son-bolum').hidden = !hepsi.length;
-  $('#sonlar').replaceChildren(...hepsi.map((k) => el('li', {}, el('button', { type: 'button', sinif: 'son', onclick: () => sonAc(k) },
-    el('span', { sinif: 'rozet', metin: uzanti(k.ad) || TUR_ADI[k.tur] || 'dosya' }), el('span', { sinif: 'son-ad', metin: k.ad }), el('span', { sinif: 'son-bilgi', metin: boyutYaz(k.boyut) })))));
+  $('#sonlar').replaceChildren(...hepsi.map((k) => el('li', { sinif: 'son-satir' }, el('button', { type: 'button', sinif: 'son', onclick: () => sonAc(k) },
+    el('span', { sinif: 'rozet', metin: uzanti(k.ad) || TUR_ADI[k.tur] || 'dosya' }), el('span', { sinif: 'son-ad', metin: k.ad }), el('span', { sinif: 'son-bilgi', metin: boyutYaz(k.boyut) })),
+    el('button', { type: 'button', sinif: 'son-kaldir', metin: '✕', title: 'Listeden kaldır', 'aria-label': k.ad + ' dosyasını son açılanlardan kaldır', onclick: async () => { await islem('readwrite', (d) => d.delete(k.ad)).catch(() => {}); sonlariCiz(); } }))));
 }
+$('#son-temizle').addEventListener('click', async () => { await islem('readwrite', (d) => d.clear()).catch(() => {}); sonlariCiz(); bildir('Son açılanlar listesi temizlendi. Dosyaların kendisi silinmedi.'); });
 async function sonAc(k) {
   try {
     if ((await k.tutamak.queryPermission({ mode: 'read' })) !== 'granted' && (await k.tutamak.requestPermission({ mode: 'read' })) !== 'granted') return bildir('Dosyaya erişim izni verilmedi.');
@@ -563,6 +832,22 @@ async function sec() {
 }
 $('#secici').addEventListener('change', (e) => { ac([...e.target.files].map((dosya) => ({ dosya }))); e.target.value = ''; });
 $('#ac').addEventListener('click', sec);
+// Klasör seçme: destekleyen cihazlarda görünür (iPhone desteklemez)
+async function klasorSec() {
+  if (window.showDirectoryPicker) {
+    try { const t = await window.showDirectoryPicker(); bildir('Klasör okunuyor…'); const cikti = []; await klasorGezTutamak(t, '', cikti); return klasorAc(t.name, cikti); }
+    catch (e) { if (e && e.name === 'AbortError') return; }
+  }
+  $('#klasor-secici').click();
+}
+if (window.showDirectoryPicker || ('webkitdirectory' in $('#klasor-secici') && !/iPhone|iPad|iPod/.test(navigator.userAgent))) $('#klasor-sec').hidden = false;
+$('#klasor-sec').addEventListener('click', klasorSec);
+$('#klasor-secici').addEventListener('change', (e) => {
+  const dosyalar = [...e.target.files].slice(0, KLASOR_SINIRI); e.target.value = '';
+  if (!dosyalar.length) return;
+  const kok = (dosyalar[0].webkitRelativePath || '').split('/')[0] || 'Klasör';
+  klasorAc(kok, dosyalar.map((dosya) => { const p = (dosya.webkitRelativePath || '').split('/'); return { dosya, tutamak: null, yol: p.slice(1, -1).join('/') + (p.length > 2 ? '/' : '') }; }));
+});
 $('#ac2').addEventListener('click', sec);
 $('#eve').addEventListener('click', () => sekmeSec(null));
 
@@ -578,10 +863,12 @@ window.addEventListener('drop', async (e) => {
   const ogeler = [...(e.dataTransfer.items || [])].filter((o) => o.kind === 'file');
   const girdiler = [];
   // Tutamaklar olay bitmeden istenmeli; sonra dosyalar okunur
-  const bekleyen = ogeler.map((o) => ({ dosya: o.getAsFile(), tutamakSozu: o.getAsFileSystemHandle ? o.getAsFileSystemHandle().catch(() => null) : null }));
+  const bekleyen = ogeler.map((o) => ({ dosya: o.getAsFile(), giris: o.webkitGetAsEntry ? o.webkitGetAsEntry() : null, tutamakSozu: o.getAsFileSystemHandle ? o.getAsFileSystemHandle().catch(() => null) : null }));
   for (const b of bekleyen) {
     const t = b.tutamakSozu ? await b.tutamakSozu : null;
-    if (t && t.kind === 'directory') { bildir('Klasör açılamaz; içindeki dosyaları bırak.'); continue; }
+    // Klasör bırakıldıysa içindeki dosyalar türüne göre ayrılmış bir listede açılır
+    if (t && t.kind === 'directory') { bildir('Klasör okunuyor…'); const cikti = []; await klasorGezTutamak(t, '', cikti).catch(() => {}); klasorAc(t.name, cikti); continue; }
+    if (b.giris && b.giris.isDirectory) { bildir('Klasör okunuyor…'); const cikti = []; await klasorGezGiris(b.giris, '', cikti).catch(() => {}); klasorAc(b.giris.name, cikti); continue; }
     if (b.dosya) girdiler.push({ dosya: b.dosya, tutamak: t && t.kind === 'file' ? t : null });
   }
   if (!girdiler.length && e.dataTransfer.files.length) for (const dosya of e.dataTransfer.files) girdiler.push({ dosya });

@@ -1,7 +1,7 @@
 // ZABAC — hizmet betiği: uygulamayı internetsiz çalıştırır, paylaşılan dosyaları karşılar
-const ONBELLEK = 'zabac-v1';
+const ONBELLEK = 'zabac-v2';
 const PAYLASIM = 'zabac-paylasim';
-const DOSYALAR = ['./', './index.html', './manifest.webmanifest', './ikon-192.png', './ikon-512.png', './pdf.min.js', './pdf.worker.min.js'];
+const DOSYALAR = ['./', './index.html', './manifest.webmanifest', './ikon-192.png', './ikon-512.png', './pdf.min.js', './pdf.worker.min.js', './xlsx.full.min.js'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(ONBELLEK).then((c) => c.addAll(DOSYALAR)).then(() => self.skipWaiting()));
