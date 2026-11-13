@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ZABAC</title>
+<meta name="theme-color" content="#facc15">
+<meta name="color-scheme" content="light dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ZABAC">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="ikon-192.png">
+<link rel="icon" href="ikon-192.png">
+<style>
+:root {
+  --sari: #facc15; --sari-koyu: #ca8a04; --sari-yazi: #1c1917;
+  --zemin: #faf8f3; --kart: #ffffff; --kart2: #f1ede3; --yazi: #1c1917; --soluk: #6b6558; --cizgi: #e4dfd2;
+  --golge: 0 1px 2px rgba(28, 25, 23, .06), 0 6px 18px rgba(28, 25, 23, .06);
+}
+@media (prefers-color-scheme: dark) {
+  :root { --zemin: #16130d; --kart: #211d15; --kart2: #2c271c; --yazi: #f5f1e6; --soluk: #a89f8b; --cizgi: #3a3325; --golge: none; --sari-koyu: #facc15; }
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; margin: 0; }
+body { display: flex; flex-direction: column; background: var(--zemin); color: var(--yazi); font: 16px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; -webkit-text-size-adjust: 100%; overflow: hidden; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+[hidden] { display: none !important; }
+
+/* Üst çubuk */
+.ust { flex: none; display: flex; align-items: center; gap: 10px; padding: calc(env(safe-area-inset-top) + 8px) 12px 8px; background: var(--kart); border-bottom: 1px solid var(--cizgi); }
+.marka { flex: none; display: flex; align-items: center; gap: 8px; padding: 0; border: 0; background: none; font-weight: 800; font-size: 18px; letter-spacing: .04em; }
+.marka img { width: 34px; height: 34px; border-radius: 9px; }
+.sekmeler { flex: 1; min-width: 0; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+.sekmeler::-webkit-scrollbar { display: none; }
+.sekme { flex: none; max-width: 220px; display: flex; align-items: center; gap: 4px; min-height: 40px; padding: 0 4px 0 12px; border: 1px solid var(--cizgi); border-radius: 12px; background: var(--kart2); font-size: 14px; }
+.sekme.secili { background: var(--sari); border-color: var(--sari); color: var(--sari-yazi); font-weight: 700; }
+.sekme-ad { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0; border: 0; background: none; min-height: 38px; }
+.sekme-kapat { flex: none; width: 30px; height: 30px; border: 0; border-radius: 8px; background: none; font-size: 15px; opacity: .7; }
+.sekme-kapat:hover { background: rgba(0, 0, 0, .12); opacity: 1; }
+.dugme { flex: none; min-height: 40px; padding: 0 16px; border: 0; border-radius: 12px; background: var(--sari); color: var(--sari-yazi); font-weight: 700; white-space: nowrap; }
+.dugme.ikincil { background: var(--kart2); color: var(--yazi); font-weight: 600; }
+.dugme:disabled { opacity: .5; cursor: default; }
+
+/* Ana ekran */
+#ana { flex: 1; overflow-y: auto; padding: 22px 16px calc(env(safe-area-inset-bottom) + 24px); }
+.ana-ic { max-width: 760px; margin: 0 auto; }
+.birak { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 44px 20px; border: 2px dashed var(--sari-koyu); border-radius: 22px; background: var(--kart); text-align: center; box-shadow: var(--golge); }
+.birak img { width: 76px; height: 76px; border-radius: 20px; }
+.birak h1 { margin: 4px 0 0; font-size: 26px; letter-spacing: -.01em; }
+.birak p { margin: 0; color: var(--soluk); max-width: 46ch; }
+.birak .dugme { min-height: 50px; padding: 0 26px; font-size: 17px; margin-top: 6px; }
+body.surukleniyor .birak { background: color-mix(in srgb, var(--sari) 22%, var(--kart)); border-style: solid; }
+.bolum { margin: 26px 4px 10px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--soluk); }
+.kart { background: var(--kart); border-radius: 18px; box-shadow: var(--golge); padding: 16px; margin: 0 0 14px; }
+.kart h2 { margin: 0 0 6px; font-size: 17px; }
+.not { margin: 0 0 10px; color: var(--soluk); font-size: 14px; }
+.turler { display: flex; flex-wrap: wrap; gap: 8px; }
+.tur { padding: 6px 12px; border-radius: 999px; background: var(--kart2); font-size: 14px; }
+.sonlar { list-style: none; margin: 0; padding: 0; background: var(--kart); border-radius: 18px; box-shadow: var(--golge); overflow: hidden; }
+.sonlar li + li { border-top: 1px solid var(--cizgi); }
+.son { width: 100%; min-height: 56px; display: flex; align-items: center; gap: 12px; padding: 8px 14px; border: 0; background: none; text-align: left; }
+.son:active { background: var(--kart2); }
+.rozet { flex: none; min-width: 46px; padding: 5px 6px; border-radius: 9px; background: var(--sari); color: var(--sari-yazi); font-size: 11px; font-weight: 800; text-align: center; text-transform: uppercase; }
+.son-ad { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.son-bilgi { flex: none; color: var(--soluk); font-size: 13px; }
+#surum { text-align: center; }
+
+/* Görüntüleyiciler */
+#alan { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.gor { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.arac { flex: none; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 8px 12px; background: var(--kart); border-bottom: 1px solid var(--cizgi); font-size: 14px; }
+.arac .bosluk { flex: 1; }
+.arac button, .arac select { min-height: 38px; min-width: 38px; padding: 0 12px; border: 1px solid var(--cizgi); border-radius: 10px; background: var(--kart2); }
+.arac button.vurgu { background: var(--sari); border-color: var(--sari); color: var(--sari-yazi); font-weight: 700; }
+.arac input[type="search"], .arac input[type="number"] { min-height: 38px; padding: 0 10px; border: 1px solid var(--cizgi); border-radius: 10px; background: var(--zemin); }
+.arac input[type="number"] { width: 64px; text-align: center; }
+.arac input[type="search"] { width: 150px; }
+.arac .bilgi { color: var(--soluk); white-space: nowrap; }
+.govde { flex: 1; min-height: 0; overflow: auto; -webkit-overflow-scrolling: touch; background: var(--kart2); padding-bottom: env(safe-area-inset-bottom); }
+.pdf-sayfa { position: relative; margin: 14px auto; background: #fff; box-shadow: 0 2px 10px rgba(0, 0, 0, .25); }
+.pdf-sayfa canvas { display: block; width: 100%; height: 100%; }
+.pdf-sayfa.bulundu { outline: 4px solid var(--sari); }
+.resim-govde { display: grid; place-items: center; min-height: 100%; padding: 14px; }
+.resim-govde img { display: block; max-width: none; background: repeating-conic-gradient(#d9d4c7 0% 25%, #f4f1e8 0% 50%) 50% / 20px 20px; box-shadow: 0 2px 10px rgba(0, 0, 0, .25); }
+.medya-govde { display: grid; place-items: center; height: 100%; background: #000; padding: 0; }
+.medya-govde video { max-width: 100%; max-height: 100%; width: 100%; height: 100%; background: #000; }
+.ses-govde { display: grid; place-items: center; height: 100%; padding: 20px; }
+.ses-kutu { width: min(560px, 100%); padding: 26px; border-radius: 22px; background: var(--kart); box-shadow: var(--golge); text-align: center; }
+.ses-kutu .not { word-break: break-word; }
+.ses-kutu audio { width: 100%; }
+.metin-alan { width: 100%; height: 100%; display: block; padding: 14px 16px; border: 0; outline: none; resize: none; background: var(--kart); color: var(--yazi); font: 15px/1.5 ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace; tab-size: 4; }
+.metin-alan.kaydirmasiz { white-space: pre; overflow-wrap: normal; }
+.ham { margin: 0; padding: 14px 16px; font: 13px/1.5 ui-monospace, Consolas, Menlo, monospace; white-space: pre; }
+.bilgi-kutu { max-width: 640px; margin: 20px auto; padding: 20px; border-radius: 18px; background: var(--kart); box-shadow: var(--golge); }
+.bilgi-kutu dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin: 10px 0 16px; }
+.bilgi-kutu dt { color: var(--soluk); } .bilgi-kutu dd { margin: 0; word-break: break-word; }
+.yukleniyor, .hata { display: grid; place-items: center; height: 100%; padding: 30px; text-align: center; color: var(--soluk); }
+.hata { color: #dc2626; }
+.bildirim { position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom) + 22px); transform: translateX(-50%); z-index: 50; max-width: min(92vw, 520px); padding: 12px 18px; border-radius: 14px; background: #1c1917; color: #fff; font-size: 15px; box-shadow: 0 8px 28px rgba(0, 0, 0, .35); }
+@media (max-width: 600px) { .marka span { display: none; } .arac input[type="search"] { width: 110px; } }
+</style>
+</head>
+<body>
+<header class="ust">
+  <button type="button" class="marka" id="eve" aria-label="ZABAC ana ekran"><img src="ikon-192.png" alt=""><span>ZABAC</span></button>
+  <div class="sekmeler" id="sekmeler" role="tablist" aria-label="Açık dosyalar"></div>
+  <button type="button" class="dugme" id="ac">Dosya aç</button>
+  <input type="file" id="secici" multiple hidden>
+</header>
+
+<main id="ana">
+  <div class="ana-ic">
+    <div class="birak" id="birak">
+      <img src="ikon-192.png" alt="">
+      <h1>Dosyanı aç</h1>
+      <p id="birak-metin">Dosyayı buraya sürükleyip bırak ya da cihazından seç. Dosyaların bu cihazdan çıkmaz.</p>
+      <button type="button" class="dugme" id="ac2">Dosya seç</button>
+    </div>
+
+    <div id="son-bolum" hidden>
+      <h2 class="bolum">Son açılanlar</h2>
+      <ul class="sonlar" id="sonlar"></ul>
+    </div>
+
+    <h2 class="bolum">Açabildiklerim</h2>
+    <div class="kart">
+      <div class="turler">
+        <span class="tur">PDF</span><span class="tur">Resim</span><span class="tur">Video</span><span class="tur">Ses</span><span class="tur">Metin ve not</span><span class="tur">Diğer dosyalar: bilgi ve ham içerik</span>
+      </div>
+    </div>
+
+    <div class="kart">
+      <h2>Uygulama olarak yükle</h2>
+      <p class="not" id="kur-bilgi">Bilgisayar ve Android: tarayıcı menüsünden "Uygulamayı yükle". iPhone: Safari'de Paylaş → "Ana Ekrana Ekle". Yüklendikten sonra internet gerekmez.</p>
+      <button type="button" class="dugme" id="kur" hidden>Uygulamayı yükle</button>
+    </div>
+    <p class="not" id="surum">Sürüm 1 · temel görüntüleyiciler</p>
+  </div>
+</main>
+
+<div id="alan" hidden></div>
+<div class="bildirim" id="bildirim" role="status" hidden></div>
+
+<script>
+'use strict';
+const $ = (s, k = document) => k.querySelector(s);
+const el = (ad, ozellik = {}, ...cocuklar) => {
+  const e = document.createElement(ad);
+  for (const [k, v] of Object.entries(ozellik)) {
+    if (k === 'sinif') e.className = v; else if (k === 'metin') e.textContent = v; else if (k.startsWith('on')) e.addEventListener(k.slice(2), v); else if (v !== false && v != null) e.setAttribute(k, v === true ? '' : v);
+  }
+  for (const c of cocuklar) if (c != null) e.append(c);
+  return e;
+};
+
+// ---------- yardımcılar ----------
+function boyutYaz(b) {
+  if (b < 1024) return b + ' B';
+  const birim = ['KB', 'MB', 'GB', 'TB']; let i = -1;
+  do { b /= 1024; i++; } while (b >= 1024 && i < birim.length - 1);
+  return b.toLocaleString('tr-TR', { maximumFractionDigits: b < 10 ? 1 : 0 }) + ' ' + birim[i];
+}
+const uzanti = (ad) => { const i = ad.lastIndexOf('.'); return i > 0 ? ad.slice(i + 1).toLowerCase() : ''; };
+let bildirimZ = null;
+function bildir(metin) {
+  const b = $('#bildirim'); b.textContent = metin; b.hidden = false;
+  clearTimeout(bildirimZ); bildirimZ = setTimeout(() => { b.hidden = true; }, 3500);
+}
+
+// ---------- dosya türü ----------
+const UZANTILAR = {
+  pdf: ['pdf'],
+  resim: ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg', 'bmp', 'ico', 'avif', 'jfif'],
+  video: ['mp4', 'webm', 'mov', 'm4v', 'ogv', 'mkv'],
+  ses: ['mp3', 'wav', 'ogg', 'oga', 'm4a', 'aac', 'flac', 'opus'],
+  metin: ['txt', 'md', 'csv', 'tsv', 'log', 'json', 'xml', 'html', 'htm', 'css', 'js', 'mjs', 'ts', 'ini', 'cfg', 'conf', 'srt', 'vtt', 'yaml', 'yml', 'bat', 'cmd', 'ps1', 'sh', 'py', 'java', 'c', 'h', 'cpp', 'cs', 'php', 'sql', 'rtf', 'tex', 'm3u', 'm3u8', 'reg', 'properties', 'gitignore', 'env'],
+};
+const TUR_ADI = { pdf: 'PDF', resim: 'Resim', video: 'Video', ses: 'Ses', metin: 'Metin', diger: 'Dosya' };
+
+// Dosyanın ilk baytlarına bakar: uzantısı yanlış ya da eksik dosyaları da tanır
+async function imzaBul(dosya) {
+  const b = new Uint8Array(await dosya.slice(0, 16).arrayBuffer());
+  const bas = (...d) => d.every((x, i) => b[i] === x);
+  const yazi = (bas_, s) => [...s].every((c, i) => b[bas_ + i] === c.charCodeAt(0));
+  if (yazi(0, '%PDF')) return 'pdf';
+  if (bas(0x89, 0x50, 0x4e, 0x47) || bas(0xff, 0xd8, 0xff) || yazi(0, 'GIF8') || bas(0x42, 0x4d)) return 'resim';
+  if (yazi(0, 'RIFF') && yazi(8, 'WEBP')) return 'resim';
+  if (yazi(0, 'RIFF') && yazi(8, 'WAVE')) return 'ses';
+  if (yazi(4, 'ftyp')) return yazi(8, 'M4A') ? 'ses' : (yazi(8, 'avif') ? 'resim' : 'video');
+  if (bas(0x1a, 0x45, 0xdf, 0xa3)) return 'video';
+  if (yazi(0, 'ID3') || yazi(0, 'fLaC') || yazi(0, 'OggS')) return 'ses';
+  return null;
+}
+async function turBul(dosya) {
+  const u = uzanti(dosya.name);
+  for (const [tur, liste] of Object.entries(UZANTILAR)) if (liste.includes(u)) return tur;
+  const t = dosya.type || '';
+  if (t === 'application/pdf') return 'pdf';
+  if (t.startsWith('image/')) return 'resim';
+  if (t.startsWith('video/')) return 'video';
+  if (t.startsWith('audio/')) return 'ses';
+  if (t.startsWith('text/') || /json|xml|javascript/.test(t)) return 'metin';
+  const imza = await imzaBul(dosya).catch(() => null);
+  if (imza) return imza;
+  if (!u && dosya.size < 2e6 && await metinMi(dosya)) return 'metin';
+  return 'diger';
+}
+async function metinMi(dosya) {
+  const b = new Uint8Array(await dosya.slice(0, 4096).arrayBuffer());
+  if (!b.length) return true;
+  let tuhaf = 0;
+  for (const x of b) if (x === 0 || (x < 9) || (x > 13 && x < 32 && x !== 27)) tuhaf++;
+  return tuhaf / b.length < 0.02;
+}
+
+// ---------- kaydetme ----------
+async function kaydet(sekme, blob, ad) {
+  // Bilgisayarda dosyanın kendisine yazar; izin yoksa ya da telefonda indirme olarak verir
+  if (sekme.tutamak && sekme.tutamak.createWritable) {
+    try {
+      const y = await sekme.tutamak.createWritable();
+      await y.write(blob); await y.close();
+      bildir('Kaydedildi: ' + sekme.ad);
+      return true;
+    } catch (e) { if (e && e.name === 'AbortError') return false; }
+  }
+  indir(blob, ad || sekme.ad);
+  bildir('İndirme olarak kaydedildi: ' + (ad || sekme.ad));
+  return true;
+}
+function indir(blob, ad) {
+  const a = el('a', { href: URL.createObjectURL(blob), download: ad });
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 30000);
+}
+
+// ---------- görüntüleyiciler ----------
+// Her görüntüleyici { kok, temizle } döndürür.
+const ortakDugmeler = (sekme) => [
+  el('span', { sinif: 'bosluk' }),
+  el('span', { sinif: 'bilgi', metin: boyutYaz(sekme.dosya.size) }),
+  el('button', { type: 'button', metin: 'İndir', title: 'Dosyanın kopyasını indir', onclick: () => indir(sekme.dosya, sekme.ad) }),
+];
+
+let pdfKitapligi = null;
+function pdfYukle() {
+  if (!pdfKitapligi) pdfKitapligi = new Promise((coz, red) => {
+    const s = el('script', { src: 'pdf.min.js' });
+    s.onload = () => { window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js'; coz(window.pdfjsLib); };
+    s.onerror = () => { pdfKitapligi = null; red(new Error('PDF parçası yüklenemedi')); };
+    document.head.append(s);
+  });
+  return pdfKitapligi;
+}
+
+async function pdfGor(sekme) {
+  const lib = await pdfYukle();
+  const gorev = lib.getDocument({ data: new Uint8Array(await sekme.dosya.arrayBuffer()) });
+  const belge = await gorev.promise;
+  const n = belge.numPages;
+  const govde = el('div', { sinif: 'govde' });
+  const sayfaNo = el('input', { type: 'number', min: 1, max: n, value: 1, 'aria-label': 'Sayfa numarası' });
+  const yuzde = el('span', { sinif: 'bilgi' });
+  const ara = el('input', { type: 'search', placeholder: 'PDF içinde ara', 'aria-label': 'PDF içinde ara' });
+  const araBilgi = el('span', { sinif: 'bilgi' });
+  let olcek = 1, sigdir = true, cizim = 0;
+  const kutular = []; const boyutlar = [];
+  for (let i = 1; i <= n; i++) {
+    const s = await belge.getPage(i);
+    const v = s.getViewport({ scale: 1 });
+    boyutlar.push([v.width, v.height]);
+    const k = el('div', { sinif: 'pdf-sayfa', 'data-no': i });
+    kutular.push(k); govde.append(k);
+    if (i === 40) await new Promise((r) => setTimeout(r)); // çok sayfalı belgede arayüz donmasın
+  }
+  const sigdirOlcegi = () => Math.max(0.2, (govde.clientWidth - 28) / Math.max(...boyutlar.map((b) => b[0])));
+  function yerlestir() {
+    if (sigdir) olcek = sigdirOlcegi();
+    cizim++;
+    kutular.forEach((k, i) => { k.style.width = boyutlar[i][0] * olcek + 'px'; k.style.height = boyutlar[i][1] * olcek + 'px'; k.replaceChildren(); delete k.dataset.cizildi; });
+    yuzde.textContent = Math.round(olcek * 100) + '%';
+    gozcu.disconnect(); kutular.forEach((k) => gozcu.observe(k));
+  }
+  async function ciz(k) {
+    if (k.dataset.cizildi) return;
+    k.dataset.cizildi = '1';
+    const benim = cizim;
+    const s = await belge.getPage(Number(k.dataset.no));
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const v = s.getViewport({ scale: olcek * dpr });
+    const c = el('canvas'); c.width = Math.floor(v.width); c.height = Math.floor(v.height);
+    await s.render({ canvasContext: c.getContext('2d'), viewport: v }).promise;
+    if (benim === cizim) k.replaceChildren(c);
+  }
+  const gozcu = new IntersectionObserver((kayitlar) => {
+    for (const k of kayitlar) if (k.isIntersecting) ciz(k.target).catch(() => {});
+  }, { root: govde, rootMargin: '600px 0px' });
+  const git = (no) => { const k = kutular[Math.min(n, Math.max(1, no)) - 1]; if (k) govde.scrollTop = k.offsetTop - 8; };
+  govde.addEventListener('scroll', () => {
+    const y = govde.scrollTop + govde.clientHeight / 3;
+    let no = 1; for (let i = 0; i < kutular.length; i++) if (kutular[i].offsetTop <= y) no = i + 1; else break;
+    if (document.activeElement !== sayfaNo) sayfaNo.value = no;
+  }, { passive: true });
+  sayfaNo.addEventListener('change', () => git(Number(sayfaNo.value) || 1));
+  const yakinlas = (c) => { sigdir = false; olcek = Math.min(5, Math.max(0.2, olcek * c)); const oran = govde.scrollTop / Math.max(1, govde.scrollHeight); yerlestir(); govde.scrollTop = oran * govde.scrollHeight; };
+
+  // Arama: sayfa metinleri bir kez okunur, eşleşen sayfalar arasında gezilir
+  let metinler = null, bulunan = [], sira = -1;
+  const sade = (s) => s.toLocaleLowerCase('tr');
+  async function aramaYap(ileri) {
+    const q = sade(ara.value.trim());
+    kutular.forEach((k) => k.classList.remove('bulundu'));
+    if (!q) { araBilgi.textContent = ''; bulunan = []; return; }
+    if (!metinler) {
+      araBilgi.textContent = 'Okunuyor…'; metinler = [];
+      for (let i = 1; i <= n; i++) { const t = await (await belge.getPage(i)).getTextContent(); metinler.push(sade(t.items.map((x) => x.str).join(' '))); }
+    }
+    const yeni = metinler.map((m, i) => (m.includes(q) ? i + 1 : 0)).filter(Boolean);
+    if (yeni.join() !== bulunan.join()) { bulunan = yeni; sira = -1; }
+    if (!bulunan.length) { araBilgi.textContent = 'Bulunamadı'; return; }
+    sira = (sira + (ileri === false ? -1 : 1) + bulunan.length) % bulunan.length;
+    kutular[bulunan[sira] - 1].classList.add('bulundu'); git(bulunan[sira]);
+    araBilgi.textContent = `${sira + 1} / ${bulunan.length} sayfa`;
+  }
+  ara.addEventListener('keydown', (e) => { if (e.key === 'Enter') aramaYap(!e.shiftKey); });
+  ara.addEventListener('search', () => { if (!ara.value) aramaYap(); });
+
+  const arac = el('div', { sinif: 'arac' },
+    el('button', { type: 'button', metin: '−', 'aria-label': 'Uzaklaştır', onclick: () => yakinlas(1 / 1.2) }), yuzde,
+    el('button', { type: 'button', metin: '+', 'aria-label': 'Yakınlaştır', onclick: () => yakinlas(1.2) }),
+    el('button', { type: 'button', metin: 'Sığdır', onclick: () => { sigdir = true; yerlestir(); } }),
+    sayfaNo, el('span', { sinif: 'bilgi', metin: '/ ' + n }),
+    ara, el('button', { type: 'button', metin: 'Bul', onclick: () => aramaYap() }), araBilgi,
+    el('span', { sinif: 'bosluk' }), el('span', { sinif: 'bilgi', metin: boyutYaz(sekme.dosya.size) }),
+    el('button', { type: 'button', metin: 'Yazdır', onclick: () => { const u = URL.createObjectURL(sekme.dosya); window.open(u, '_blank'); setTimeout(() => URL.revokeObjectURL(u), 60000); } }),
+    el('button', { type: 'button', metin: 'İndir', onclick: () => indir(sekme.dosya, sekme.ad) }));
+  const kok = el('div', { sinif: 'gor' }, arac, govde);
+  const boyutGozcu = new ResizeObserver(() => { if (sigdir && kok.isConnected && govde.clientWidth) yerlestir(); });
+  sekme.gosterildi = () => { if (!kok.dataset.hazir) { kok.dataset.hazir = '1'; yerlestir(); boyutGozcu.observe(govde); } };
+  return { kok, temizle: () => { gozcu.disconnect(); boyutGozcu.disconnect(); gorev.destroy(); } };
+}
+
+async function resimGor(sekme) {
+  let adres = URL.createObjectURL(sekme.dosya);
+  const img = el('img', { alt: sekme.ad });
+  const govde = el('div', { sinif: 'govde' }, el('div', { sinif: 'resim-govde' }, img));
+  const yuzde = el('span', { sinif: 'bilgi' }); const olcu = el('span', { sinif: 'bilgi' });
+  let olcek = 1, sigdir = true, aci = 0;
+  const uygula = () => {
+    if (!img.naturalWidth) return;
+    if (sigdir) olcek = Math.min(1, (govde.clientWidth - 28) / img.naturalWidth, (govde.clientHeight - 28) / img.naturalHeight) || 1;
+    img.style.width = Math.max(1, img.naturalWidth * olcek) + 'px';
+    yuzde.textContent = Math.round(olcek * 100) + '%';
+    olcu.textContent = `${img.naturalWidth} × ${img.naturalHeight}`;
+  };
+  await new Promise((coz, red) => { img.onload = coz; img.onerror = () => red(new Error('Bu resim biçimi bu cihazda gösterilemiyor.')); img.src = adres; });
+  const yakinlas = (c) => { sigdir = false; olcek = Math.min(16, Math.max(0.02, olcek * c)); uygula(); };
+  // Döndürme yalnızca görünümü değiştirir; dosyanın kendisine dokunmaz
+  async function dondur() {
+    aci = (aci + 90) % 360;
+    const kaynak = await createImageBitmap(sekme.dosya).catch(() => null);
+    if (!kaynak) return bildir('Bu resim döndürülemedi.');
+    const yan = aci % 180 !== 0;
+    const c = el('canvas'); c.width = yan ? kaynak.height : kaynak.width; c.height = yan ? kaynak.width : kaynak.height;
+    const g = c.getContext('2d'); g.translate(c.width / 2, c.height / 2); g.rotate(aci * Math.PI / 180); g.drawImage(kaynak, -kaynak.width / 2, -kaynak.height / 2);
+    const b = await new Promise((r) => c.toBlob(r, 'image/png'));
+    URL.revokeObjectURL(adres); adres = URL.createObjectURL(b);
+    await new Promise((r) => { img.onload = r; img.src = adres; });
+    uygula();
+  }
+  const arac = el('div', { sinif: 'arac' },
+    el('button', { type: 'button', metin: '−', 'aria-label': 'Uzaklaştır', onclick: () => yakinlas(1 / 1.25) }), yuzde,
+    el('button', { type: 'button', metin: '+', 'aria-label': 'Yakınlaştır', onclick: () => yakinlas(1.25) }),
+    el('button', { type: 'button', metin: 'Sığdır', onclick: () => { sigdir = true; uygula(); } }),
+    el('button', { type: 'button', metin: '%100', onclick: () => { sigdir = false; olcek = 1; uygula(); } }),
+    el('button', { type: 'button', metin: 'Döndür', onclick: dondur }), olcu, ...ortakDugmeler(sekme));
+  const kok = el('div', { sinif: 'gor' }, arac, govde);
+  const boyutGozcu = new ResizeObserver(() => { if (sigdir && govde.clientWidth) uygula(); });
+  sekme.gosterildi = () => { uygula(); boyutGozcu.observe(govde); };
+  return { kok, temizle: () => { boyutGozcu.disconnect(); URL.revokeObjectURL(adres); } };
+}
+
+// .srt altyazıyı tarayıcının anladığı biçime çevirir
+const srtCevir = (s) => 'WEBVTT\n\n' + s.replace(/\r/g, '').replace(/(\d{2}:\d{2}:\d{2}),(\d{3})/g, '$1.$2');
+function hizSecici(medya) {
+  const s = el('select', { 'aria-label': 'Oynatma hızı' });
+  for (const h of [0.5, 0.75, 1, 1.25, 1.5, 2]) s.append(el('option', { value: h, metin: h + '×', selected: h === 1 }));
+  s.addEventListener('change', () => { medya.playbackRate = Number(s.value); });
+  return s;
+}
+async function videoGor(sekme) {
+  const adres = URL.createObjectURL(sekme.dosya);
+  const v = el('video', { controls: true, playsinline: true, src: adres });
+  const hata = el('div', { sinif: 'hata', hidden: true, metin: 'Bu video biçimi bu cihazda oynatılamıyor. "İndir" ile başka bir oynatıcıda açabilirsin.' });
+  v.addEventListener('error', () => { v.hidden = true; hata.hidden = false; });
+  const altyazi = el('input', { type: 'file', accept: '.vtt,.srt', hidden: true });
+  let izAdresi = null;
+  altyazi.addEventListener('change', async () => {
+    const d = altyazi.files[0]; if (!d) return;
+    const m = await d.text();
+    v.querySelectorAll('track').forEach((t) => t.remove()); if (izAdresi) URL.revokeObjectURL(izAdresi);
+    izAdresi = URL.createObjectURL(new Blob([/^WEBVTT/.test(m.trim()) ? m : srtCevir(m)], { type: 'text/vtt' }));
+    const t = el('track', { kind: 'subtitles', label: 'Altyazı', srclang: 'tr', src: izAdresi, default: true });
+    v.append(t); t.track.mode = 'showing'; bildir('Altyazı eklendi: ' + d.name);
+  });
+  const arac = el('div', { sinif: 'arac' }, el('span', { sinif: 'bilgi', metin: 'Hız' }), hizSecici(v),
+    el('button', { type: 'button', metin: 'Altyazı ekle', onclick: () => altyazi.click() }), altyazi, ...ortakDugmeler(sekme));
+  const kok = el('div', { sinif: 'gor' }, arac, el('div', { sinif: 'govde medya-govde' }, v, hata));
+  sekme.gizlendi = () => v.pause();
+  return { kok, temizle: () => { v.pause(); v.removeAttribute('src'); v.load(); URL.revokeObjectURL(adres); if (izAdresi) URL.revokeObjectURL(izAdresi); } };
+}
+async function sesGor(sekme) {
+  const adres = URL.createObjectURL(sekme.dosya);
+  const a = el('audio', { controls: true, src: adres });
+  const hata = el('p', { sinif: 'hata', hidden: true, metin: 'Bu ses biçimi bu cihazda çalınamıyor.' });
+  a.addEventListener('error', () => { a.hidden = true; hata.hidden = false; });
+  const arac = el('div', { sinif: 'arac' }, el('span', { sinif: 'bilgi', metin: 'Hız' }), hizSecici(a), ...ortakDugmeler(sekme));
+  const kok = el('div', { sinif: 'gor' }, arac, el('div', { sinif: 'govde ses-govde' }, el('div', { sinif: 'ses-kutu' }, el('h2', { metin: '♪' }), el('p', { sinif: 'not', metin: sekme.ad }), a, hata)));
+  sekme.gizlendi = () => a.pause();
+  return { kok, temizle: () => { a.pause(); a.removeAttribute('src'); a.load(); URL.revokeObjectURL(adres); } };
+}
+
+const METIN_SINIRI = 5 * 1024 * 1024;
+// Önce UTF-8 dener; bozuk çıkarsa eski Türkçe Windows kodlamasıyla okur
+function metinCoz(tampon) {
+  const b = new Uint8Array(tampon);
+  if (b[0] === 0xff && b[1] === 0xfe) return new TextDecoder('utf-16le').decode(b);
+  if (b[0] === 0xfe && b[1] === 0xff) return new TextDecoder('utf-16be').decode(b);
+  try { return new TextDecoder('utf-8', { fatal: true }).decode(b); } catch (e) { return new TextDecoder('windows-1254').decode(b); }
+}
+async function metinGor(sekme) {
+  const buyuk = sekme.dosya.size > METIN_SINIRI;
+  const metin = metinCoz(await sekme.dosya.slice(0, METIN_SINIRI).arrayBuffer());
+  const alan = el('textarea', { sinif: 'metin-alan', spellcheck: 'false', autocapitalize: 'off', autocomplete: 'off', 'aria-label': sekme.ad + ' içeriği', readonly: buyuk });
+  alan.value = metin;
+  const durum = el('span', { sinif: 'bilgi' });
+  const kaydetD = el('button', { type: 'button', sinif: 'vurgu', metin: 'Kaydet', disabled: true });
+  const say = () => { durum.textContent = `${alan.value.length.toLocaleString('tr-TR')} karakter · ${alan.value.split('\n').length.toLocaleString('tr-TR')} satır`; };
+  alan.addEventListener('input', () => { sekme.degisti = true; kaydetD.disabled = false; say(); sekmeleriCiz(); });
+  const yap = async () => {
+    if (await kaydet(sekme, new Blob([alan.value], { type: 'text/plain;charset=utf-8' }))) { sekme.degisti = false; kaydetD.disabled = true; sekmeleriCiz(); }
+  };
+  kaydetD.addEventListener('click', yap);
+  alan.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') { e.preventDefault(); if (!kaydetD.disabled) yap(); } });
+  say();
+  const arac = el('div', { sinif: 'arac' }, buyuk ? el('span', { sinif: 'bilgi', metin: 'Dosya büyük: ilk 5 MB gösteriliyor, düzenleme kapalı' }) : kaydetD,
+    el('button', { type: 'button', metin: 'Satır kaydır', 'aria-pressed': 'true', onclick: (e) => { const k = alan.classList.toggle('kaydirmasiz'); e.currentTarget.setAttribute('aria-pressed', !k); } }),
+    durum, ...ortakDugmeler(sekme));
+  return { kok: el('div', { sinif: 'gor' }, arac, el('div', { sinif: 'govde' }, alan)), temizle: () => {} };
+}
+
+async function digerGor(sekme) {
+  const d = sekme.dosya;
+  const b = new Uint8Array(await d.slice(0, 2048).arrayBuffer());
+  let ham = '';
+  for (let i = 0; i < b.length; i += 16) {
+    const p = b.slice(i, i + 16);
+    ham += i.toString(16).padStart(6, '0') + '  ' + [...p].map((x) => x.toString(16).padStart(2, '0')).join(' ').padEnd(48) + '  ' + [...p].map((x) => (x >= 32 && x < 127 ? String.fromCharCode(x) : '·')).join('') + '\n';
+  }
+  const kutu = el('div', { sinif: 'bilgi-kutu' }, el('h2', { metin: 'Bu dosya türü için henüz görüntüleyici yok' }),
+    el('dl', {}, el('dt', { metin: 'Ad' }), el('dd', { metin: d.name }), el('dt', { metin: 'Boyut' }), el('dd', { metin: boyutYaz(d.size) }),
+      el('dt', { metin: 'Tür' }), el('dd', { metin: d.type || 'bilinmiyor' }), el('dt', { metin: 'Değiştirilme' }), el('dd', { metin: d.lastModified ? new Date(d.lastModified).toLocaleString('tr-TR') : 'bilinmiyor' })),
+    el('button', { type: 'button', sinif: 'dugme', metin: 'Metin olarak aç', onclick: () => turDegistir(sekme, 'metin') }));
+  return { kok: el('div', { sinif: 'gor' }, el('div', { sinif: 'arac' }, ...ortakDugmeler(sekme)), el('div', { sinif: 'govde' }, kutu, el('h2', { sinif: 'bolum', style: 'margin-left:16px', metin: 'Ham içerik (ilk 2 KB)' }), el('pre', { sinif: 'ham', metin: ham || '(boş dosya)' }))), temizle: () => {} };
+}
+const GORUCULER = { pdf: pdfGor, resim: resimGor, video: videoGor, ses: sesGor, metin: metinGor, diger: digerGor };
+
+// ---------- sekmeler ----------
+const sekmeler = [];
+let aktif = null, sayac = 0;
+function sekmeleriCiz() {
+  $('#sekmeler').replaceChildren(...sekmeler.map((s) => el('div', { sinif: 'sekme' + (s === aktif ? ' secili' : ''), role: 'tab', 'aria-selected': s === aktif },
+    el('button', { type: 'button', sinif: 'sekme-ad', metin: (s.degisti ? '● ' : '') + s.ad, title: s.ad, onclick: () => sekmeSec(s) }),
+    el('button', { type: 'button', sinif: 'sekme-kapat', metin: '✕', 'aria-label': s.ad + ' sekmesini kapat', onclick: () => sekmeKapat(s) }))));
+}
+function sekmeSec(s) {
+  if (aktif && aktif !== s && aktif.gizlendi) aktif.gizlendi();
+  aktif = s;
+  for (const x of sekmeler) if (x.kok) x.kok.hidden = x !== s;
+  $('#ana').hidden = !!s; $('#alan').hidden = !s;
+  document.title = s ? s.ad + ' · ZABAC' : 'ZABAC';
+  sekmeleriCiz();
+  if (s && s.gosterildi && s.kok) s.gosterildi();
+}
+function sekmeKapat(s) {
+  if (s.degisti && !confirm(`"${s.ad}" kaydedilmedi. Yine de kapatılsın mı?`)) return;
+  const i = sekmeler.indexOf(s); if (i < 0) return;
+  sekmeler.splice(i, 1);
+  try { s.temizle && s.temizle(); } catch (e) { /* yok say */ }
+  if (s.kok) s.kok.remove();
+  if (aktif === s) sekmeSec(sekmeler[Math.min(i, sekmeler.length - 1)] || null); else sekmeleriCiz();
+}
+async function gorucuKur(s) {
+  const bekle = el('div', { sinif: 'gor' }, el('div', { sinif: 'yukleniyor', metin: 'Açılıyor…' }));
+  if (s.kok) s.kok.replaceWith(bekle); else $('#alan').append(bekle);
+  s.kok = bekle; s.gosterildi = null; s.gizlendi = null;
+  bekle.hidden = aktif !== s;
+  let sonuc;
+  try { sonuc = await GORUCULER[s.tur](s); }
+  catch (e) { sonuc = { kok: el('div', { sinif: 'gor' }, el('div', { sinif: 'arac' }, ...ortakDugmeler(s)), el('div', { sinif: 'hata', metin: 'Dosya açılamadı: ' + (e && e.message ? e.message : 'bilinmeyen hata') })), temizle: () => {} }; }
+  if (!sekmeler.includes(s)) { try { sonuc.temizle(); } catch (e) { /* kapatılmış */ } return; }
+  bekle.replaceWith(sonuc.kok); s.kok = sonuc.kok; s.temizle = sonuc.temizle;
+  s.kok.hidden = aktif !== s;
+  if (aktif === s && s.gosterildi) s.gosterildi();
+}
+async function turDegistir(s, tur) {
+  try { s.temizle && s.temizle(); } catch (e) { /* yok say */ }
+  s.tur = tur; await gorucuKur(s);
+}
+// girdiler: [{ dosya: File, tutamak?: FileSystemFileHandle }]
+async function ac(girdiler) {
+  let son = null;
+  for (const g of girdiler) {
+    if (!g || !g.dosya) continue;
+    const s = { id: ++sayac, ad: g.dosya.name || 'adsız', dosya: g.dosya, tutamak: g.tutamak || null, tur: await turBul(g.dosya), kok: null, degisti: false };
+    sekmeler.push(s); son = s;
+    sekmeSec(s);
+    gorucuKur(s);
+    sonEkle(s).catch(() => {});
+  }
+  if (son) sekmeSec(son);
+}
+
+// ---------- son açılanlar (yalnızca dosyaya yeniden erişilebilen cihazlarda) ----------
+const VT = 'zabac', DEPO = 'son';
+const vt = () => new Promise((coz, red) => { const i = indexedDB.open(VT, 1); i.onupgradeneeded = () => i.result.createObjectStore(DEPO, { keyPath: 'ad' }); i.onsuccess = () => coz(i.result); i.onerror = () => red(i.error); });
+const islem = async (kip, is) => { const d = await vt(); return new Promise((coz, red) => { const t = d.transaction(DEPO, kip); const r = is(t.objectStore(DEPO)); t.oncomplete = () => coz(r && r.result); t.onerror = () => red(t.error); }); };
+async function sonEkle(s) {
+  if (!s.tutamak) return;
+  await islem('readwrite', (d) => d.put({ ad: s.ad, boyut: s.dosya.size, tur: s.tur, tarih: Date.now(), tutamak: s.tutamak }));
+  const hepsi = (await islem('readonly', (d) => d.getAll())).sort((a, b) => b.tarih - a.tarih);
+  for (const eski of hepsi.slice(12)) await islem('readwrite', (d) => d.delete(eski.ad));
+  sonlariCiz();
+}
+async function sonlariCiz() {
+  let hepsi = [];
+  try { hepsi = (await islem('readonly', (d) => d.getAll())).sort((a, b) => b.tarih - a.tarih); } catch (e) { /* depolama kapalı */ }
+  $('#son-bolum').hidden = !hepsi.length;
+  $('#sonlar').replaceChildren(...hepsi.map((k) => el('li', {}, el('button', { type: 'button', sinif: 'son', onclick: () => sonAc(k) },
+    el('span', { sinif: 'rozet', metin: uzanti(k.ad) || TUR_ADI[k.tur] || 'dosya' }), el('span', { sinif: 'son-ad', metin: k.ad }), el('span', { sinif: 'son-bilgi', metin: boyutYaz(k.boyut) })))));
+}
+async function sonAc(k) {
+  try {
+    if ((await k.tutamak.queryPermission({ mode: 'read' })) !== 'granted' && (await k.tutamak.requestPermission({ mode: 'read' })) !== 'granted') return bildir('Dosyaya erişim izni verilmedi.');
+    await ac([{ dosya: await k.tutamak.getFile(), tutamak: k.tutamak }]);
+  } catch (e) {
+    await islem('readwrite', (d) => d.delete(k.ad)).catch(() => {});
+    sonlariCiz(); bildir('Dosya bulunamadı; taşınmış ya da silinmiş olabilir.');
+  }
+}
+
+// ---------- dosya alma yolları ----------
+async function sec() {
+  if (window.showOpenFilePicker) {
+    try {
+      const tutamaklar = await window.showOpenFilePicker({ multiple: true });
+      return ac(await Promise.all(tutamaklar.map(async (t) => ({ dosya: await t.getFile(), tutamak: t }))));
+    } catch (e) { if (e && e.name === 'AbortError') return; }
+  }
+  $('#secici').click();
+}
+$('#secici').addEventListener('change', (e) => { ac([...e.target.files].map((dosya) => ({ dosya }))); e.target.value = ''; });
+$('#ac').addEventListener('click', sec);
+$('#ac2').addEventListener('click', sec);
+$('#eve').addEventListener('click', () => sekmeSec(null));
+
+// Sürükle bırak: pencerenin her yerine bırakılabilir
+let suruklemeSayaci = 0;
+const dosyaMi = (e) => e.dataTransfer && [...e.dataTransfer.types].includes('Files');
+window.addEventListener('dragenter', (e) => { if (!dosyaMi(e)) return; e.preventDefault(); suruklemeSayaci++; document.body.classList.add('surukleniyor'); if (aktif) bildir('Bırak: dosya yeni sekmede açılır'); });
+window.addEventListener('dragover', (e) => { if (dosyaMi(e)) { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; } });
+window.addEventListener('dragleave', (e) => { if (!dosyaMi(e)) return; if (--suruklemeSayaci <= 0) { suruklemeSayaci = 0; document.body.classList.remove('surukleniyor'); } });
+window.addEventListener('drop', async (e) => {
+  if (!dosyaMi(e)) return;
+  e.preventDefault(); suruklemeSayaci = 0; document.body.classList.remove('surukleniyor');
+  const ogeler = [...(e.dataTransfer.items || [])].filter((o) => o.kind === 'file');
+  const girdiler = [];
+  // Tutamaklar olay bitmeden istenmeli; sonra dosyalar okunur
+  const bekleyen = ogeler.map((o) => ({ dosya: o.getAsFile(), tutamakSozu: o.getAsFileSystemHandle ? o.getAsFileSystemHandle().catch(() => null) : null }));
+  for (const b of bekleyen) {
+    const t = b.tutamakSozu ? await b.tutamakSozu : null;
+    if (t && t.kind === 'directory') { bildir('Klasör açılamaz; içindeki dosyaları bırak.'); continue; }
+    if (b.dosya) girdiler.push({ dosya: b.dosya, tutamak: t && t.kind === 'file' ? t : null });
+  }
+  if (!girdiler.length && e.dataTransfer.files.length) for (const dosya of e.dataTransfer.files) girdiler.push({ dosya });
+  ac(girdiler);
+});
+
+// Bilgisayarda "Birlikte aç" ve çift tıklama: dosyalar buraya gelir
+if ('launchQueue' in window) {
+  window.launchQueue.setConsumer(async (p) => {
+    if (!p.files || !p.files.length) return;
+    ac(await Promise.all(p.files.map(async (t) => ({ dosya: await t.getFile(), tutamak: t }))));
+  });
+}
+// Android'de "Paylaş → ZABAC" ile gelen dosyalar
+async function paylasilanlariAc() {
+  if (!new URLSearchParams(location.search).has('paylasim') || !('caches' in window)) return;
+  history.replaceState(null, '', location.pathname);
+  try {
+    const c = await caches.open('zabac-paylasim');
+    const girdiler = [];
+    for (const istek of await c.keys()) {
+      const y = await c.match(istek);
+      girdiler.push({ dosya: new File([await y.blob()], decodeURIComponent(y.headers.get('X-Dosya-Adi') || 'dosya'), { type: y.headers.get('Content-Type') || '' }) });
+      await c.delete(istek);
+    }
+    ac(girdiler);
+  } catch (e) { bildir('Paylaşılan dosya okunamadı.'); }
+}
+
+window.addEventListener('beforeunload', (e) => { if (sekmeler.some((s) => s.degisti)) { e.preventDefault(); e.returnValue = ''; } });
+
+// ---------- kurulum ----------
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  navigator.serviceWorker.register('sw.js').catch(() => { /* kurulum desteği yok: uygulama yine çalışır */ });
+}
+let kurIstegi = null;
+window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); kurIstegi = e; $('#kur').hidden = false; });
+$('#kur').addEventListener('click', async () => {
+  if (!kurIstegi) return;
+  kurIstegi.prompt(); try { await kurIstegi.userChoice; } catch (e) { /* yok say */ }
+  kurIstegi = null; $('#kur').hidden = true;
+});
+window.addEventListener('appinstalled', () => { $('#kur').hidden = true; $('#kur-bilgi').textContent = 'ZABAC bu cihaza yüklendi. Bilgisayarda bir dosyaya sağ tıklayıp "Birlikte aç" ile ZABAC\'ı seçebilirsin.'; });
+if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) $('#kur-bilgi').textContent = 'ZABAC bu cihazda yüklü olarak açık.';
+if (!('ondrop' in window) || matchMedia('(pointer: coarse)').matches) $('#birak-metin').textContent = 'Cihazından bir dosya seç. Dosyaların bu cihazdan çıkmaz.';
+
+sonlariCiz();
+paylasilanlariAc();
+</script>
+</body>
+</html>
