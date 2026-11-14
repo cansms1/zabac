@@ -113,10 +113,48 @@ body.surukleniyor .birak { background: color-mix(in srgb, var(--sari) 22%, var(-
 .tablo th.kose { left: 0; z-index: 3; min-width: 44px; }
 .tablo td.bulundu, .tablo tbody tr:hover td.bulundu { background: #bfdbfe; color: #0f172a; box-shadow: inset 0 0 0 1px #2563eb; }
 .tablo tbody tr:hover td { background: color-mix(in srgb, var(--sari) 12%, var(--kart)); }
+.tablo td { cursor: cell; }
+.tablo td.secili, .tablo tbody tr:hover td.secili { box-shadow: inset 0 0 0 2px var(--sari-koyu); background: color-mix(in srgb, var(--sari) 18%, var(--kart)); }
+.tablo td.duzenleniyor { padding: 0; overflow: visible; }
+.tablo td.duzenleniyor input { display: block; width: 100%; min-width: 120px; height: 30px; padding: 0 8px; border: 2px solid var(--sari-koyu); border-radius: 0; background: var(--kart); color: var(--yazi); font: inherit; outline: none; }
+.tablo-sar:focus { outline: none; }
+.arac .konum { min-width: 44px; padding: 0 6px; font-weight: 700; text-align: center; color: var(--yazi); }
+.arac button:disabled { opacity: .45; }
+/* Resim düzenleyici */
+.arac.ikinci { background: var(--kart2); }
+.arac label { display: inline-flex; align-items: center; gap: 6px; color: var(--soluk); white-space: nowrap; }
+.arac input[type="range"] { width: 110px; accent-color: var(--sari-koyu); }
+.arac input[type="color"] { width: 40px; height: 38px; padding: 2px; border: 1px solid var(--cizgi); border-radius: 10px; background: var(--kart); }
+.arac input[type="text"] { min-height: 38px; width: 170px; padding: 0 10px; border: 1px solid var(--cizgi); border-radius: 10px; background: var(--zemin); color: var(--yazi); }
+.arac button.acik { background: var(--sari); border-color: var(--sari); color: var(--sari-yazi); font-weight: 700; }
+.duzen-govde { display: grid; place-items: center; padding: 14px; }
+.duzen-sar { position: relative; flex: none; line-height: 0; overflow: hidden; background: repeating-conic-gradient(#d9d4c7 0% 25%, #f4f1e8 0% 50%) 50% / 20px 20px; box-shadow: 0 2px 14px rgba(0, 0, 0, .3); }
+.duzen-sar canvas { display: block; width: 100%; height: 100%; }
+.duzen-sar.kip-kirp, .duzen-sar.kip-ciz, .duzen-sar.kip-yazi { touch-action: none; }
+.duzen-sar.kip-kirp, .duzen-sar.kip-ciz { cursor: crosshair; } .duzen-sar.kip-yazi { cursor: text; }
+.kirp-kutu { position: absolute; border: 2px dashed #fff; box-shadow: 0 0 0 9999px rgba(0, 0, 0, .5); outline: 1px solid #000; pointer-events: none; }
 .tablo-son { padding: 14px; text-align: center; color: var(--soluk); font-size: 13px; }
 .sayfalar { flex: none; display: flex; gap: 6px; padding: 6px 10px calc(env(safe-area-inset-bottom) + 6px); overflow-x: auto; background: var(--kart); border-top: 1px solid var(--cizgi); scrollbar-width: thin; }
 .sayfalar button { flex: none; min-height: 36px; max-width: 220px; padding: 0 14px; border: 1px solid var(--cizgi); border-radius: 10px; background: var(--kart2); font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sayfalar button.secili { background: var(--sari); border-color: var(--sari); color: var(--sari-yazi); font-weight: 700; }
+/* Word belgesi */
+.belge-govde { padding: 16px 10px 40px; }
+.belge-sayfa { box-sizing: border-box; width: 100%; min-height: 60vh; margin: 0 auto; background: #fff; color: #000; box-shadow: 0 2px 14px rgba(0, 0, 0, .25); font: 11pt/1.3 Calibri, Carlito, "Segoe UI", Arial, sans-serif; overflow-wrap: break-word; }
+.bp { margin: 0; min-height: 1.3em; white-space: pre-wrap; outline: none; tab-size: 4; }
+.bp:focus { background: rgba(250, 204, 21, .12); }
+.bn { -webkit-user-select: none; user-select: none; }
+.bbag { color: #0563c1; text-decoration: underline; }
+.btablo { width: 100%; margin: 4pt 0; border-collapse: collapse; table-layout: fixed; }
+.btablo td { border: 1px solid #000; padding: 2pt 5pt; vertical-align: top; }
+.btablo.kenarsiz td { border: 1px dashed #ddd; }
+.belge-sayfa img { max-width: 100%; height: auto; vertical-align: bottom; }
+.bresim-yok { color: #888; font-size: 9pt; }
+.sayfa-sonu { margin: 10pt 0; border-top: 1px dashed #999; color: #999; font-size: 9pt; text-align: center; -webkit-user-select: none; user-select: none; }
+.sayfa-basi { margin-top: 10pt; border-top: 1px dashed #999; padding-top: 8pt; }
+.belge-not { flex: none; padding: 8px 14px; background: #fef3c7; color: #78350f; font-size: 13px; }
+::highlight(zabac-bul) { background: #bfdbfe; color: #0f172a; }
+::highlight(zabac-bul-simdi) { background: #2563eb; color: #fff; }
+@media (max-width: 700px) { .belge-sayfa { padding: 18pt 12pt !important; } }
 /* Klasör listesi */
 .klasor { background: var(--zemin); }
 .klasor-ic { max-width: 860px; margin: 0 auto; padding: 4px 14px 30px; }
@@ -162,7 +200,7 @@ body.surukleniyor .birak { background: color-mix(in srgb, var(--sari) 22%, var(-
     <h2 class="bolum">Açabildiklerim</h2>
     <div class="kart">
       <div class="turler">
-        <span class="tur">PDF</span><span class="tur">Excel ve CSV</span><span class="tur">Web sayfası (HTML)</span><span class="tur">Klasör</span><span class="tur">Resim</span><span class="tur">Video</span><span class="tur">Ses</span><span class="tur">Metin ve not</span><span class="tur">Diğer dosyalar: bilgi ve ham içerik</span>
+        <span class="tur">PDF</span><span class="tur">Excel ve CSV</span><span class="tur">Word</span><span class="tur">Web sayfası (HTML)</span><span class="tur">Klasör</span><span class="tur">Resim</span><span class="tur">Video</span><span class="tur">Ses</span><span class="tur">Metin ve not</span><span class="tur">Diğer dosyalar: bilgi ve ham içerik</span>
       </div>
     </div>
 
@@ -171,7 +209,7 @@ body.surukleniyor .birak { background: color-mix(in srgb, var(--sari) 22%, var(-
       <p class="not" id="kur-bilgi">Bilgisayar ve Android: tarayıcı menüsünden "Uygulamayı yükle". iPhone: Safari'de Paylaş → "Ana Ekrana Ekle". Yüklendikten sonra internet gerekmez.</p>
       <button type="button" class="dugme" id="kur" hidden>Uygulamayı yükle</button>
     </div>
-    <p class="not" id="surum">Sürüm 2 · Excel, HTML, klasör, mavi arama</p>
+    <p class="not" id="surum">Sürüm 5 · Word açma ve düzenleme</p>
   </div>
 </main>
 
@@ -208,13 +246,14 @@ function bildir(metin) {
 const UZANTILAR = {
   pdf: ['pdf'],
   web: ['html', 'htm', 'xhtml', 'mht'],
+  belge: ['docx', 'docm', 'dotx', 'doc', 'dot'],
   tablo: ['xls', 'xlsx', 'xlsm', 'xlsb', 'xlt', 'xltx', 'ods', 'csv', 'tsv'],
   resim: ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg', 'bmp', 'ico', 'avif', 'jfif'],
   video: ['mp4', 'webm', 'mov', 'm4v', 'ogv', 'mkv'],
   ses: ['mp3', 'wav', 'ogg', 'oga', 'm4a', 'aac', 'flac', 'opus'],
   metin: ['txt', 'md', 'log', 'json', 'xml', 'css', 'js', 'mjs', 'ts', 'ini', 'cfg', 'conf', 'srt', 'vtt', 'yaml', 'yml', 'bat', 'cmd', 'ps1', 'sh', 'py', 'java', 'c', 'h', 'cpp', 'cs', 'php', 'sql', 'rtf', 'tex', 'm3u', 'm3u8', 'reg', 'properties', 'gitignore', 'env'],
 };
-const TUR_ADI = { web: 'Web sayfası', tablo: 'Tablo', pdf: 'PDF', resim: 'Resim', video: 'Video', ses: 'Ses', metin: 'Metin', diger: 'Dosya' };
+const TUR_ADI = { belge: 'Word', web: 'Web sayfası', tablo: 'Tablo', pdf: 'PDF', resim: 'Resim', video: 'Video', ses: 'Ses', metin: 'Metin', diger: 'Dosya' };
 
 // Dosyanın ilk baytlarına bakar: uzantısı yanlış ya da eksik dosyaları da tanır
 async function imzaBul(dosya) {
@@ -273,13 +312,36 @@ function indir(blob, ad) {
   setTimeout(() => URL.revokeObjectURL(a.href), 30000);
 }
 
+// Kopya olarak kaydeder: bilgisayarda yer sorar, telefonda indirir. Aslının üzerine yazmaz.
+async function farkliKaydet(blob, ad) {
+  if (window.showSaveFilePicker) {
+    try { const t = await window.showSaveFilePicker({ suggestedName: ad }); const y = await t.createWritable(); await y.write(blob); await y.close(); bildir('Kaydedildi: ' + t.name); return true; }
+    catch (e) { if (e && e.name === 'AbortError') return false; }
+  }
+  indir(blob, ad); bildir('Kopya indirildi: ' + ad); return true;
+}
+const duzenlenmisAd = (ad, uz) => ad.replace(/\.[^.]+$/, '') + ' (düzenlendi).' + uz;
+// Verilen içeriği gizli bir çerçevede yazdırır
+function yazdir(baslik, icerik, ekStil = '') {
+  const c = el('iframe', { style: 'position:fixed;right:0;bottom:0;width:0;height:0;border:0', 'aria-hidden': 'true', tabindex: '-1' });
+  document.body.append(c);
+  const d = c.contentDocument;
+  d.open(); d.write('<!DOCTYPE html><html lang="tr"><head><meta charset="utf-8"><title></title><style>body{font:12px system-ui,sans-serif;margin:10mm;color:#000;background:#fff}table{border-collapse:collapse}td,th{border:1px solid #888;padding:3px 6px;font-size:11px;text-align:left}td.sayi{text-align:right}img{max-width:100%;height:auto}pre{white-space:pre-wrap;word-break:break-word;font:12px ui-monospace,Consolas,monospace;margin:0}' + ekStil + '</style></head><body></body></html>'); d.close();
+  d.title = baslik; d.body.append(d.importNode(icerik, true));
+  const bitir = () => setTimeout(() => c.remove(), 1500);
+  c.contentWindow.onafterprint = bitir;
+  setTimeout(() => c.remove(), 120000);
+  Promise.all([...d.images].map((i) => (i.decode ? i.decode().catch(() => {}) : null))).then(() => setTimeout(() => { try { c.contentWindow.focus(); c.contentWindow.print(); } catch (e) { bildir('Yazdırma başlatılamadı.'); bitir(); } }, 120));
+}
+
 // ---------- görüntüleyiciler ----------
 // Her görüntüleyici { kok, temizle } döndürür.
 const ortakDugmeler = (sekme) => [
   el('span', { sinif: 'bosluk' }),
   el('span', { sinif: 'bilgi', metin: boyutYaz(sekme.dosya.size) }),
+  sekme.yazdir ? el('button', { type: 'button', metin: 'Yazdır', title: 'Yazıcıya gönder ya da PDF olarak kaydet', onclick: () => sekme.yazdir() }) : null,
   el('button', { type: 'button', metin: 'İndir', title: 'Dosyanın kopyasını indir', onclick: () => indir(sekme.dosya, sekme.ad) }),
-];
+].filter(Boolean);
 
 let pdfKitapligi = null;
 function pdfYukle() {
@@ -433,7 +495,9 @@ async function resimGor(sekme) {
     await new Promise((r) => { img.onload = r; img.src = adres; });
     uygula();
   }
+  sekme.yazdir = () => yazdir(sekme.ad, el('img', { src: img.src, alt: sekme.ad }), '@page{margin:8mm}');
   const arac = el('div', { sinif: 'arac' },
+    el('button', { type: 'button', sinif: 'vurgu', metin: 'Düzenle', title: 'Kırp, döndür, renk ayarla, yazı ve çizim ekle', onclick: () => turDegistir(sekme, 'resimduzen') }),
     el('button', { type: 'button', metin: '−', 'aria-label': 'Uzaklaştır', onclick: () => yakinlas(1 / 1.25) }), yuzde,
     el('button', { type: 'button', metin: '+', 'aria-label': 'Yakınlaştır', onclick: () => yakinlas(1.25) }),
     el('button', { type: 'button', metin: 'Sığdır', onclick: () => { sigdir = true; uygula(); } }),
@@ -443,6 +507,235 @@ async function resimGor(sekme) {
   const boyutGozcu = new ResizeObserver(() => { if (sigdir && govde.clientWidth) uygula(); });
   sekme.gosterildi = () => { uygula(); boyutGozcu.observe(govde); };
   return { kok, temizle: () => { boyutGozcu.disconnect(); URL.revokeObjectURL(adres); } };
+}
+
+// ---------- fotoğraf düzenleyici ----------
+const RESIM_PIKSEL_SINIRI = 16e6;   // telefonların tuval sınırı
+const RESIM_GERI_PIKSEL = 60e6;     // geri al için bellekte tutulan toplam piksel
+async function resimDuzenGor(sekme) {
+  let kaynak = await createImageBitmap(sekme.dosya).catch(() => null);
+  if (!kaynak) {
+    // Bazı biçimler (ör. SVG) doğrudan çözülmez; resim öğesi üzerinden denenir
+    const adres = URL.createObjectURL(sekme.dosya);
+    kaynak = await new Promise((coz) => { const i = new Image(); i.onload = () => coz(i); i.onerror = () => coz(null); i.src = adres; });
+    setTimeout(() => URL.revokeObjectURL(adres), 5000);
+    if (!kaynak || !(kaynak.naturalWidth || kaynak.width)) throw new Error('bu resim düzenlenemiyor');
+  }
+  const kw = kaynak.naturalWidth || kaynak.width, kh = kaynak.naturalHeight || kaynak.height;
+  const kucult = Math.min(1, Math.sqrt(RESIM_PIKSEL_SINIRI / (kw * kh)));
+  const tuval = el('canvas');
+  tuval.width = Math.max(1, Math.round(kw * kucult)); tuval.height = Math.max(1, Math.round(kh * kucult));
+  let g = tuval.getContext('2d', { willReadFrequently: true });
+  g.drawImage(kaynak, 0, 0, tuval.width, tuval.height);
+  if (kaynak.close) kaynak.close();
+
+  const sar = el('div', { sinif: 'duzen-sar' }, tuval);
+  const govde = el('div', { sinif: 'govde duzen-govde' }, sar);
+  const olcu = el('span', { sinif: 'bilgi' }), yuzde = el('span', { sinif: 'bilgi' });
+  const geriD = el('button', { type: 'button', metin: 'Geri al', title: 'Son işlemi geri al (Ctrl+Z)', disabled: true });
+  const kaydetD = el('button', { type: 'button', sinif: 'vurgu', metin: 'Kaydet', title: 'Düzenlenmiş resmi ayrı bir kopya olarak kaydet (aslına dokunulmaz)' });
+  const ikinci = el('div', { sinif: 'arac ikinci' });
+  let olcek = 1, sigdir = true, kip = null;
+  const AYAR0 = { parlak: 100, kontrast: 100, doygun: 100, gri: 0, sepya: 0 };
+  let ayar = { ...AYAR0 };
+  const geri = [];
+
+  const ayarVar = () => Object.keys(AYAR0).some((k) => ayar[k] !== AYAR0[k]);
+  const onizle = () => { tuval.style.filter = ayarVar() ? `brightness(${ayar.parlak}%) contrast(${ayar.kontrast}%) saturate(${ayar.doygun}%) grayscale(${ayar.gri}%) sepia(${ayar.sepya}%)` : ''; };
+  const yerlestir = () => {
+    if (sigdir && govde.clientWidth) olcek = Math.min(1, (govde.clientWidth - 28) / tuval.width, (govde.clientHeight - 28) / tuval.height) || 1;
+    sar.style.width = Math.max(1, tuval.width * olcek) + 'px'; sar.style.height = Math.max(1, tuval.height * olcek) + 'px';
+    olcu.textContent = tuval.width + ' × ' + tuval.height; yuzde.textContent = Math.round(olcek * 100) + '%';
+  };
+  const kopya = () => { const c = el('canvas'); c.width = tuval.width; c.height = tuval.height; c.getContext('2d').drawImage(tuval, 0, 0); return c; };
+  const anlik = () => {
+    geri.push({ c: kopya(), ayar: { ...ayar } });
+    let toplam = geri.reduce((t, k) => t + k.c.width * k.c.height, 0);
+    while (geri.length > 3 && (toplam > RESIM_GERI_PIKSEL || geri.length > 20)) { const k = geri.shift(); toplam -= k.c.width * k.c.height; }
+    geriD.disabled = false;
+    if (!sekme.degisti) { sekme.degisti = true; sekmeleriCiz(); }
+  };
+  const yukle = (c) => { tuval.width = c.width; tuval.height = c.height; g = tuval.getContext('2d', { willReadFrequently: true }); g.drawImage(c, 0, 0); yerlestir(); };
+  function geriAl() {
+    const k = geri.pop(); if (!k) return;
+    yukle(k.c); ayar = k.ayar; onizle(); geriD.disabled = !geri.length; if (!kip) kipSec(null);
+  }
+  // Renk ayarlarını piksellere işler (önizlemedeki süzgeçlerle aynı sıra ve aynı katsayılar)
+  function ayarIsle(hedef) {
+    if (!ayarVar()) return;
+    const c = hedef.getContext('2d', { willReadFrequently: true });
+    const veri = c.getImageData(0, 0, hedef.width, hedef.height), d = veri.data;
+    const b = ayar.parlak / 100, k = ayar.kontrast / 100, s = ayar.doygun / 100, gr = ayar.gri / 100, sp = ayar.sepya / 100;
+    const kes = 127.5 * (1 - k);
+    for (let i = 0; i < d.length; i += 4) {
+      let r = d[i] * b, y = d[i + 1] * b, m = d[i + 2] * b;
+      r = r * k + kes; y = y * k + kes; m = m * k + kes;
+      if (r < 0) r = 0; else if (r > 255) r = 255; if (y < 0) y = 0; else if (y > 255) y = 255; if (m < 0) m = 0; else if (m > 255) m = 255;
+      if (s !== 1) {
+        const r2 = (0.213 + 0.787 * s) * r + (0.715 - 0.715 * s) * y + (0.072 - 0.072 * s) * m;
+        const y2 = (0.213 - 0.213 * s) * r + (0.715 + 0.285 * s) * y + (0.072 - 0.072 * s) * m;
+        const m2 = (0.213 - 0.213 * s) * r + (0.715 - 0.715 * s) * y + (0.072 + 0.928 * s) * m;
+        r = r2; y = y2; m = m2;
+      }
+      if (gr) {
+        const q = 1 - gr;
+        const r2 = (0.2126 + 0.7874 * q) * r + (0.7152 - 0.7152 * q) * y + (0.0722 - 0.0722 * q) * m;
+        const y2 = (0.2126 - 0.2126 * q) * r + (0.7152 + 0.2848 * q) * y + (0.0722 - 0.0722 * q) * m;
+        const m2 = (0.2126 - 0.2126 * q) * r + (0.7152 - 0.7152 * q) * y + (0.0722 + 0.9278 * q) * m;
+        r = r2; y = y2; m = m2;
+      }
+      if (sp) {
+        const q = 1 - sp;
+        const r2 = (0.393 + 0.607 * q) * r + (0.769 - 0.769 * q) * y + (0.189 - 0.189 * q) * m;
+        const y2 = (0.349 - 0.349 * q) * r + (0.686 + 0.314 * q) * y + (0.168 - 0.168 * q) * m;
+        const m2 = (0.272 - 0.272 * q) * r + (0.534 - 0.534 * q) * y + (0.131 + 0.869 * q) * m;
+        r = r2; y = y2; m = m2;
+      }
+      d[i] = r; d[i + 1] = y; d[i + 2] = m;
+    }
+    c.putImageData(veri, 0, 0);
+  }
+  // Çizim ve yazıdan önce renk ayarları resme işlenir ki sonradan eklenenler etkilenmesin
+  const ayariSabitle = () => { if (!ayarVar()) return; ayarIsle(tuval); ayar = { ...AYAR0 }; onizle(); };
+  const sonHal = () => { const c = kopya(); ayarIsle(c); return c; };
+
+  function donustur(w, h, ciz) {
+    anlik();
+    const eski = kopya();
+    tuval.width = w; tuval.height = h; g = tuval.getContext('2d', { willReadFrequently: true });
+    ciz(g, eski); yerlestir();
+  }
+  const dondur = (yon) => donustur(tuval.height, tuval.width, (c, e) => { c.translate(tuval.width / 2, tuval.height / 2); c.rotate(yon * Math.PI / 2); c.drawImage(e, -e.width / 2, -e.height / 2); c.setTransform(1, 0, 0, 1, 0, 0); });
+  const cevir = (yatay) => donustur(tuval.width, tuval.height, (c, e) => { c.translate(yatay ? e.width : 0, yatay ? 0 : e.height); c.scale(yatay ? -1 : 1, yatay ? 1 : -1); c.drawImage(e, 0, 0); c.setTransform(1, 0, 0, 1, 0, 0); });
+
+  // ---- alt araç çubuğu: seçili araca göre değişir ----
+  const kutu = el('div', { sinif: 'kirp-kutu', hidden: true });
+  sar.append(kutu);
+  let kirp = null;
+  const renk = el('input', { type: 'color', value: '#e11d48', 'aria-label': 'Renk' });
+  const kalinlik = el('input', { type: 'range', min: '1', max: '60', value: '6', 'aria-label': 'Kalınlık' });
+  const yazi = el('input', { type: 'text', placeholder: 'Yazılacak metin', 'aria-label': 'Yazılacak metin' });
+  const yaziBoyut = el('input', { type: 'number', min: '8', max: '400', value: '36', 'aria-label': 'Yazı boyutu' });
+  const kaydirici = (ad, anahtar, en, ust) => {
+    const giris = el('input', { type: 'range', min: String(en), max: String(ust), value: String(ayar[anahtar]), 'aria-label': ad });
+    giris.addEventListener('pointerdown', () => { if (!giris.dataset.basladi) { anlik(); giris.dataset.basladi = '1'; } });
+    giris.addEventListener('keydown', () => { if (!giris.dataset.basladi) { anlik(); giris.dataset.basladi = '1'; } });
+    giris.addEventListener('input', () => { ayar[anahtar] = Number(giris.value); onizle(); });
+    giris.addEventListener('change', () => { delete giris.dataset.basladi; });
+    return el('label', {}, ad, giris);
+  };
+  const dugme = (metin, is, ek = {}) => el('button', { type: 'button', metin, onclick: is, ...ek });
+  const kipDugmeleri = {};
+  function kipSec(yeni) {
+    kip = yeni; kirp = null; kutu.hidden = true;
+    sar.className = 'duzen-sar' + (kip ? ' kip-' + kip : '');
+    for (const [k, d] of Object.entries(kipDugmeleri)) { d.classList.toggle('acik', k === kip); d.setAttribute('aria-pressed', k === kip); }
+    if (kip === 'kirp') ikinci.replaceChildren(el('span', { sinif: 'bilgi', metin: 'Kalacak alanı resmin üzerinde sürükleyerek seç' }), dugme('Kırp', kirpUygula, { class: 'vurgu' }), dugme('Vazgeç', () => kipSec(null)));
+    else if (kip === 'ciz') ikinci.replaceChildren(el('label', {}, 'Renk', renk), el('label', {}, 'Kalınlık', kalinlik), el('span', { sinif: 'bilgi', metin: 'Resmin üzerinde sürükleyerek çiz' }), dugme('Bitti', () => kipSec(null)));
+    else if (kip === 'yazi') ikinci.replaceChildren(yazi, el('label', {}, 'Boyut', yaziBoyut), el('label', {}, 'Renk', renk), el('span', { sinif: 'bilgi', metin: 'Metni yaz, sonra resimde geleceği yere dokun' }), dugme('Bitti', () => kipSec(null)));
+    else if (kip === 'boyut') {
+      const en = el('input', { type: 'number', min: '1', max: '20000', value: String(tuval.width), 'aria-label': 'Genişlik' });
+      const boy = el('input', { type: 'number', min: '1', max: '20000', value: String(tuval.height), 'aria-label': 'Yükseklik' });
+      const kilit = el('input', { type: 'checkbox', checked: true });
+      const oran = tuval.width / tuval.height;
+      en.style.width = boy.style.width = '86px';
+      en.addEventListener('input', () => { if (kilit.checked && +en.value > 0) boy.value = String(Math.max(1, Math.round(+en.value / oran))); });
+      boy.addEventListener('input', () => { if (kilit.checked && +boy.value > 0) en.value = String(Math.max(1, Math.round(+boy.value * oran))); });
+      ikinci.replaceChildren(el('label', {}, 'Genişlik', en), el('label', {}, 'Yükseklik', boy), el('label', {}, kilit, 'Oranı koru'),
+        dugme('Uygula', () => {
+          const w = Math.round(+en.value), h = Math.round(+boy.value);
+          if (!(w >= 1 && h >= 1)) return bildir('Geçerli bir boyut yaz.');
+          if (w * h > RESIM_PIKSEL_SINIRI) return bildir('Bu boyut çok büyük (en çok 16 milyon piksel).');
+          donustur(w, h, (c, e) => { c.imageSmoothingQuality = 'high'; c.drawImage(e, 0, 0, w, h); }); kipSec(null);
+        }, { class: 'vurgu' }), dugme('Vazgeç', () => kipSec(null)));
+    } else ikinci.replaceChildren(kaydirici('Parlaklık', 'parlak', 20, 200), kaydirici('Kontrast', 'kontrast', 20, 200), kaydirici('Doygunluk', 'doygun', 0, 200),
+      dugme('Siyah beyaz', () => { anlik(); ayar.gri = ayar.gri ? 0 : 100; ayar.sepya = 0; onizle(); }),
+      dugme('Sepya', () => { anlik(); ayar.sepya = ayar.sepya ? 0 : 100; ayar.gri = 0; onizle(); }),
+      dugme('Renkleri sıfırla', () => { if (!ayarVar()) return; anlik(); ayar = { ...AYAR0 }; onizle(); kipSec(null); }));
+  }
+  function kirpUygula() {
+    if (!kirp || kirp.w < 2 || kirp.h < 2) return bildir('Önce resmin üzerinde bir alan seç.');
+    const k = kirp;
+    donustur(k.w, k.h, (c, e) => c.drawImage(e, k.x, k.y, k.w, k.h, 0, 0, k.w, k.h));
+    kipSec(null);
+  }
+
+  // ---- resmin üzerinde fare / parmak ----
+  const nokta = (e) => { const r = sar.getBoundingClientRect(); return { x: Math.min(tuval.width, Math.max(0, (e.clientX - r.left) / r.width * tuval.width)), y: Math.min(tuval.height, Math.max(0, (e.clientY - r.top) / r.height * tuval.height)) }; };
+  let basla = null;
+  sar.addEventListener('pointerdown', (e) => {
+    if (!kip || kip === 'boyut' || e.button > 0) return;
+    e.preventDefault();
+    const p = nokta(e);
+    if (kip === 'yazi') {
+      const metin = yazi.value.trim();
+      if (!metin) { bildir('Önce yazılacak metni gir.'); yazi.focus(); return; }
+      anlik(); ayariSabitle();
+      const boyut = Math.max(4, (Number(yaziBoyut.value) || 36) / olcek);
+      g.font = '700 ' + boyut + 'px system-ui, -apple-system, "Segoe UI", sans-serif'; g.textBaseline = 'top'; g.fillStyle = renk.value;
+      metin.split('\n').forEach((satir, i) => g.fillText(satir, p.x, p.y + i * boyut * 1.2));
+      return;
+    }
+    try { sar.setPointerCapture(e.pointerId); } catch (hata) { /* yakalanamadı */ }
+    basla = p;
+    if (kip === 'ciz') {
+      anlik(); ayariSabitle();
+      g.strokeStyle = renk.value; g.fillStyle = renk.value; g.lineWidth = Math.max(1, Number(kalinlik.value) / olcek); g.lineCap = 'round'; g.lineJoin = 'round';
+      g.beginPath(); g.arc(p.x, p.y, g.lineWidth / 2, 0, Math.PI * 2); g.fill();
+      g.beginPath(); g.moveTo(p.x, p.y);
+    }
+  });
+  sar.addEventListener('pointermove', (e) => {
+    if (!basla) return;
+    const p = nokta(e);
+    if (kip === 'ciz') { g.lineTo(p.x, p.y); g.stroke(); g.beginPath(); g.moveTo(p.x, p.y); }
+    else if (kip === 'kirp') {
+      kirp = { x: Math.round(Math.min(basla.x, p.x)), y: Math.round(Math.min(basla.y, p.y)), w: Math.round(Math.abs(p.x - basla.x)), h: Math.round(Math.abs(p.y - basla.y)) };
+      kutu.hidden = false;
+      kutu.style.left = kirp.x / tuval.width * 100 + '%'; kutu.style.top = kirp.y / tuval.height * 100 + '%';
+      kutu.style.width = kirp.w / tuval.width * 100 + '%'; kutu.style.height = kirp.h / tuval.height * 100 + '%';
+      olcu.textContent = 'Seçim: ' + kirp.w + ' × ' + kirp.h;
+    }
+  });
+  const birak = () => { basla = null; };
+  sar.addEventListener('pointerup', birak); sar.addEventListener('pointercancel', birak);
+
+  // ---- kaydetme ve yazdırma ----
+  const u = uzanti(sekme.ad);
+  const bicim = el('select', { 'aria-label': 'Kayıt biçimi', title: 'Kayıt biçimi' }, el('option', { value: 'png', metin: 'PNG' }), el('option', { value: 'jpg', metin: 'JPG' }), el('option', { value: 'webp', metin: 'WebP' }));
+  bicim.value = (u === 'jpg' || u === 'jpeg') ? 'jpg' : (u === 'webp' ? 'webp' : 'png');
+  async function kaydetYap() {
+    let c = sonHal();
+    const tur = bicim.value === 'jpg' ? 'image/jpeg' : (bicim.value === 'webp' ? 'image/webp' : 'image/png');
+    if (bicim.value === 'jpg') { const b = el('canvas'); b.width = c.width; b.height = c.height; const x = b.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, b.width, b.height); x.drawImage(c, 0, 0); c = b; }
+    const blob = await new Promise((coz) => c.toBlob(coz, tur, 0.92));
+    if (!blob) return bildir('Resim kaydedilemedi.');
+    const gercek = blob.type === tur ? bicim.value : 'png';     // tarayıcı biçimi desteklemiyorsa PNG verir
+    if (gercek !== bicim.value) bildir('Bu cihaz ' + bicim.value.toUpperCase() + ' yazamıyor, PNG olarak kaydediliyor.');
+    if (await farkliKaydet(blob, duzenlenmisAd(sekme.ad, gercek))) { sekme.degisti = false; sekmeleriCiz(); }
+  }
+  kaydetD.addEventListener('click', kaydetYap);
+  sekme.yazdir = () => yazdir(sekme.ad, el('img', { src: sonHal().toDataURL('image/png'), alt: sekme.ad }), '@page{margin:8mm}');
+
+  const yakinlas = (c) => { sigdir = false; olcek = Math.min(8, Math.max(0.02, olcek * c)); yerlestir(); };
+  const kipD = (k, metin, baslik) => (kipDugmeleri[k] = dugme(metin, () => kipSec(kip === k ? null : k), { title: baslik, 'aria-pressed': 'false' }));
+  geriD.addEventListener('click', geriAl);
+  const ortak = ortakDugmeler(sekme);
+  const arac = el('div', { sinif: 'arac' }, kaydetD, bicim, geriD,
+    dugme('⟲ Sola', () => dondur(-1), { title: 'Sola döndür' }), dugme('⟳ Sağa', () => dondur(1), { title: 'Sağa döndür' }),
+    dugme('↔ Çevir', () => cevir(true), { title: 'Yatay çevir (ayna)' }), dugme('↕ Çevir', () => cevir(false), { title: 'Dikey çevir' }),
+    kipD('kirp', 'Kırp', 'Resmin bir bölümünü kes'), kipD('ciz', 'Çiz', 'Resmin üzerine serbest çiz'), kipD('yazi', 'Yazı', 'Resmin üzerine yazı ekle'), kipD('boyut', 'Boyut', 'Resmi küçült ya da büyüt'),
+    dugme('−', () => yakinlas(1 / 1.25), { 'aria-label': 'Uzaklaştır' }), yuzde, dugme('+', () => yakinlas(1.25), { 'aria-label': 'Yakınlaştır' }), dugme('Sığdır', () => { sigdir = true; yerlestir(); }),
+    olcu, ...ortak.slice(0, 1), ...ortak.slice(2, -1),
+    dugme('Bitir', () => { if (sekme.degisti && !confirm('Kaydedilmemiş düzenlemeler silinecek. Düzenleyiciden çıkılsın mı?')) return; sekme.degisti = false; sekmeleriCiz(); turDegistir(sekme, 'resim'); }, { title: 'Düzenleyiciyi kapat, resme dön' }));
+  const kok = el('div', { sinif: 'gor' }, arac, ikinci, govde);
+  kok.tabIndex = -1;
+  kok.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z' && e.target.tagName !== 'INPUT') { e.preventDefault(); geriAl(); } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') { e.preventDefault(); kaydetYap(); } });
+  kipSec(null);
+  if (kucult < 1) bildir('Resim çok büyük olduğu için ' + tuval.width + ' × ' + tuval.height + ' boyutuna küçültülerek açıldı.');
+  const boyutGozcu = new ResizeObserver(() => { if (sigdir && govde.clientWidth) yerlestir(); });
+  sekme.gosterildi = () => { yerlestir(); boyutGozcu.observe(govde); };
+  return { kok, temizle: () => { boyutGozcu.disconnect(); geri.length = 0; } };
 }
 
 // .srt altyazıyı tarayıcının anladığı biçime çevirir
@@ -498,6 +791,7 @@ async function metinGor(sekme) {
   const metin = metinCoz(await sekme.dosya.slice(0, METIN_SINIRI).arrayBuffer());
   const alan = el('textarea', { sinif: 'metin-alan', spellcheck: 'false', autocapitalize: 'off', autocomplete: 'off', 'aria-label': sekme.ad + ' içeriği', readonly: buyuk });
   alan.value = metin;
+  sekme.yazdir = () => yazdir(sekme.ad, el('pre', { metin: alan.value }));
   const durum = el('span', { sinif: 'bilgi' });
   const kaydetD = el('button', { type: 'button', sinif: 'vurgu', metin: 'Kaydet', disabled: true });
   const say = () => { durum.textContent = `${alan.value.length.toLocaleString('tr-TR')} karakter · ${alan.value.split('\n').length.toLocaleString('tr-TR')} satır`; };
@@ -528,7 +822,337 @@ async function digerGor(sekme) {
     el('button', { type: 'button', sinif: 'dugme', metin: 'Metin olarak aç', onclick: () => turDegistir(sekme, 'metin') }));
   return { kok: el('div', { sinif: 'gor' }, el('div', { sinif: 'arac' }, ...ortakDugmeler(sekme)), el('div', { sinif: 'govde' }, kutu, el('h2', { sinif: 'bolum', style: 'margin-left:16px', metin: 'Ham içerik (ilk 2 KB)' }), el('pre', { sinif: 'ham', metin: ham || '(boş dosya)' }))), temizle: () => {} };
 }
-// ---------- tablo (Excel, CSV) ----------
+// ---------- formül hesaplayıcı (Excel formüllerini uygulamanın içinde hesaplar) ----------
+// Dosyada formüller İngilizce adlarla ve virgülle saklanır; ekranda Türkçe adlar ve noktalı virgülle gösterilir.
+const FORMUL_ADLARI = { TOPLA: 'SUM', ORTALAMA: 'AVERAGE', MAK: 'MAX', 'MİN': 'MIN', 'BAĞ_DEĞ_SAY': 'COUNT', 'BAĞ_DEĞ_DOLU_SAY': 'COUNTA', 'BOŞLUKSAY': 'COUNTBLANK', 'EĞER': 'IF', 'EĞERHATA': 'IFERROR', VE: 'AND', YADA: 'OR', 'DEĞİL': 'NOT',
+  YUVARLA: 'ROUND', YUKARIYUVARLA: 'ROUNDUP', 'AŞAĞIYUVARLA': 'ROUNDDOWN', TAMSAYI: 'INT', MUTLAK: 'ABS', 'KAREKÖK': 'SQRT', KUVVET: 'POWER', 'ÇARPIM': 'PRODUCT', 'TOPLA.ÇARPIM': 'SUMPRODUCT', ETOPLA: 'SUMIF', 'EĞERSAY': 'COUNTIF',
+  'EĞERORTALAMA': 'AVERAGEIF', 'ÇOKETOPLA': 'SUMIFS', 'ÇOKEĞERSAY': 'COUNTIFS', 'DÜŞEYARA': 'VLOOKUP', YATAYARA: 'HLOOKUP', 'İNDİS': 'INDEX', 'KAÇINCI': 'MATCH', 'BİRLEŞTİR': 'CONCATENATE', ARALIKBİRLEŞTİR: 'CONCAT', SOLDAN: 'LEFT', 'SAĞDAN': 'RIGHT',
+  'PARÇAAL': 'MID', UZUNLUK: 'LEN', 'BÜYÜKHARF': 'UPPER', 'KÜÇÜKHARF': 'LOWER', KIRP: 'TRIM', 'METNEÇEVİR': 'TEXT', 'SAYIYAÇEVİR': 'VALUE', 'BUGÜN': 'TODAY', 'ŞİMDİ': 'NOW', YIL: 'YEAR', AY: 'MONTH', 'GÜN': 'DAY', 'TARİH': 'DATE',
+  ORTANCA: 'MEDIAN', 'EBOŞSA': 'ISBLANK', ESAYIYSA: 'ISNUMBER', 'EMETİNSE': 'ISTEXT', EHATALIYSA: 'ISERROR', 'Pİ': 'PI', TAVANAYUVARLA: 'CEILING', TABANAYUVARLA: 'FLOOR', 'İŞARET': 'SIGN', 'DOĞRU': 'TRUE', 'YANLIŞ': 'FALSE' };
+const formulAnahtar = (ad) => ad.toLocaleUpperCase('tr').replace(/İ/g, 'I');
+const FORMUL_TR_EN = new Map(Object.entries(FORMUL_ADLARI).map(([tr, en]) => [formulAnahtar(tr), en]));
+const FORMUL_EN_TR = new Map(Object.entries(FORMUL_ADLARI).map(([tr, en]) => [en, tr]));
+const formulParcala = (f, is) => f.split(/("(?:[^"]|"")*")/).map((p, i) => (i % 2 ? p : is(p))).join('');
+const FORMUL_AD_RE = /[A-Za-zÇĞİÖŞÜçğıöşü_][A-Za-z0-9ÇĞİÖŞÜçğıöşü_.]*/g;
+// Kullanıcının yazdığı formülü (TOPLA, noktalı virgül, ondalık virgül) dosyada saklanan biçime çevirir
+function formulEnYap(metin) {
+  return formulParcala(metin, (p) => p.replace(/(^|[^A-Za-z0-9$.])(\d+),(?=\d)/g, '$1$2.').replace(/;/g, ',').replace(FORMUL_AD_RE, (ad) => FORMUL_TR_EN.get(formulAnahtar(ad)) || ad.toUpperCase()));
+}
+// Saklanan formülü ekranda Türkçe yazımıyla gösterir
+function formulTrYap(f) {
+  return formulParcala(f, (p) => p.replace(/,/g, ';').replace(/(\d)\.(?=\d)/g, '$1,').replace(FORMUL_AD_RE, (ad) => FORMUL_EN_TR.get(ad.toUpperCase()) || ad));
+}
+
+function formulMotoru(X, kitap) {
+  class Hata { constructor(k) { this.k = k; } }
+  const HATA_KOD = { '#NULL!': 0, '#DIV/0!': 7, '#VALUE!': 15, '#REF!': 23, '#NAME?': 29, '#NUM!': 36, '#N/A': 42 };
+  const KOD_HATA = Object.fromEntries(Object.entries(HATA_KOD).map(([k, v]) => [v, k]));
+  const HATA_TR = { '#DIV/0!': '#SAYI/0!', '#VALUE!': '#DEĞER!', '#REF!': '#BAŞV!', '#NAME?': '#AD?', '#NUM!': '#SAYI!', '#N/A': '#YOK', '#NULL!': '#BOŞ!', '#CYCLE!': '#DÖNGÜ!' };
+  const agaclar = new Map();
+
+  // ---- sözcüklere ayırma ----
+  const RE = {
+    bosluk: /^\s+/, metin: /^"((?:[^"]|"")*)"/, hata: /^#(DIV\/0!|VALUE!|REF!|NAME\?|NUM!|N\/A|NULL!)/i,
+    sayfa: /^(?:'((?:[^']|'')+)'|([A-Za-z_\u00C0-\u024F][\w.\u00C0-\u024F]*))!/,
+    hucre: /^\$?([A-Za-z]{1,3})\$?(\d{1,7})(?::\$?([A-Za-z]{1,3})\$?(\d{1,7}))?(?![\w(.])/,
+    sutun: /^\$?([A-Za-z]{1,3}):\$?([A-Za-z]{1,3})(?![\w(.])/, satir: /^\$?(\d{1,7}):\$?(\d{1,7})/,
+    sayi: /^(\d+\.?\d*|\.\d+)(E[+-]?\d+)?/i, ad: /^[A-Za-z_\u00C0-\u024F][\w.\u00C0-\u024F]*/, op: /^(<>|<=|>=|[-+*\/^&=<>(),%])/,
+  };
+  function sozcukler(f) {
+    const s = []; let k = f, m;
+    while (k.length) {
+      if ((m = RE.bosluk.exec(k))) { k = k.slice(m[0].length); continue; }
+      if ((m = RE.metin.exec(k))) { s.push({ t: 'm', v: m[1].replace(/""/g, '"') }); k = k.slice(m[0].length); continue; }
+      if ((m = RE.hata.exec(k))) { s.push({ t: 'h', v: m[0].toUpperCase() }); k = k.slice(m[0].length); continue; }
+      let sayfa = null;
+      if ((m = RE.sayfa.exec(k))) { sayfa = m[1] != null ? m[1].replace(/''/g, "'") : m[2]; k = k.slice(m[0].length); }
+      if ((m = RE.hucre.exec(k))) {
+        const c1 = X.utils.decode_col(m[1].toUpperCase()), r1 = +m[2] - 1;
+        const c2 = m[3] ? X.utils.decode_col(m[3].toUpperCase()) : c1, r2 = m[4] ? +m[4] - 1 : r1;
+        s.push({ t: 'r', sayfa, r1: Math.min(r1, r2), c1: Math.min(c1, c2), r2: Math.max(r1, r2), c2: Math.max(c1, c2), alan: !!m[3] }); k = k.slice(m[0].length); continue;
+      }
+      if ((m = RE.sutun.exec(k))) { const a = X.utils.decode_col(m[1].toUpperCase()), b = X.utils.decode_col(m[2].toUpperCase()); s.push({ t: 'r', sayfa, r1: 0, c1: Math.min(a, b), r2: -1, c2: Math.max(a, b), alan: true }); k = k.slice(m[0].length); continue; }
+      if ((m = RE.satir.exec(k))) { s.push({ t: 'r', sayfa, r1: Math.min(+m[1], +m[2]) - 1, c1: 0, r2: Math.max(+m[1], +m[2]) - 1, c2: -1, alan: true }); k = k.slice(m[0].length); continue; }
+      if (sayfa != null) throw new Error('başvuru çözülemedi');
+      if ((m = RE.sayi.exec(k))) { s.push({ t: 's', v: Number(m[0]) }); k = k.slice(m[0].length); continue; }
+      if ((m = RE.ad.exec(k))) { s.push({ t: 'a', v: m[0].toUpperCase() }); k = k.slice(m[0].length); continue; }
+      if ((m = RE.op.exec(k))) { s.push({ t: 'o', v: m[0] }); k = k.slice(m[0].length); continue; }
+      throw new Error('formül çözülemedi');
+    }
+    return s;
+  }
+  // ---- ağaç kurma (işlem önceliği Excel ile aynı) ----
+  function agac(f) {
+    if (agaclar.has(f)) return agaclar.get(f);
+    const s = sozcukler(f); let i = 0;
+    const bak = (v) => s[i] && s[i].t === 'o' && s[i].v === v;
+    const al = (v) => { if (!bak(v)) throw new Error('beklenen: ' + v); i++; };
+    const ikili = (alt, ops) => () => { let sol = alt(); while (s[i] && s[i].t === 'o' && ops.includes(s[i].v)) { const op = s[i++].v; sol = ['b', op, sol, alt()]; } return sol; };
+    function birim() {
+      const t = s[i];
+      if (!t) throw new Error('eksik formül');
+      if (t.t === 's' || t.t === 'm') { i++; return ['n', t.v]; }
+      if (t.t === 'h') { i++; return ['n', new Hata(t.v)]; }
+      if (t.t === 'r') { i++; return ['r', t]; }
+      if (t.t === 'a') {
+        i++;
+        if (bak('(')) {
+          i++; const arg = [];
+          if (!bak(')')) { for (;;) { arg.push(bak(',') || bak(')') ? ['n', null] : ifade()); if (bak(',')) { i++; continue; } break; } }
+          al(')'); return ['f', t.v, arg];
+        }
+        if (t.v === 'TRUE') return ['n', true];
+        if (t.v === 'FALSE') return ['n', false];
+        throw new Error('bilinmeyen ad: ' + t.v);
+      }
+      if (bak('(')) { i++; const x = ifade(); al(')'); return x; }
+      throw new Error('beklenmeyen sözcük');
+    }
+    const yuzde = () => { let x = birim(); while (bak('%')) { i++; x = ['%', x]; } return x; };
+    const tekli = () => { if (bak('-')) { i++; return ['u', '-', tekli()]; } if (bak('+')) { i++; return tekli(); } return yuzde(); };
+    const us = ikili(tekli, ['^']), carp = ikili(us, ['*', '/']), topla = ikili(carp, ['+', '-']), birlestir = ikili(topla, ['&']);
+    const ifade = ikili(birlestir, ['=', '<>', '<', '>', '<=', '>=']);
+    const kok = ifade();
+    if (i < s.length) throw new Error('fazla sözcük');
+    agaclar.set(f, kok);
+    return kok;
+  }
+
+  // ---- değerler ----
+  const tek = (v) => (v && v.alan ? (v.d[0] ? v.d[0][0] : null) : v);
+  const sayi = (v) => {
+    v = tek(v);
+    if (v instanceof Hata) throw v;
+    if (v == null || v === '') return 0;
+    if (typeof v === 'number') return v;
+    if (typeof v === 'boolean') return v ? 1 : 0;
+    const n = Number(String(v).trim().replace(',', '.'));
+    if (String(v).trim() === '' || !isFinite(n)) throw new Hata('#VALUE!');
+    return n;
+  };
+  const yazi = (v) => {
+    v = tek(v);
+    if (v instanceof Hata) throw v;
+    if (v == null) return '';
+    if (typeof v === 'boolean') return v ? 'DOĞRU' : 'YANLIŞ';
+    if (typeof v === 'number') return v.toLocaleString('tr-TR', { useGrouping: false, maximumFractionDigits: 10 });
+    return String(v);
+  };
+  const mantik = (v) => { v = tek(v); if (v instanceof Hata) throw v; if (typeof v === 'string') { const b = v.toLocaleUpperCase('tr'); if (b === 'DOĞRU' || b === 'TRUE') return true; if (b === 'YANLIŞ' || b === 'FALSE') return false; throw new Hata('#VALUE!'); } return !!v; };
+  const sira = (v) => (typeof v === 'number' ? 1 : typeof v === 'string' ? 2 : typeof v === 'boolean' ? 3 : 0);
+  function kiyas(a, b) {
+    a = tek(a); b = tek(b);
+    if (a instanceof Hata) throw a; if (b instanceof Hata) throw b;
+    if (a == null) a = typeof b === 'string' ? '' : typeof b === 'boolean' ? false : 0;
+    if (b == null) b = typeof a === 'string' ? '' : typeof a === 'boolean' ? false : 0;
+    if (sira(a) !== sira(b)) return sira(a) - sira(b);
+    if (typeof a === 'string') return a.toLocaleLowerCase('tr').localeCompare(b.toLocaleLowerCase('tr'), 'tr');
+    return a < b ? -1 : a > b ? 1 : 0;
+  }
+  const duz = (liste) => { const c = []; for (const v of liste) { if (v && v.alan) for (const s of v.d) for (const h of s) c.push(h); else c.push(v); } return c; };
+  // Toplama türü işlevler: alanlardaki yalnızca sayılar alınır, doğrudan yazılan değerler sayıya çevrilir
+  const sayilar = (liste) => {
+    const c = [];
+    for (const v of liste) {
+      if (v && v.alan) { for (const s of v.d) for (const h of s) { if (h instanceof Hata) throw h; if (typeof h === 'number') c.push(h); } }
+      else if (v != null) c.push(sayi(v));
+    }
+    return c;
+  };
+  // ETOPLA, EĞERSAY ölçütü: ">5", "<>elma", "a*", 12 …
+  function olcut(o) {
+    o = tek(o);
+    if (o instanceof Hata) throw o;
+    let op = '=', d = o;
+    if (typeof o === 'string') { const m = /^(<>|<=|>=|=|<|>)(.*)$/.exec(o); if (m) { op = m[1]; d = m[2]; } const n = Number(String(d).replace(',', '.')); if (String(d).trim() !== '' && isFinite(n)) d = n; }
+    if (typeof d === 'string' && (op === '=' || op === '<>')) {
+      const re = new RegExp('^' + d.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/~?\*/g, (x) => (x[0] === '~' ? '\\*' : '.*')).replace(/~?\?/g, (x) => (x[0] === '~' ? '\\?' : '.')) + '$', 'i');
+      return (v) => { const uy = d === '' ? (v == null || v === '') : (v != null && !(v instanceof Hata) && re.test(String(v))); return op === '=' ? uy : !uy; };
+    }
+    return (v) => {
+      if (v == null || v instanceof Hata || typeof v !== typeof d) return op === '<>';
+      const k = kiyas(v, d);
+      return op === '=' ? k === 0 : op === '<>' ? k !== 0 : op === '<' ? k < 0 : op === '>' ? k > 0 : op === '<=' ? k <= 0 : k >= 0;
+    };
+  }
+  const alanOl = (v) => (v && v.alan ? v : { alan: true, d: [[v]] });
+  const yuvarla = (x, b, kip) => { const c = Math.pow(10, b); const y = x * c; const z = kip === 0 ? Math.round(Math.abs(y) + 1e-9) * Math.sign(y) : kip > 0 ? Math.ceil(Math.abs(y) - 1e-9) * Math.sign(y) : Math.floor(Math.abs(y) + 1e-9) * Math.sign(y); return z / c; };
+  const tarihSeri = (y, a, g) => Date.UTC(y, a - 1, g) / 86400000 + 25569;
+  const tarihCoz = (v) => { const p = X.SSF.parse_date_code(sayi(v)); if (!p) throw new Hata('#VALUE!'); return p; };
+  const kosullu = (a, cift) => {
+    // (alan, ölçüt[, toplam alanı]) ya da ÇOK… biçimi: (toplam alanı, alan1, ölçüt1, …)
+    const esler = []; let hedef;
+    if (cift) { hedef = alanOl(a[0]); for (let i = 1; i + 1 < a.length; i += 2) esler.push([alanOl(a[i]), olcut(a[i + 1])]); }
+    else { esler.push([alanOl(a[0]), olcut(a[1])]); hedef = alanOl(a[2] != null ? a[2] : a[0]); }
+    const c = [];
+    const ilk = esler[0][0];
+    for (let r = 0; r < ilk.d.length; r++) for (let k = 0; k < ilk.d[r].length; k++) {
+      if (esler.every(([al, uy]) => uy(al.d[r] ? al.d[r][k] : null))) c.push(hedef.d[r] ? hedef.d[r][k] : null);
+    }
+    return c;
+  };
+  const sayiSec = (l) => l.filter((x) => typeof x === 'number');
+  const ISLEV = {
+    SUM: (a) => sayilar(a).reduce((t, x) => t + x, 0),
+    AVERAGE: (a) => { const s = sayilar(a); if (!s.length) throw new Hata('#DIV/0!'); return s.reduce((t, x) => t + x, 0) / s.length; },
+    MIN: (a) => { const s = sayilar(a); return s.length ? Math.min(...s) : 0; },
+    MAX: (a) => { const s = sayilar(a); return s.length ? Math.max(...s) : 0; },
+    MEDIAN: (a) => { const s = sayilar(a).sort((x, y) => x - y); if (!s.length) throw new Hata('#NUM!'); const o = s.length >> 1; return s.length % 2 ? s[o] : (s[o - 1] + s[o]) / 2; },
+    PRODUCT: (a) => sayilar(a).reduce((t, x) => t * x, 1),
+    COUNT: (a) => duz(a).filter((x) => typeof x === 'number').length,
+    COUNTA: (a) => duz(a).filter((x) => x != null && x !== '').length,
+    COUNTBLANK: (a) => duz(a).filter((x) => x == null || x === '').length,
+    SUMPRODUCT: (a) => { const al = a.map(alanOl); let t = 0; for (let r = 0; r < al[0].d.length; r++) for (let k = 0; k < al[0].d[r].length; k++) { let c = 1; for (const x of al) { const v = x.d[r] ? x.d[r][k] : null; if (v instanceof Hata) throw v; c *= typeof v === 'number' ? v : 0; } t += c; } return t; },
+    SUMIF: (a) => sayiSec(kosullu(a, false)).reduce((t, x) => t + x, 0),
+    SUMIFS: (a) => sayiSec(kosullu(a, true)).reduce((t, x) => t + x, 0),
+    COUNTIF: (a) => kosullu([a[0], a[1]], false).length,
+    COUNTIFS: (a) => kosullu([a[0], ...a], true).length,
+    AVERAGEIF: (a) => { const s = sayiSec(kosullu(a, false)); if (!s.length) throw new Hata('#DIV/0!'); return s.reduce((t, x) => t + x, 0) / s.length; },
+    ROUND: (a) => yuvarla(sayi(a[0]), sayi(a[1]), 0), ROUNDUP: (a) => yuvarla(sayi(a[0]), sayi(a[1]), 1), ROUNDDOWN: (a) => yuvarla(sayi(a[0]), sayi(a[1]), -1),
+    INT: (a) => Math.floor(sayi(a[0])), ABS: (a) => Math.abs(sayi(a[0])), SIGN: (a) => Math.sign(sayi(a[0])), PI: () => Math.PI,
+    SQRT: (a) => { const x = sayi(a[0]); if (x < 0) throw new Hata('#NUM!'); return Math.sqrt(x); },
+    POWER: (a) => Math.pow(sayi(a[0]), sayi(a[1])),
+    MOD: (a) => { const x = sayi(a[0]), y = sayi(a[1]); if (!y) throw new Hata('#DIV/0!'); return x - y * Math.floor(x / y); },
+    CEILING: (a) => { const x = sayi(a[0]), k = a[1] == null ? 1 : sayi(a[1]); return k ? Math.ceil(x / k - 1e-9) * k : 0; },
+    FLOOR: (a) => { const x = sayi(a[0]), k = a[1] == null ? 1 : sayi(a[1]); if (!k) throw new Hata('#DIV/0!'); return Math.floor(x / k + 1e-9) * k; },
+    NOT: (a) => !mantik(a[0]),
+    CONCATENATE: (a) => a.map(yazi).join(''), CONCAT: (a) => duz(a).map(yazi).join(''),
+    LEFT: (a) => yazi(a[0]).slice(0, a[1] == null ? 1 : sayi(a[1])), RIGHT: (a) => { const n = a[1] == null ? 1 : sayi(a[1]); return n > 0 ? yazi(a[0]).slice(-n) : ''; },
+    MID: (a) => yazi(a[0]).substr(Math.max(0, sayi(a[1]) - 1), sayi(a[2])), LEN: (a) => yazi(a[0]).length,
+    UPPER: (a) => yazi(a[0]).toLocaleUpperCase('tr'), LOWER: (a) => yazi(a[0]).toLocaleLowerCase('tr'), TRIM: (a) => yazi(a[0]).trim().replace(/ +/g, ' '),
+    VALUE: (a) => sayi(a[0]), TEXT: (a) => { try { return X.SSF.format(yazi(a[1]), sayi(a[0])); } catch (e) { throw new Hata('#VALUE!'); } },
+    TODAY: () => { const d = new Date(); return tarihSeri(d.getFullYear(), d.getMonth() + 1, d.getDate()); },
+    NOW: () => { const d = new Date(); return tarihSeri(d.getFullYear(), d.getMonth() + 1, d.getDate()) + (d.getHours() * 3600 + d.getMinutes() * 60 + d.getSeconds()) / 86400; },
+    DATE: (a) => tarihSeri(sayi(a[0]), sayi(a[1]), sayi(a[2])), YEAR: (a) => tarihCoz(a[0]).y, MONTH: (a) => tarihCoz(a[0]).m, DAY: (a) => tarihCoz(a[0]).d,
+    ISBLANK: (a) => tek(a[0]) == null, ISNUMBER: (a) => typeof tek(a[0]) === 'number', ISTEXT: (a) => typeof tek(a[0]) === 'string', ISERROR: (a) => tek(a[0]) instanceof Hata,
+    MATCH: (a) => {
+      const l = duz([alanOl(a[1])]), tur = a[2] == null ? 1 : sayi(a[2]), h = tek(a[0]);
+      if (tur === 0) { const uy = olcut(typeof h === 'string' ? h : h); const i = l.findIndex((x) => uy(x)); if (i < 0) throw new Hata('#N/A'); return i + 1; }
+      let son = -1;
+      for (let i = 0; i < l.length; i++) { if (l[i] == null || sira(l[i]) !== sira(h)) continue; const k = kiyas(l[i], h); if (tur > 0 ? k <= 0 : k >= 0) son = i; else break; }
+      if (son < 0) throw new Hata('#N/A'); return son + 1;
+    },
+    INDEX: (a) => {
+      const al = alanOl(a[0]); let r = a[1] == null ? 0 : sayi(a[1]), k = a[2] == null ? 0 : sayi(a[2]);
+      if (al.d.length === 1 && a[2] == null) { k = r; r = 1; }
+      const v = al.d[Math.max(1, r) - 1]; if (!v || Math.max(1, k) > v.length) throw new Hata('#REF!');
+      return v[Math.max(1, k) - 1];
+    },
+    VLOOKUP: (a) => ara(a, false), HLOOKUP: (a) => ara(a, true),
+  };
+  function ara(a, yatay) {
+    const h = tek(a[0]), al = alanOl(a[1]), no = sayi(a[2]), yaklasik = a[3] == null ? true : mantik(a[3]);
+    if (h instanceof Hata) throw h;
+    const uzunluk = yatay ? (al.d[0] || []).length : al.d.length;
+    const anahtar = (i) => (yatay ? al.d[0][i] : al.d[i][0]);
+    let bulunan = -1;
+    if (!yaklasik) { const uy = olcut(h); for (let i = 0; i < uzunluk; i++) if (uy(anahtar(i))) { bulunan = i; break; } }
+    else for (let i = 0; i < uzunluk; i++) { const v = anahtar(i); if (v == null || sira(v) !== sira(h)) continue; if (kiyas(v, h) <= 0) bulunan = i; else break; }
+    if (bulunan < 0) throw new Hata('#N/A');
+    const v = yatay ? (al.d[no - 1] || [])[bulunan] : al.d[bulunan][no - 1];
+    if (no < 1 || (yatay ? no > al.d.length : no > al.d[bulunan].length)) throw new Hata('#REF!');
+    return v;
+  }
+
+  // ---- hücre okuma ve hesaplama ----
+  const sayfaBul = (ad) => { if (kitap.Sheets[ad]) return ad; const es = (x) => x.toUpperCase().replace(/İ/g, 'I'); const k = es(ad); return (kitap.SheetNames || []).find((x) => es(x) === k) || null; };
+  let memo = new Map(), suren = new Set(), eksikKip = false, desteksiz = 0;
+  function hucre(sayfaAdi, r, c) {
+    const sayfa = kitap.Sheets[sayfaAdi];
+    const a = X.utils.encode_cell({ r, c }), h = sayfa[a];
+    if (!h) return null;
+    if (h.f) return formulDeger(sayfaAdi, a, h);
+    if (h.t === 'e') return new Hata(KOD_HATA[h.v] || '#VALUE!');
+    return h.v == null ? null : h.v;
+  }
+  function deg(n, sayfaAdi) {
+    switch (n[0]) {
+      case 'n': return n[1];
+      case 'r': {
+        const t = n[1];
+        const ad = t.sayfa == null ? sayfaAdi : sayfaBul(t.sayfa);
+        if (!ad) return new Hata('#REF!');
+        if (!t.alan) return hucre(ad, t.r1, t.c1);
+        const sinir = kitap.Sheets[ad]['!ref'] ? X.utils.decode_range(kitap.Sheets[ad]['!ref']) : { s: { r: 0, c: 0 }, e: { r: 0, c: 0 } };
+        const r2 = t.r2 < 0 ? sinir.e.r : Math.min(t.r2, Math.max(sinir.e.r, t.r1)), c2 = t.c2 < 0 ? sinir.e.c : Math.min(t.c2, Math.max(sinir.e.c, t.c1));
+        const d = [];
+        for (let r = t.r1; r <= r2; r++) { const s = []; for (let c = t.c1; c <= c2; c++) s.push(hucre(ad, r, c)); d.push(s); }
+        return { alan: true, d };
+      }
+      case 'u': return -sayi(deg(n[2], sayfaAdi));
+      case '%': return sayi(deg(n[1], sayfaAdi)) / 100;
+      case 'b': {
+        const op = n[1], a = deg(n[2], sayfaAdi), b = deg(n[3], sayfaAdi);
+        if (op === '&') return yazi(a) + yazi(b);
+        if (op === '+') return sayi(a) + sayi(b);
+        if (op === '-') return sayi(a) - sayi(b);
+        if (op === '*') return sayi(a) * sayi(b);
+        if (op === '/') { const y = sayi(b), x = sayi(a); if (y === 0) throw new Hata('#DIV/0!'); return x / y; }
+        if (op === '^') return Math.pow(sayi(a), sayi(b));
+        const k = kiyas(a, b);
+        return op === '=' ? k === 0 : op === '<>' ? k !== 0 : op === '<' ? k < 0 : op === '>' ? k > 0 : op === '<=' ? k <= 0 : k >= 0;
+      }
+      case 'f': {
+        const ad = n[1], arg = n[2];
+        const d = (i) => deg(arg[i], sayfaAdi);
+        if (ad === 'IF') return mantik(d(0)) ? (arg.length > 1 ? d(1) : true) : (arg.length > 2 ? d(2) : false);
+        if (ad === 'IFERROR') { try { const v = tek(d(0)); if (v instanceof Hata) return d(1); return v; } catch (e) { if (e instanceof Hata) return d(1); throw e; } }
+        if (ad === 'AND') { let s = true; for (let i = 0; i < arg.length; i++) for (const v of duz([d(i)])) if (v != null && !mantik(v)) s = false; return s; }
+        if (ad === 'OR') { let s = false; for (let i = 0; i < arg.length; i++) for (const v of duz([d(i)])) if (v != null && mantik(v)) s = true; return s; }
+        if (ad === 'ISERROR') { try { return tek(d(0)) instanceof Hata; } catch (e) { if (e instanceof Hata) return true; throw e; } }
+        if (ad === 'TRUE') return true;
+        if (ad === 'FALSE') return false;
+        const is = ISLEV[ad];
+        if (!is) throw new Error('desteklenmeyen işlev: ' + ad);
+        return is(arg.map((x, i) => d(i)));
+      }
+      default: throw new Error('bilinmeyen düğüm');
+    }
+  }
+  function formulDeger(sayfaAdi, a, h) {
+    const anahtar = sayfaAdi + '!' + a;
+    if (memo.has(anahtar)) return memo.get(anahtar);
+    const onbellek = h.t !== 'z' && h.v != null;
+    if (eksikKip && onbellek) { const v = h.t === 'e' ? new Hata(KOD_HATA[h.v] || '#VALUE!') : h.v; memo.set(anahtar, v); return v; }
+    if (suren.has(anahtar)) return new Hata('#CYCLE!');
+    suren.add(anahtar);
+    let v, tamam = true;
+    try { v = tek(deg(agac(h.f), sayfaAdi)); if (typeof v === 'number' && !isFinite(v)) v = new Hata('#NUM!'); }
+    catch (e) { if (e instanceof Hata) v = e; else { tamam = false; desteksiz++; } }
+    suren.delete(anahtar);
+    if (!tamam) {
+      // Hesaplanamayan formül: dosyadaki eski sonucu korunur, yoksa #AD? gösterilir
+      if (onbellek) v = h.t === 'e' ? new Hata(KOD_HATA[h.v] || '#VALUE!') : h.v;
+      else { v = new Hata('#NAME?'); h.t = 'e'; h.v = 29; h.w = '#AD?'; }
+      memo.set(anahtar, v); return v;
+    }
+    delete h.w;
+    if (v instanceof Hata) { h.t = 'e'; h.v = HATA_KOD[v.k] != null ? HATA_KOD[v.k] : 15; h.w = HATA_TR[v.k] || v.k; }
+    else if (v == null) { h.t = 'n'; h.v = 0; }
+    else if (typeof v === 'number') { h.t = 'n'; h.v = v; if (h.z) { try { h.w = X.SSF.format(h.z, v); } catch (e) { /* biçim uygulanamadı */ } } }
+    else if (typeof v === 'boolean') { h.t = 'b'; h.v = v; }
+    else { h.t = 's'; h.v = String(v); }
+    memo.set(anahtar, v);
+    return v;
+  }
+  // Bütün formülleri yeniden hesaplar. yalnizEksik: yalnızca sonucu olmayan formüller (dosya ilk açıldığında)
+  function hesapla(yalnizEksik = false) {
+    memo = new Map(); suren = new Set(); eksikKip = yalnizEksik; desteksiz = 0;
+    let adet = 0;
+    for (const ad of kitap.SheetNames || []) {
+      const sayfa = kitap.Sheets[ad];
+      for (const a of Object.keys(sayfa)) {
+        if (a[0] === '!') continue;
+        const h = sayfa[a];
+        if (h && h.f) { adet++; try { formulDeger(ad, a, h); } catch (e) { desteksiz++; } }
+      }
+    }
+    return { adet, desteksiz };
+  }
+  return { hesapla };
+}
+
+// ---------- tablo (Excel, CSV): görüntüleme ve düzenleme ----------
 let tabloKitapligi = null;
 function tabloYukle() {
   if (!tabloKitapligi) tabloKitapligi = new Promise((coz, red) => {
@@ -541,29 +1165,65 @@ function tabloYukle() {
 }
 const TABLO_PARCA = 300;      // bir seferde çizilen satır
 const TABLO_SUTUN_SINIRI = 256;
+const TABLO_GERI_SINIRI = 100;
+const TABLO_YAZDIR_SINIRI = 5000;
+
+// Formüldeki hücre adreslerini satır/sütun ekleme-silmeye göre kaydırır (tırnak içindeki metne dokunmaz)
+function formulKaydir(f, eksen, konum, delta, X) {
+  return f.split(/("(?:[^"]|"")*")/).map((parca, i) => (i % 2 ? parca : parca.replace(/(^|[^A-Za-z0-9_!.'$])(\$?)([A-Z]{1,3})(\$?)(\d{1,7})(?![A-Za-z0-9_(!])/g, (tum, on, d1, sutun, d2, satir) => {
+    let c = X.utils.decode_col(sutun), r = Number(satir) - 1;
+    if (eksen === 'r') { if (delta > 0 ? r >= konum : r > konum) r += delta; }
+    else if (delta > 0 ? c >= konum : c > konum) c += delta;
+    if (r < 0 || c < 0) return tum;
+    return on + d1 + X.utils.encode_col(c) + d2 + (r + 1);
+  }))).join('');
+}
+
 async function tabloGor(sekme) {
   const X = await tabloYukle();
   const tampon = await sekme.dosya.arrayBuffer();
   const u = uzanti(sekme.ad);
-  const kitap = (u === 'csv' || u === 'tsv' || u === 'txt')
-    ? X.read(metinCoz(tampon), { type: 'string', raw: false, cellNF: true })
-    : X.read(new Uint8Array(tampon), { type: 'array', cellNF: true });
+  const metinTablo = u === 'csv' || u === 'tsv' || u === 'txt';
+  let ayrac = ';';
+  let kitap;
+  if (metinTablo) {
+    const ham = metinCoz(tampon);
+    const ilk = ham.split('\n', 1)[0] || '';
+    const say = (k) => ilk.split(k).length - 1;
+    ayrac = u === 'tsv' || say('\t') > Math.max(say(';'), say(',')) ? '\t' : (say(',') > say(';') ? ',' : ';');
+    kitap = X.read(ham, { type: 'string', raw: false, cellNF: true });
+  } else kitap = X.read(new Uint8Array(tampon), { type: 'array', cellNF: true, cellStyles: true });
   const adlar = kitap.SheetNames || [];
   if (!adlar.length) throw new Error('dosyada sayfa bulunamadı');
+  // Formüller uygulamanın içinde hesaplanır. Açılışta yalnızca sonucu olmayanlar, her değişiklikten sonra hepsi.
+  const motor = formulMotoru(X, kitap);
+  motor.hesapla(true);
+  let desteksizUyari = false;
 
-  const sar = el('div', { sinif: 'govde tablo-sar' });
+  const sar = el('div', { sinif: 'govde tablo-sar', tabindex: '0', 'aria-label': 'Tablo. Hücreyi seçip yazmaya başla.' });
   const sayfalar = el('div', { sinif: 'sayfalar', role: 'tablist', 'aria-label': 'Sayfalar' });
   const durum = el('span', { sinif: 'bilgi' });
+  const konumYazi = el('span', { sinif: 'bilgi konum', metin: '—', title: 'Seçili hücre' });
   const ara = el('input', { type: 'search', placeholder: 'Tabloda ara', 'aria-label': 'Tabloda ara', autocomplete: 'off' });
+  const kaydetD = el('button', { type: 'button', sinif: 'vurgu', metin: 'Kaydet', title: 'Değişiklikleri ayrı bir kopya olarak kaydet (aslına dokunulmaz)', disabled: true });
+  const geriD = el('button', { type: 'button', metin: 'Geri al', title: 'Son değişikliği geri al (Ctrl+Z)', disabled: true });
   let secili = 0, gozcu = null, zamanlayici = null;
+  let sec = null;            // seçili hücre { r, c }
+  let duzen = null;          // açık düzenleme kutusu { td, a, giris }
+  let gorunen = null;        // çizilen alan
+  let cizilenSayi = 0;
+  const geri = [];
 
+  const sayfaAl = () => kitap.Sheets[adlar[secili]];
+  const iki = (n) => String(n).padStart(2, '0');
+  const tarihMi = (h) => h && h.t === 'n' && typeof h.v === 'number' && h.z && X.SSF.is_date(h.z);
   const hucreMetni = (h) => {
-    if (!h || h.v == null) return '';
+    if (!h) return '';
+    if (h.v == null) return h.f ? '=' + formulTrYap(h.f) : '';
     // Tarihler seri numarasından doğrudan çözülür (saat dilimi kayması olmaz) ve gün.ay.yıl yazılır
-    if (h.t === 'n' && typeof h.v === 'number' && h.z && X.SSF.is_date(h.z)) {
+    if (tarihMi(h)) {
       const p = X.SSF.parse_date_code(h.v);
       if (p) {
-        const iki = (n) => String(n).padStart(2, '0');
         const saat = (p.H || p.M) ? iki(p.H) + ':' + iki(p.M) : '';
         if (h.v < 1) return saat || '00:00';
         return iki(p.d) + '.' + iki(p.m) + '.' + p.y + (saat ? ' ' + saat : '');
@@ -576,15 +1236,132 @@ async function tabloGor(sekme) {
     if (typeof h.v === 'boolean') return h.v ? 'DOĞRU' : 'YANLIŞ';
     return String(h.v);
   };
+  // Düzenleme kutusunda görünen metin: formül varsa formül, sayıysa Türkçe yazımı
+  const duzenMetni = (h) => {
+    if (!h) return '';
+    if (h.f) return '=' + formulTrYap(h.f);
+    if (h.v == null) return '';
+    if (tarihMi(h)) return hucreMetni(h);
+    if (h.t === 'n' && typeof h.v === 'number') return h.v.toLocaleString('tr-TR', { useGrouping: false, maximumFractionDigits: 15 });
+    if (typeof h.v === 'boolean') return h.v ? 'DOĞRU' : 'YANLIŞ';
+    return String(h.v);
+  };
+  // Yazılan metni hücre değerine çevirir: Türkçe sayı, gün.ay.yıl tarih, =formül ya da düz metin
+  const degerCoz = (metin, eski) => {
+    const t = metin.trim();
+    if (t === '') return null;
+    const bicim = (h) => { if (h.z) { try { h.w = X.SSF.format(h.z, h.v); } catch (e) { /* biçim uygulanamadı */ } } return h; };
+    if (t[0] === '=' && t.length > 1) return { t: 'z', f: formulEnYap(t.slice(1)) };
+    const tarih = t.match(/^(\d{1,2})[./](\d{1,2})[./](\d{4})$/);
+    if (tarih) {
+      const g = +tarih[1], a = +tarih[2], y = +tarih[3];
+      const d = new Date(Date.UTC(y, a - 1, g));
+      if (y >= 1900 && d.getUTCDate() === g && d.getUTCMonth() === a - 1) return { t: 'n', v: d.getTime() / 86400000 + 25569, z: tarihMi(eski) ? eski.z : 'dd.mm.yyyy' };
+    }
+    const yuzde = t.match(/^%\s*(-?\d+(?:,\d+)?)$/) || t.match(/^(-?\d+(?:,\d+)?)\s*%$/);
+    if (yuzde) return bicim({ t: 'n', v: Number(yuzde[1].replace(',', '.')) / 100, z: eski && eski.z && /%/.test(eski.z) ? eski.z : '0.00%' });
+    let sayi = null;
+    if (/^-?\d{1,3}(\.\d{3})+(,\d+)?$/.test(t)) sayi = t.replace(/\./g, '').replace(',', '.');
+    else if (/^-?\d+,\d+$/.test(t)) sayi = t.replace(',', '.');
+    else if (/^-?\d+(\.\d+)?$/.test(t)) sayi = t;
+    const basSifir = /^-?0\d/.test(t);                       // 0532… gibi numaralar metin kalır
+    const uzun = t.replace(/\D/g, '').length > 15;           // 15 basamaktan uzun sayılar bozulmasın diye metin kalır
+    if (sayi != null && !basSifir && !uzun && isFinite(Number(sayi))) {
+      const h = { t: 'n', v: Number(sayi) };
+      if (eski && eski.t === 'n' && eski.z && !tarihMi(eski)) h.z = eski.z;
+      return bicim(h);
+    }
+    const buyuk = t.toLocaleUpperCase('tr');
+    if (buyuk === 'DOĞRU' || buyuk === 'YANLIŞ') return { t: 'b', v: buyuk === 'DOĞRU' };
+    return { t: 's', v: metin };
+  };
+  const alanAl = (sayfa) => (sayfa && sayfa['!ref'] ? X.utils.decode_range(sayfa['!ref']) : { s: { r: 0, c: 0 }, e: { r: 0, c: 0 } });
+  const alanGenislet = (sayfa, r, c) => {
+    const a = alanAl(sayfa);
+    if (!sayfa['!ref']) { a.s = { r, c }; a.e = { r, c }; }
+    a.s.r = Math.min(a.s.r, r); a.s.c = Math.min(a.s.c, c); a.e.r = Math.max(a.e.r, r); a.e.c = Math.max(a.e.c, c);
+    sayfa['!ref'] = X.utils.encode_range(a);
+  };
+  const degisti = () => { sekme.degisti = true; kaydetD.disabled = false; geriD.disabled = !geri.length; sekmeleriCiz(); };
+  const geriEkle = (kayit) => { geri.push(kayit); if (geri.length > TABLO_GERI_SINIRI) geri.shift(); };
+  const tdBul = (r, c) => sar.querySelector('td[data-a="' + X.utils.encode_cell({ r, c }) + '"]');
+  const tdYaz = (td, h) => {
+    const metin = hucreMetni(h);
+    td.textContent = metin;
+    td.classList.toggle('sayi', !!h && (h.t === 'n' || h.t === 'd') && h.v != null);
+    if (metin.length > 28) td.title = metin; else td.removeAttribute('title');
+  };
 
-  function sayfaCiz() {
+  function yenidenHesapla(tazele = true) {
+    const s = motor.hesapla();
+    if (tazele) { const sayfa = sayfaAl(); for (const td of sar.querySelectorAll('td[data-a]')) { const h = sayfa[td.dataset.a]; if (h && h.f && !td.classList.contains('duzenleniyor')) tdYaz(td, h); } }
+    if (s.desteksiz && !desteksizUyari) { desteksizUyari = true; bildir('Bu dosyada ZABAC\'ın hesaplayamadığı ' + s.desteksiz + ' formül var; onların sonucu dosyadaki haliyle kalır, Excel\'de açınca güncellenir.'); }
+  }
+  function sec_(r, c, kaydir = true) {
+    const eski = sar.querySelector('td.secili'); if (eski) eski.classList.remove('secili');
+    sec = { r, c };
+    konumYazi.textContent = X.utils.encode_cell(sec);
+    const td = tdBul(r, c);
+    if (td) { td.classList.add('secili'); if (kaydir) td.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }
+    return td;
+  }
+  function hucreKoy(a, yeni, kayit = true) {
+    const sayfa = sayfaAl();
+    const eski = sayfa[a];
+    if (!eski && !yeni) return false;
+    if (kayit) geriEkle({ tur: 'hucre', sayfa: secili, a, eski, ref: sayfa['!ref'] });
+    if (yeni) { sayfa[a] = yeni; const k = X.utils.decode_cell(a); alanGenislet(sayfa, k.r, k.c); } else delete sayfa[a];
+    yenidenHesapla();
+    degisti();
+    return true;
+  }
+  function duzenBitir(kaydetsin) {
+    if (!duzen) return;
+    const { td, a, giris } = duzen; duzen = null;
+    td.classList.remove('duzenleniyor');
+    const sayfa = sayfaAl();
+    if (kaydetsin) {
+      const eski = sayfa[a];
+      if (giris.value !== duzenMetni(eski)) hucreKoy(a, degerCoz(giris.value, eski));
+    }
+    tdYaz(td, sayfa[a]);
+    const k = X.utils.decode_cell(a);
+    // Görünen alanın sonuna yazıldıysa tablo yeniden çizilir ki altta ve sağda yine boş yer kalsın
+    if (gorunen && !ara.value.trim() && (k.r >= gorunen.e.r - 1 || k.c >= gorunen.e.c)) sayfaCiz(true);
+  }
+  function duzenBasla(td, ilk) {
+    if (duzen) duzenBitir(true);
+    const a = td.dataset.a;
+    const giris = el('input', { type: 'text', 'aria-label': a + ' hücresi', autocomplete: 'off', spellcheck: 'false' });
+    giris.value = ilk != null ? ilk : duzenMetni(sayfaAl()[a]);
+    td.classList.add('duzenleniyor'); td.replaceChildren(giris);
+    duzen = { td, a, giris };
+    giris.focus();
+    if (ilk == null) giris.select();
+    giris.addEventListener('keydown', (e) => {
+      e.stopPropagation();
+      const k = X.utils.decode_cell(a);
+      if (e.key === 'Enter') { e.preventDefault(); duzenBitir(true); sec_(k.r + 1, k.c); sar.focus({ preventScroll: true }); }
+      else if (e.key === 'Tab') { e.preventDefault(); duzenBitir(true); sec_(k.r, Math.max(0, k.c + (e.shiftKey ? -1 : 1))); sar.focus({ preventScroll: true }); }
+      else if (e.key === 'Escape') { e.preventDefault(); duzenBitir(false); sec_(k.r, k.c); sar.focus({ preventScroll: true }); }
+    });
+    giris.addEventListener('blur', () => { if (duzen && duzen.giris === giris) duzenBitir(true); });
+  }
+
+  function sayfaCiz(koru = false) {
+    if (duzen) duzenBitir(true);
     if (gozcu) { gozcu.disconnect(); gozcu = null; }
-    const sayfa = kitap.Sheets[adlar[secili]];
+    const eskiUst = sar.scrollTop, eskiSol = sar.scrollLeft, eskiCizilen = cizilenSayi;
+    const sayfa = sayfaAl();
     [...sayfalar.children].forEach((b, i) => { b.classList.toggle('secili', i === secili); b.setAttribute('aria-selected', i === secili); });
-    if (!sayfa || !sayfa['!ref'] || !Object.keys(sayfa).some((k) => k[0] !== '!' && sayfa[k] && sayfa[k].v != null && sayfa[k].v !== '')) { sar.replaceChildren(el('div', { sinif: 'yukleniyor', metin: 'Bu sayfa boş.' })); durum.textContent = 'boş sayfa'; return; }
-    const alan = X.utils.decode_range(sayfa['!ref']);
-    const sutunSon = Math.min(alan.e.c, alan.s.c + TABLO_SUTUN_SINIRI - 1);
+    const bos = !sayfa['!ref'] || !Object.keys(sayfa).some((k) => k[0] !== '!' && sayfa[k] && (sayfa[k].v != null && sayfa[k].v !== '' || sayfa[k].f));
+    const alan = alanAl(sayfa);
+    const aranan = ara.value.trim().toLocaleLowerCase('tr');
+    // Düzenlerken yazacak yer olsun diye verinin altında ve sağında birkaç boş satır/sütun gösterilir
+    const sutunSon = Math.min(alan.e.c + (aranan ? 0 : 3), alan.s.c + TABLO_SUTUN_SINIRI - 1);
+    const satirSon = alan.e.r + (aranan ? 0 : 20);
     const kesildi = alan.e.c > sutunSon;
+    gorunen = { s: alan.s, e: { r: satirSon, c: sutunSon } };
     // Birleştirilmiş hücreler: sol üst hücre genişler, kapsadığı diğer hücreler çizilmez
     const birlesik = new Map(), ortulu = new Set();
     for (const m of sayfa['!merges'] || []) {
@@ -592,9 +1369,8 @@ async function tabloGor(sekme) {
       for (let r = m.s.r; r <= m.e.r; r++) for (let c = m.s.c; c <= m.e.c; c++) if (r !== m.s.r || c !== m.s.c) ortulu.add(r + ':' + c);
     }
     // Arama: eşleşen satırlar. Arama varken birleştirme uygulanmaz (satırlar ardışık değil).
-    const aranan = ara.value.trim().toLocaleLowerCase('tr');
-    let satirlar = [];
-    for (let r = alan.s.r; r <= alan.e.r; r++) {
+    const satirlar = [];
+    for (let r = alan.s.r; r <= satirSon; r++) {
       if (!aranan) { satirlar.push(r); continue; }
       for (let c = alan.s.c; c <= sutunSon; c++) {
         const t = hucreMetni(sayfa[X.utils.encode_cell({ r, c })]);
@@ -602,8 +1378,8 @@ async function tabloGor(sekme) {
       }
     }
     const toplamSatir = alan.e.r - alan.s.r + 1, toplamSutun = alan.e.c - alan.s.c + 1;
-    durum.textContent = (aranan ? satirlar.length + ' eşleşen satır · ' : '') + toplamSatir + ' satır × ' + toplamSutun + ' sütun' + (kesildi ? ' (ilk ' + TABLO_SUTUN_SINIRI + ' sütun gösteriliyor)' : '');
-    if (!satirlar.length) { sar.replaceChildren(el('div', { sinif: 'yukleniyor', metin: 'Aramana uyan satır yok.' })); return; }
+    durum.textContent = bos ? 'boş sayfa' : (aranan ? satirlar.length + ' eşleşen satır · ' : '') + toplamSatir + ' satır × ' + toplamSutun + ' sütun' + (kesildi ? ' (ilk ' + TABLO_SUTUN_SINIRI + ' sütun gösteriliyor)' : '');
+    if (!satirlar.length) { sar.replaceChildren(el('div', { sinif: 'yukleniyor', metin: 'Aramana uyan satır yok.' })); cizilenSayi = 0; return; }
 
     const baslik = el('tr', {}, el('th', { sinif: 'kose' }));
     for (let c = alan.s.c; c <= sutunSon; c++) baslik.append(el('th', { metin: X.utils.encode_col(c), scope: 'col' }));
@@ -621,24 +1397,25 @@ async function tabloGor(sekme) {
           const anahtar = r + ':' + c;
           if (!aranan && ortulu.has(anahtar)) continue;
           const h = sayfa[X.utils.encode_cell({ r, c })];
-          const metin = hucreMetni(h);
-          const td = el('td', { metin });
-          if (h && (h.t === 'n' || h.t === 'd')) td.className = 'sayi';
-          if (metin.length > 28) td.title = metin;
-          if (aranan && metin.toLocaleLowerCase('tr').includes(aranan)) td.classList.add('bulundu');
+          const td = el('td', { 'data-a': X.utils.encode_cell({ r, c }) });
+          tdYaz(td, h);
+          if (aranan && td.textContent.toLocaleLowerCase('tr').includes(aranan)) td.classList.add('bulundu');
           const m = !aranan && birlesik.get(anahtar);
           if (m) { if (m.e.r > m.s.r) td.rowSpan = m.e.r - m.s.r + 1; if (m.e.c > m.s.c) td.colSpan = Math.min(m.e.c, sutunSon) - m.s.c + 1; td.classList.add('birlesik'); }
+          if (sec && sec.r === r && sec.c === c) td.classList.add('secili');
           tr.append(td);
         }
         parca.append(tr);
       }
       govde.append(parca);
+      cizilenSayi = cizilen;
       dahaFazla.textContent = cizilen < satirlar.length ? cizilen + ' / ' + satirlar.length + ' satır gösteriliyor, kaydırdıkça devamı gelir' : '';
       if (cizilen >= satirlar.length && gozcu) { gozcu.disconnect(); gozcu = null; }
     }
     sar.replaceChildren(tablo, dahaFazla);
-    sar.scrollTop = 0; sar.scrollLeft = 0;
     parcaCiz();
+    if (koru) { while (cizilen < Math.min(eskiCizilen, satirlar.length)) parcaCiz(); sar.scrollTop = eskiUst; sar.scrollLeft = eskiSol; }
+    else { sar.scrollTop = 0; sar.scrollLeft = 0; }
     if (cizilen < satirlar.length && 'IntersectionObserver' in window) {
       gozcu = new IntersectionObserver((g) => { if (g.some((x) => x.isIntersecting)) parcaCiz(); }, { root: sar, rootMargin: '600px' });
       gozcu.observe(dahaFazla);
@@ -647,14 +1424,687 @@ async function tabloGor(sekme) {
     }
   }
 
-  adlar.forEach((ad, i) => sayfalar.append(el('button', { type: 'button', role: 'tab', metin: ad, title: ad, onclick: () => { secili = i; sayfaCiz(); } })));
-  ara.addEventListener('input', () => { clearTimeout(zamanlayici); zamanlayici = setTimeout(sayfaCiz, 200); });
+  // Satır ya da sütun ekler/siler: hücreler, birleştirmeler ve formüllerdeki adresler birlikte kayar
+  function kaydir(eksen, konum, delta) {
+    if (duzen) duzenBitir(true);
+    const sayfa = sayfaAl();
+    const alan = alanAl(sayfa);
+    if (delta < 0 && (eksen === 'r' ? alan.e.r - alan.s.r : alan.e.c - alan.s.c) < 1 && sayfa['!ref']) return bildir('Sayfada tek ' + (eksen === 'r' ? 'satır' : 'sütun') + ' kaldı, silinemez.');
+    geriEkle({ tur: 'sayfa', sayfa: secili, onceki: Object.assign({}, sayfa, { '!merges': (sayfa['!merges'] || []).map((m) => ({ s: { ...m.s }, e: { ...m.e } })) }) });
+    let formulVar = false;
+    const yeni = {};
+    for (const k of Object.keys(sayfa)) {
+      if (k[0] === '!') { yeni[k] = sayfa[k]; continue; }
+      const p = X.utils.decode_cell(k);
+      const d = eksen === 'r' ? p.r : p.c;
+      if (delta < 0 && d === konum) continue;
+      if (delta > 0 ? d >= konum : d > konum) { if (eksen === 'r') p.r += delta; else p.c += delta; }
+      let h = sayfa[k];
+      if (h && h.f) { formulVar = true; const f = formulKaydir(h.f, eksen, konum, delta, X); if (f !== h.f) h = Object.assign({}, h, { f }); }
+      yeni[X.utils.encode_cell(p)] = h;
+    }
+    const birlesimler = [];
+    for (const m of sayfa['!merges'] || []) {
+      const n = { s: { ...m.s }, e: { ...m.e } };
+      const b = eksen === 'r' ? 'r' : 'c';
+      if (delta > 0) { if (n.s[b] >= konum) { n.s[b]++; n.e[b]++; } else if (n.e[b] >= konum) n.e[b]++; }
+      else if (n.s[b] > konum) { n.s[b]--; n.e[b]--; }
+      else if (n.e[b] >= konum) { if (n.s[b] === n.e[b]) continue; n.e[b]--; }
+      if (n.s.r === n.e.r && n.s.c === n.e.c) continue;
+      birlesimler.push(n);
+    }
+    yeni['!merges'] = birlesimler;
+    const dizi = eksen === 'r' ? '!rows' : '!cols';
+    if (Array.isArray(sayfa[dizi])) { const kopya = sayfa[dizi].slice(); if (delta > 0) kopya.splice(konum, 0, undefined); else kopya.splice(konum, 1); yeni[dizi] = kopya; }
+    if (eksen === 'r') alan.e.r = Math.max(alan.s.r, alan.e.r + delta); else alan.e.c = Math.max(alan.s.c, alan.e.c + delta);
+    yeni['!ref'] = X.utils.encode_range(alan);
+    kitap.Sheets[adlar[secili]] = yeni;
+    yenidenHesapla(false);
+    degisti();
+    sayfaCiz(true);
+    if (sec) sec_(sec.r, sec.c, false);
+    if (formulVar) bildir('Formüllerdeki hücre adresleri de kaydırıldı ve yeniden hesaplandı.');
+  }
+  function geriAl() {
+    if (duzen) duzenBitir(false);
+    const k = geri.pop();
+    if (!k) return;
+    if (k.sayfa !== secili) secili = k.sayfa;
+    if (k.tur === 'hucre') { const sayfa = sayfaAl(); if (k.eski) sayfa[k.a] = k.eski; else delete sayfa[k.a]; if (k.ref) sayfa['!ref'] = k.ref; else delete sayfa['!ref']; }
+    else kitap.Sheets[adlar[k.sayfa]] = k.onceki;
+    geriD.disabled = !geri.length;
+    sekme.degisti = true; kaydetD.disabled = false; sekmeleriCiz();
+    yenidenHesapla(false);
+    sayfaCiz(true);
+    if (k.tur === 'hucre') { const p = X.utils.decode_cell(k.a); sec_(p.r, p.c); }
+    sar.focus({ preventScroll: true });
+  }
+  const secimIste = () => { if (!sec) { bildir('Önce bir hücre seç.'); return false; } return true; };
+  const islemler = {
+    ust: () => kaydir('r', sec.r, 1), alt: () => kaydir('r', sec.r + 1, 1), satirsil: () => kaydir('r', sec.r, -1),
+    sol: () => kaydir('c', sec.c, 1), sag: () => kaydir('c', sec.c + 1, 1), sutunsil: () => kaydir('c', sec.c, -1),
+  };
+  const islemSec = el('select', { 'aria-label': 'Satır ve sütun işlemleri', title: 'Seçili hücreye göre satır ya da sütun ekle, sil' },
+    el('option', { value: '', metin: 'Satır / sütun…' }), el('option', { value: 'ust', metin: 'Üste satır ekle' }), el('option', { value: 'alt', metin: 'Alta satır ekle' }), el('option', { value: 'satirsil', metin: 'Satırı sil' }),
+    el('option', { value: 'sol', metin: 'Sola sütun ekle' }), el('option', { value: 'sag', metin: 'Sağa sütun ekle' }), el('option', { value: 'sutunsil', metin: 'Sütunu sil' }));
+  islemSec.addEventListener('change', () => { const i = islemSec.value; islemSec.value = ''; if (i && secimIste()) { islemler[i](); sar.focus({ preventScroll: true }); } });
+
+  // Kaydetme: her zaman ayrı bir kopya. Excel dosyaları .xlsx, CSV dosyaları CSV olarak yazılır.
+  async function kaydetYap() {
+    if (duzen) duzenBitir(true);
+    let blob, ad;
+    try {
+      if (metinTablo) {
+        const sayfa = sayfaAl(), alan = alanAl(sayfa);
+        const satirlar = [];
+        for (let r = alan.s.r; r <= alan.e.r; r++) {
+          const s = [];
+          for (let c = alan.s.c; c <= alan.e.c; c++) { const t = hucreMetni(sayfa[X.utils.encode_cell({ r, c })]); s.push(/["\r\n]/.test(t) || t.includes(ayrac) ? '"' + t.replace(/"/g, '""') + '"' : t); }
+          satirlar.push(s.join(ayrac));
+        }
+        blob = new Blob(['﻿' + satirlar.join('\r\n') + '\r\n'], { type: 'text/csv;charset=utf-8' });
+        ad = duzenlenmisAd(sekme.ad, u === 'tsv' ? 'tsv' : 'csv');
+      } else {
+        blob = new Blob([X.write(kitap, { bookType: 'xlsx', type: 'array', compression: true })], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        ad = duzenlenmisAd(sekme.ad, 'xlsx');
+      }
+    } catch (e) { return bildir('Kaydedilemedi: ' + (e && e.message ? e.message : 'bilinmeyen hata')); }
+    if (await farkliKaydet(blob, ad)) { sekme.degisti = false; kaydetD.disabled = true; sekmeleriCiz(); }
+  }
+  kaydetD.addEventListener('click', kaydetYap);
+  geriD.addEventListener('click', geriAl);
+
+  // Yazdırma: açık sayfanın tamamı düz bir tablo olarak yazıcıya gider
+  sekme.yazdir = () => {
+    if (duzen) duzenBitir(true);
+    const sayfa = sayfaAl(), alan = alanAl(sayfa);
+    if (!sayfa['!ref']) return bildir('Bu sayfa boş, yazdırılacak bir şey yok.');
+    const son = Math.min(alan.e.r, alan.s.r + TABLO_YAZDIR_SINIRI - 1), sutunSon = Math.min(alan.e.c, alan.s.c + TABLO_SUTUN_SINIRI - 1);
+    const birlesik = new Map(), ortulu = new Set();
+    for (const m of sayfa['!merges'] || []) { birlesik.set(m.s.r + ':' + m.s.c, m); for (let r = m.s.r; r <= m.e.r; r++) for (let c = m.s.c; c <= m.e.c; c++) if (r !== m.s.r || c !== m.s.c) ortulu.add(r + ':' + c); }
+    const govde = el('tbody');
+    for (let r = alan.s.r; r <= son; r++) {
+      const tr = el('tr');
+      for (let c = alan.s.c; c <= sutunSon; c++) {
+        if (ortulu.has(r + ':' + c)) continue;
+        const h = sayfa[X.utils.encode_cell({ r, c })];
+        const td = el('td', { metin: hucreMetni(h) });
+        if (h && h.t === 'n' && h.v != null) td.className = 'sayi';
+        const m = birlesik.get(r + ':' + c);
+        if (m) { td.rowSpan = Math.min(m.e.r, son) - m.s.r + 1; td.colSpan = Math.min(m.e.c, sutunSon) - m.s.c + 1; }
+        tr.append(td);
+      }
+      govde.append(tr);
+    }
+    if (alan.e.r > son) bildir('Sayfa çok uzun: ilk ' + TABLO_YAZDIR_SINIRI + ' satır yazdırılıyor.');
+    yazdir(sekme.ad + ' · ' + adlar[secili], el('table', {}, govde), '@page{size:landscape;margin:8mm}');
+  };
+
+  // Fare ve dokunma: ilk dokunuş seçer, seçili hücreye ikinci dokunuş yazmaya başlar
+  sar.addEventListener('click', (e) => {
+    const td = e.target.closest('td[data-a]');
+    if (!td || (duzen && duzen.td === td)) return;
+    const k = X.utils.decode_cell(td.dataset.a);
+    if (sec && sec.r === k.r && sec.c === k.c && !duzen) return duzenBasla(td);
+    if (duzen) duzenBitir(true);
+    sec_(k.r, k.c, false);
+  });
+  sar.addEventListener('dblclick', (e) => { const td = e.target.closest('td[data-a]'); if (td && !(duzen && duzen.td === td)) { const k = X.utils.decode_cell(td.dataset.a); sec_(k.r, k.c, false); duzenBasla(td); } });
+  sar.addEventListener('keydown', (e) => {
+    if (duzen) return;
+    const komut = e.ctrlKey || e.metaKey;
+    if (komut && e.key.toLowerCase() === 'z') { e.preventDefault(); return geriAl(); }
+    if (komut && e.key.toLowerCase() === 's') { e.preventDefault(); if (!kaydetD.disabled) kaydetYap(); return; }
+    if (!sec || komut || e.altKey) return;
+    const git = (dr, dc) => { e.preventDefault(); const a = gorunen || { s: { r: 0, c: 0 }, e: { r: 0, c: 0 } }; sec_(Math.min(a.e.r, Math.max(a.s.r, sec.r + dr)), Math.min(a.e.c, Math.max(a.s.c, sec.c + dc))); };
+    if (e.key === 'ArrowDown') return git(1, 0);
+    if (e.key === 'ArrowUp') return git(-1, 0);
+    if (e.key === 'ArrowRight') return git(0, 1);
+    if (e.key === 'ArrowLeft') return git(0, -1);
+    if (e.key === 'Tab') return git(0, e.shiftKey ? -1 : 1);
+    const td = tdBul(sec.r, sec.c);
+    if (!td) return;
+    if (e.key === 'Enter' || e.key === 'F2') { e.preventDefault(); return duzenBasla(td); }
+    if (e.key === 'Delete' || e.key === 'Backspace') { e.preventDefault(); if (hucreKoy(td.dataset.a, null)) tdYaz(td, null); return; }
+    if (e.key.length === 1) { e.preventDefault(); duzenBasla(td, e.key); }
+  });
+
+  adlar.forEach((ad, i) => sayfalar.append(el('button', { type: 'button', role: 'tab', metin: ad, title: ad, onclick: () => { if (duzen) duzenBitir(true); secili = i; sec = null; konumYazi.textContent = '—'; sayfaCiz(); } })));
+  ara.addEventListener('input', () => { clearTimeout(zamanlayici); zamanlayici = setTimeout(() => sayfaCiz(), 200); });
   sayfaCiz();
-  const arac = el('div', { sinif: 'arac' }, ara, durum,
-    ...ortakDugmeler(sekme).slice(0, 2),
-    el('button', { type: 'button', metin: 'Metin olarak aç', title: 'Dosyanın ham içeriğini göster', onclick: () => turDegistir(sekme, 'metin') }),
-    ...ortakDugmeler(sekme).slice(2));
+  const ortak = ortakDugmeler(sekme);
+  const arac = el('div', { sinif: 'arac' }, kaydetD, geriD, konumYazi, islemSec, ara, durum,
+    ...ortak.slice(0, 2),
+    el('button', { type: 'button', metin: 'Metin olarak aç', title: 'Dosyanın ham içeriğini göster', onclick: () => { if (sekme.degisti && !confirm('Kaydedilmemiş değişiklikler silinecek. Devam edilsin mi?')) return; sekme.degisti = false; turDegistir(sekme, 'metin'); } }),
+    ...ortak.slice(2));
   return { kok: el('div', { sinif: 'gor' }, arac, sar, sayfalar), temizle: () => { if (gozcu) gozcu.disconnect(); clearTimeout(zamanlayici); } };
+}
+
+// ---------- Word belgesi (.docx, eski .doc): görüntüleme ve düzenleme ----------
+const W_AD = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+const RPR_SIRA = ['rStyle', 'rFonts', 'b', 'bCs', 'i', 'iCs', 'caps', 'smallCaps', 'strike', 'dstrike', 'outline', 'shadow', 'emboss', 'imprint', 'noProof', 'snapToGrid', 'vanish', 'webHidden', 'color', 'spacing', 'w', 'kern', 'position', 'sz', 'szCs', 'highlight', 'u', 'effect', 'bdr', 'shd', 'fitText', 'vertAlign', 'rtl', 'cs', 'em', 'lang', 'eastAsianLayout', 'specVanish', 'oMath', 'rPrChange'];
+const PPR_SIRA = ['pStyle', 'keepNext', 'keepLines', 'pageBreakBefore', 'framePr', 'widowControl', 'numPr', 'suppressLineNumbers', 'pBdr', 'shd', 'tabs', 'suppressAutoHyphens', 'kinsoku', 'wordWrap', 'overflowPunct', 'topLinePunct', 'autoSpaceDE', 'autoSpaceDN', 'bidi', 'adjustRightInd', 'snapToGrid', 'spacing', 'ind', 'contextualSpacing', 'mirrorIndents', 'suppressOverlap', 'jc', 'textDirection', 'textAlignment', 'textboxTightWrap', 'outlineLvl', 'divId', 'cnfStyle', 'rPr', 'sectPr', 'pPrChange'];
+const VURGU_RENK = { yellow: '#ffff00', green: '#00ff00', cyan: '#00ffff', magenta: '#ff00ff', blue: '#0000ff', red: '#ff0000', darkBlue: '#000080', darkCyan: '#008080', darkGreen: '#008000', darkMagenta: '#800080', darkRed: '#800000', darkYellow: '#808000', darkGray: '#808080', lightGray: '#c0c0c0', black: '#000000' };
+const RESIM_TURU = { png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', gif: 'image/gif', bmp: 'image/bmp', webp: 'image/webp', svg: 'image/svg+xml' };
+
+// Eski .doc dosyasından düz metni çıkarır (parça tablosu üzerinden). Biçim, tablo çizgisi ve resim okunmaz.
+function dokMetni(X, cfb) {
+  const bul = (ad) => { const e = X.CFB.find(cfb, ad); return e && e.content ? new Uint8Array(e.content) : null; };
+  const ana = bul('WordDocument');
+  if (!ana || ana.length < 0x1aa) throw new Error('eski Word dosyası okunamadı');
+  const g = new DataView(ana.buffer, ana.byteOffset, ana.byteLength);
+  if (g.getUint16(0, true) !== 0xa5ec) throw new Error('eski Word dosyası tanınmadı');
+  const bayrak = g.getUint16(0x0a, true);
+  if (bayrak & 0x0100) throw new Error('belge şifreli');
+  const tablo = bul((bayrak & 0x0200) ? '1Table' : '0Table');
+  if (!tablo) throw new Error('eski Word dosyasının tablo akışı yok');
+  const ccpMetin = g.getInt32(0x4c, true);
+  const fcClx = g.getUint32(0x1a2, true), lcbClx = g.getUint32(0x1a6, true);
+  const t = new DataView(tablo.buffer, tablo.byteOffset, tablo.byteLength);
+  let k = fcClx; const son = fcClx + lcbClx;
+  while (k < son && tablo[k] === 1) k += 3 + t.getUint16(k + 1, true);
+  if (k >= son || tablo[k] !== 2) throw new Error('eski Word dosyasının metin tablosu bulunamadı');
+  const boy = t.getUint32(k + 1, true); k += 5;
+  const n = (boy - 4) / 12;
+  let metin = '';
+  const c1252 = new TextDecoder('windows-1254'), u16 = new TextDecoder('utf-16le');
+  for (let i = 0; i < n; i++) {
+    const cp1 = t.getUint32(k + i * 4, true), cp2 = t.getUint32(k + (i + 1) * 4, true);
+    const fc = t.getUint32(k + (n + 1) * 4 + i * 8 + 2, true);
+    const adet = cp2 - cp1;
+    if (fc & 0x40000000) { const b = (fc & 0x3fffffff) >>> 1; metin += c1252.decode(ana.subarray(b, b + adet)); }
+    else metin += u16.decode(ana.subarray(fc, fc + adet * 2));
+  }
+  metin = metin.slice(0, ccpMetin > 0 ? ccpMetin : metin.length);
+  // Alan kodlarını at (0x13 … 0x14 arası), alan sonucunu bırak
+  metin = metin.replace(/\x13[^\x13\x14\x15]*\x14/g, '').replace(/[\x13\x14\x15]/g, '').replace(/[\x01\x02\x08]/g, '');
+  return metin.replace(/\x07/g, '\t').replace(/\x0c/g, '\r').replace(/\x0b/g, '\n').replace(/\x1e/g, '-').replace(/\x1f/g, '').split('\r');
+}
+// Düz paragraflardan en küçük geçerli .docx paketini kurar
+function docxKur(X, paragraflar) {
+  const kac = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const govde = paragraflar.map((p) => '<w:p>' + (p ? '<w:r>' + p.split(/(\t|\n)/).map((x) => (x === '\t' ? '<w:tab/>' : x === '\n' ? '<w:br/>' : x ? '<w:t xml:space="preserve">' + kac(x) + '</w:t>' : '')).join('') + '</w:r>' : '') + '</w:p>').join('');
+  const cfb = X.CFB.utils.cfb_new();
+  const ekle = (yol, s) => X.CFB.utils.cfb_add(cfb, yol, new TextEncoder().encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n' + s));
+  ekle('/[Content_Types].xml', '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>');
+  ekle('/_rels/.rels', '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>');
+  ekle('/word/document.xml', '<w:document xmlns:w="' + W_AD + '"><w:body>' + govde + '<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1417" w:right="1417" w:bottom="1417" w:left="1417" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr></w:body></w:document>');
+  return cfb;
+}
+
+async function belgeGor(sekme) {
+  const X = await tabloYukle();    // zip okuma-yazma aynı parçanın içinde
+  const ham = new Uint8Array(await sekme.dosya.arrayBuffer());
+  let zip = X.CFB.read(ham, { type: 'array' });
+  let eskiDoc = false;
+  if (ham[0] === 0xd0 && ham[1] === 0xcf) { zip = docxKur(X, dokMetni(X, zip)); eskiDoc = true; }
+  const coz = new TextDecoder('utf-8');
+  const girdi = (yol) => { const e = X.CFB.find(zip, '/' + yol); return e && e.content ? e : null; };
+  const xmlOku = (yol) => { const e = girdi(yol); if (!e) return null; const d = new DOMParser().parseFromString(coz.decode(new Uint8Array(e.content)), 'application/xml'); return d.getElementsByTagName('parsererror').length ? null : d; };
+  const anaGirdi = girdi('word/document.xml');
+  if (!anaGirdi) throw new Error('bu dosyanın içinde Word belgesi bulunamadı');
+  let belge = xmlOku('word/document.xml');
+  if (!belge) throw new Error('belge içeriği çözülemedi');
+
+  // ---- XML yardımcıları ----
+  const ad = (e) => e.localName;
+  const cocuk = (e, a) => { if (!e) return null; for (const c of e.children) if (c.localName === a && c.namespaceURI === W_AD) return c; return null; };
+  const cocuklar = (e, a) => (e ? [...e.children].filter((c) => c.localName === a && c.namespaceURI === W_AD) : []);
+  const oz = (e, a) => (e ? (e.getAttributeNS(W_AD, a) || e.getAttribute('w:' + a)) : null);
+  const yeniW = (a) => belge.createElementNS(W_AD, 'w:' + a);
+  const acik = (e) => { if (!e) return undefined; const v = oz(e, 'val'); return !(v === '0' || v === 'false' || v === 'none'); };
+  const siraliEkle = (ust, yeni, sira) => { const i = sira.indexOf(yeni.localName); const sonra = [...ust.children].find((c) => sira.indexOf(c.localName) > i); ust.insertBefore(yeni, sonra || null); return yeni; };
+  const ozellikKoy = (ust, a, deger, sira) => { let e = cocuk(ust, a); if (deger === null) { if (e) e.remove(); return; } if (!e) e = siraliEkle(ust, yeniW(a), sira); if (deger === true) e.removeAttributeNS(W_AD, 'val'); else e.setAttributeNS(W_AD, 'w:val', deger); };
+
+  // ---- stiller, numaralar, ilişkiler ----
+  const stilBelge = xmlOku('word/styles.xml'), numBelge = xmlOku('word/numbering.xml'), iliskiBelge = xmlOku('word/_rels/document.xml.rels');
+  const stiller = new Map(); let varsayilanP = null, varsayilanR = null, varsayilanStil = null;
+  if (stilBelge) {
+    const kok = stilBelge.documentElement;
+    const vars = cocuk(kok, 'docDefaults');
+    varsayilanR = cocuk(cocuk(vars, 'rPrDefault'), 'rPr'); varsayilanP = cocuk(cocuk(vars, 'pPrDefault'), 'pPr');
+    for (const s of cocuklar(kok, 'style')) { const id = oz(s, 'styleId'); stiller.set(id, s); const v = oz(s, 'default'); if (oz(s, 'type') === 'paragraph' && (v === '1' || v === 'true')) varsayilanStil = id; }
+  }
+  const stilZinciri = (id) => { const z = []; const gorulen = new Set(); while (id && stiller.has(id) && !gorulen.has(id)) { gorulen.add(id); const s = stiller.get(id); z.unshift(s); id = oz(cocuk(s, 'basedOn'), 'val'); } return z; };
+  const numaralar = new Map();
+  if (numBelge) {
+    const soyut = new Map();
+    for (const a of cocuklar(numBelge.documentElement, 'abstractNum')) soyut.set(oz(a, 'abstractNumId'), a);
+    for (const n of cocuklar(numBelge.documentElement, 'num')) { const a = soyut.get(oz(cocuk(n, 'abstractNumId'), 'val')); if (a) numaralar.set(oz(n, 'numId'), a); }
+  }
+  const iliskiler = new Map();
+  if (iliskiBelge) for (const r of iliskiBelge.documentElement.children) iliskiler.set(r.getAttribute('Id'), r.getAttribute('Target'));
+  const adresler = [];
+  const resimAdresi = (rId) => {
+    const hedef = iliskiler.get(rId); if (!hedef) return null;
+    const yol = hedef.startsWith('/') ? hedef.slice(1) : 'word/' + hedef.replace(/^\.\//, '');
+    const tur = RESIM_TURU[uzanti(yol)]; const e = girdi(yol);
+    if (!tur || !e) return null;
+    const a = URL.createObjectURL(new Blob([new Uint8Array(e.content)], { type: tur })); adresler.push(a); return a;
+  };
+
+  // ---- biçim çözme ----
+  function rOzellik(kaynaklar) {
+    const o = {};
+    for (const rPr of kaynaklar) {
+      if (!rPr) continue;
+      for (const c of rPr.children) {
+        const a = c.localName, v = oz(c, 'val');
+        if (a === 'b' || a === 'i' || a === 'strike' || a === 'caps') o[a] = acik(c);
+        else if (a === 'u') o.u = v && v !== 'none';
+        else if (a === 'color') { if (v && v !== 'auto') o.color = '#' + v; else delete o.color; }
+        else if (a === 'sz') o.sz = Number(v) / 2;
+        else if (a === 'highlight') o.vurgu = VURGU_RENK[v] || null;
+        else if (a === 'shd') { const f = oz(c, 'fill'); if (f && f !== 'auto') o.vurgu = '#' + f; }
+        else if (a === 'vertAlign') o.dikey = v;
+        else if (a === 'rFonts') { const f = oz(c, 'ascii') || oz(c, 'hAnsi') || oz(c, 'cs'); if (f) o.font = f; }
+      }
+    }
+    return o;
+  }
+  function pOzellik(kaynaklar) {
+    const o = {};
+    for (const pPr of kaynaklar) {
+      if (!pPr) continue;
+      for (const c of pPr.children) {
+        const a = c.localName;
+        if (a === 'jc') o.jc = oz(c, 'val');
+        else if (a === 'ind') { for (const k of ['left', 'start', 'right', 'end', 'firstLine', 'hanging']) { const v = oz(c, k); if (v != null) o[k === 'start' ? 'left' : k === 'end' ? 'right' : k] = Number(v) / 20; } }
+        else if (a === 'spacing') { const b = oz(c, 'before'), s = oz(c, 'after'), l = oz(c, 'line'), k = oz(c, 'lineRule'); if (b != null) o.once = Number(b) / 20; if (s != null) o.sonra = Number(s) / 20; if (l != null && (!k || k === 'auto')) o.satir = Number(l) / 240; }
+        else if (a === 'numPr') { o.numId = oz(cocuk(c, 'numId'), 'val'); o.ilvl = Number(oz(cocuk(c, 'ilvl'), 'val') || 0); }
+        else if (a === 'shd') { const f = oz(c, 'fill'); if (f && f !== 'auto') o.zemin = '#' + f; }
+        else if (a === 'pageBreakBefore') o.sayfaBasi = acik(c);
+      }
+    }
+    return o;
+  }
+  const stilYaz = (e, o) => {
+    const s = e.style;
+    if (o.b) s.fontWeight = '700'; if (o.i) s.fontStyle = 'italic';
+    const cizgi = (o.u ? 'underline ' : '') + (o.strike ? 'line-through' : ''); if (cizgi) s.textDecoration = cizgi.trim();
+    if (o.color) s.color = o.color; if (o.sz) s.fontSize = o.sz + 'pt'; if (o.vurgu) s.backgroundColor = o.vurgu;
+    if (o.font) s.fontFamily = '"' + o.font.replace(/"/g, '') + '", Calibri, Arial, sans-serif';
+    if (o.caps) s.textTransform = 'uppercase';
+    if (o.dikey === 'superscript') { s.verticalAlign = 'super'; s.fontSize = '0.7em'; } else if (o.dikey === 'subscript') { s.verticalAlign = 'sub'; s.fontSize = '0.7em'; }
+  };
+
+  // ---- paragrafın metin taşıyan parçaları (run) ----
+  const pRunlari = (xp) => [...xp.getElementsByTagNameNS(W_AD, 'r')].filter((r) => { for (let u = r.parentNode; u && u !== xp; u = u.parentNode) { const a = u.localName; if (a === 'p' || a === 'drawing' || a === 'pict' || a === 'del' || a === 'txbxContent' || a === 'object') return false; } return true; });
+  const runMetni = (r) => { let t = ''; for (const c of r.children) { const a = c.localName; if (a === 't') t += c.textContent; else if (a === 'tab') t += '\t'; else if (a === 'br' || a === 'cr') { if (oz(c, 'type') !== 'page') t += '\n'; } else if (a === 'noBreakHyphen') t += '‑'; } return t; };
+  const runMetniKoy = (r, metin) => {
+    for (const c of [...r.children]) { const a = c.localName; if (a === 't' || a === 'tab' || a === 'cr' || a === 'noBreakHyphen' || (a === 'br' && oz(c, 'type') !== 'page')) c.remove(); }
+    for (const parca of metin.split(/(\t|\n)/)) {
+      if (parca === '\t') r.append(yeniW('tab')); else if (parca === '\n') r.append(yeniW('br'));
+      else if (parca) { const t = yeniW('t'); t.setAttribute('xml:space', 'preserve'); t.textContent = parca; r.append(t); }
+    }
+  };
+  const resimliMi = (r) => [...r.children].some((c) => c.localName === 'drawing' || c.localName === 'pict' || c.localName === 'object');
+
+  // ---- çizim ----
+  const sayfa = el('div', { sinif: 'belge-sayfa', lang: 'tr' });
+  const govde = el('div', { sinif: 'govde belge-govde' }, sayfa);
+  const duzenlenebilir = (() => { const d = document.createElement('div'); try { d.contentEditable = 'plaintext-only'; return d.contentEditable === 'plaintext-only' ? 'plaintext-only' : 'true'; } catch (e) { return 'true'; } })();
+  const sayaclar = new Map();
+  const romen = (n) => { const t = [[1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'], [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'], [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']]; let s = ''; for (const [d, h] of t) while (n >= d) { s += h; n -= d; } return s; };
+  const harf = (n) => { let s = ''; while (n > 0) { n--; s = String.fromCharCode(97 + (n % 26)) + s; n = Math.floor(n / 26); } return s; };
+  function numaraEtiketi(numId, ilvl) {
+    const a = numaralar.get(numId); if (!a) return '•';
+    const duzeyler = cocuklar(a, 'lvl'); const bul = (i) => duzeyler.find((l) => Number(oz(l, 'ilvl')) === i);
+    const d = bul(ilvl); if (!d) return '•';
+    const s = sayaclar.get(numId) || []; sayaclar.set(numId, s);
+    const bas = Number(oz(cocuk(d, 'start'), 'val') || 1);
+    s[ilvl] = s[ilvl] == null ? bas : s[ilvl] + 1; s.length = ilvl + 1;
+    const bicimle = (i) => { const l = bul(i); const f = oz(cocuk(l, 'numFmt'), 'val') || 'decimal'; const n = s[i] == null ? Number(oz(cocuk(l, 'start'), 'val') || 1) : s[i];
+      return f === 'lowerLetter' ? harf(n) : f === 'upperLetter' ? harf(n).toUpperCase() : f === 'lowerRoman' ? romen(n).toLowerCase() : f === 'upperRoman' ? romen(n) : f === 'bullet' ? '•' : String(n); };
+    if ((oz(cocuk(d, 'numFmt'), 'val') || 'decimal') === 'bullet') { const m = oz(cocuk(d, 'lvlText'), 'val') || '•'; return /^[-]$/.test(m) || m === 'o' ? (m === 'o' ? '◦' : '•') : m; }
+    return (oz(cocuk(d, 'lvlText'), 'val') || '%' + (ilvl + 1) + '.').replace(/%(\d)/g, (_, k) => bicimle(Number(k) - 1));
+  }
+  function paragrafCiz(xp, eski) {
+    const pPr = cocuk(xp, 'pPr');
+    const stilId = oz(cocuk(pPr, 'pStyle'), 'val') || varsayilanStil;
+    const zincir = stilZinciri(stilId);
+    const po = pOzellik([varsayilanP, ...zincir.map((s) => cocuk(s, 'pPr')), pPr]);
+    const stilR = [varsayilanR, ...zincir.map((s) => cocuk(s, 'rPr'))];
+    const p = eski || el('p', { sinif: 'bp', contenteditable: duzenlenebilir, spellcheck: 'false' });
+    p.replaceChildren(); p.removeAttribute('style'); p.x = xp; p.po = po;
+    const s = p.style;
+    if (po.jc === 'center') s.textAlign = 'center'; else if (po.jc === 'right' || po.jc === 'end') s.textAlign = 'right'; else if (po.jc === 'both' || po.jc === 'distribute') s.textAlign = 'justify';
+    if (po.left) s.marginLeft = po.left + 'pt'; if (po.right) s.marginRight = po.right + 'pt';
+    if (po.hanging) s.textIndent = -po.hanging + 'pt'; else if (po.firstLine) s.textIndent = po.firstLine + 'pt';
+    if (po.once != null) s.marginTop = po.once + 'pt'; if (po.sonra != null) s.marginBottom = po.sonra + 'pt'; if (po.satir) s.lineHeight = String(Math.max(1, po.satir * 1.15).toFixed(2));
+    if (po.zemin) s.backgroundColor = po.zemin; if (po.sayfaBasi) p.classList.add('sayfa-basi'); else p.classList.remove('sayfa-basi');
+    stilYaz(p, rOzellik(stilR));
+    if (po.numId && po.numId !== '0') p.append(el('span', { sinif: 'bn', contenteditable: 'false', metin: numaraEtiketi(po.numId, po.ilvl || 0) + ' ' }));
+    const runlar = pRunlari(xp); p.runlar = runlar;
+    const sirali = new Map(runlar.map((r, i) => [r, i]));
+    for (const r of xp.getElementsByTagNameNS(W_AD, 'r')) {
+      if (!sirali.has(r)) continue;
+      const rPr = cocuk(r, 'rPr');
+      const rStil = oz(cocuk(rPr, 'rStyle'), 'val');
+      const o = rOzellik([...(rStil ? stilZinciri(rStil).map((x) => cocuk(x, 'rPr')) : []), rPr]);
+      for (const c of r.children) {
+        if (c.localName !== 'drawing' && c.localName !== 'pict') continue;
+        const blip = c.getElementsByTagNameNS('*', 'blip')[0] || c.getElementsByTagNameNS('*', 'imagedata')[0];
+        const rId = blip && (blip.getAttribute('r:embed') || blip.getAttribute('r:id') || blip.getAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships', 'embed'));
+        const adres = rId && resimAdresi(rId);
+        const olcu = c.getElementsByTagNameNS('*', 'extent')[0];
+        if (adres) { const img = el('img', { src: adres, alt: 'Belgedeki resim', contenteditable: 'false', draggable: 'false' }); if (olcu) img.style.width = Math.round(Number(olcu.getAttribute('cx')) / 9525) + 'px'; p.append(img); }
+        else p.append(el('span', { sinif: 'bresim-yok', contenteditable: 'false', metin: '[resim]' }));
+      }
+      const metin = runMetni(r);
+      const span = el('span', { 'data-r': String(sirali.get(r)) });
+      span.textContent = metin; stilYaz(span, o);
+      for (let u = r.parentNode; u && u !== xp; u = u.parentNode) if (u.localName === 'hyperlink') { span.classList.add('bbag'); break; }
+      if (metin || !resimliMi(r)) p.append(span);
+    }
+    if (!p.textContent && !p.querySelector('img')) p.append(el('br'));
+    return p;
+  }
+  function tabloCiz(xt) {
+    const tablo = el('table', { sinif: 'btablo' });
+    const tblPr = cocuk(xt, 'tblPr'), kenar = cocuk(tblPr, 'tblBorders');
+    const kenarsiz = !cocuk(tblPr, 'tblStyle') && (!kenar || [...kenar.children].every((k) => ['none', 'nil'].includes(oz(k, 'val'))));
+    if (kenarsiz) tablo.classList.add('kenarsiz');
+    const izgara = cocuklar(cocuk(xt, 'tblGrid'), 'gridCol').map((g) => Number(oz(g, 'w')) || 0);
+    const toplam = izgara.reduce((a, b) => a + b, 0);
+    if (toplam) tablo.append(el('colgroup', {}, ...izgara.map((w) => el('col', { style: 'width:' + (w / toplam * 100).toFixed(2) + '%' }))));
+    const ustHucre = [];   // dikey birleştirme için sütun → üstteki td
+    const tg = el('tbody'); tablo.append(tg);
+    for (const xr of cocuklar(xt, 'tr')) {
+      const tr = el('tr'); let sutun = 0;
+      for (const xc of cocuklar(xr, 'tc')) {
+        const tcPr = cocuk(xc, 'tcPr');
+        const yay = Number(oz(cocuk(tcPr, 'gridSpan'), 'val') || 1);
+        const dikey = cocuk(tcPr, 'vMerge');
+        if (dikey && oz(dikey, 'val') !== 'restart' && ustHucre[sutun]) { ustHucre[sutun].rowSpan += 1; sutun += yay; continue; }
+        const td = el('td'); if (yay > 1) td.colSpan = yay;
+        const dolgu = oz(cocuk(tcPr, 'shd'), 'fill'); if (dolgu && dolgu !== 'auto') td.style.backgroundColor = '#' + dolgu;
+        const hiza = oz(cocuk(tcPr, 'vAlign'), 'val'); if (hiza === 'center') td.style.verticalAlign = 'middle'; else if (hiza === 'bottom') td.style.verticalAlign = 'bottom';
+        icerikCiz(xc, td);
+        for (let i = 0; i < yay; i++) ustHucre[sutun + i] = dikey ? td : null;
+        sutun += yay; tr.append(td);
+      }
+      tg.append(tr);
+    }
+    return tablo;
+  }
+  function icerikCiz(ust, hedef) {
+    for (const c of ust.children) {
+      if (c.namespaceURI !== W_AD) continue;
+      if (c.localName === 'p') {
+        hedef.append(paragrafCiz(c));
+        if ([...c.getElementsByTagNameNS(W_AD, 'br')].some((b) => oz(b, 'type') === 'page')) hedef.append(el('div', { sinif: 'sayfa-sonu', contenteditable: 'false', metin: 'sayfa sonu' }));
+      } else if (c.localName === 'tbl') hedef.append(tabloCiz(c));
+      else if (c.localName === 'sdt') { const ic = cocuk(c, 'sdtContent'); if (ic) icerikCiz(ic, hedef); }
+    }
+  }
+  const durum = el('span', { sinif: 'bilgi' });
+  function hepsiniCiz() {
+    const ust = govde.scrollTop;
+    sayaclar.clear(); sayfa.replaceChildren();
+    const body = cocuk(belge.documentElement, 'body');
+    if (!body) throw new Error('belge gövdesi yok');
+    const kenar = cocuk(cocuk(body, 'sectPr'), 'pgMar'), boyut = cocuk(cocuk(body, 'sectPr'), 'pgSz');
+    const pt = (e, a, v) => (e && oz(e, a) != null ? Number(oz(e, a)) / 20 : v);
+    sayfa.style.maxWidth = pt(boyut, 'w', 595) + 'pt';
+    sayfa.style.padding = Math.min(72, pt(kenar, 'top', 71)) + 'pt ' + Math.min(72, pt(kenar, 'right', 71)) + 'pt ' + Math.min(72, pt(kenar, 'bottom', 71)) + 'pt ' + Math.min(72, pt(kenar, 'left', 71)) + 'pt';
+    icerikCiz(body, sayfa);
+    if (!sayfa.querySelector('.bp')) { const xp = yeniW('p'); body.insertBefore(xp, cocuk(body, 'sectPr')); sayfa.append(paragrafCiz(xp)); }
+    govde.scrollTop = ust; say();
+  }
+  function numaralariYenile() {
+    sayaclar.clear();
+    for (const p of sayfa.querySelectorAll('.bp')) { const e = p.querySelector(':scope > .bn'); if (p.po && p.po.numId && p.po.numId !== '0') { const t = numaraEtiketi(p.po.numId, p.po.ilvl || 0) + ' '; if (e) e.textContent = t; } }
+  }
+  function say() {
+    const metin = sayfa.innerText || '';
+    const kelime = (metin.match(/[\p{L}\p{N}]+/gu) || []).length;
+    durum.textContent = kelime.toLocaleString('tr-TR') + ' sözcük · ' + sayfa.querySelectorAll('.bp').length.toLocaleString('tr-TR') + ' paragraf';
+  }
+
+  // ---- ekrandaki metni belgeye işleme ----
+  const metinDugumleri = (p) => {
+    const c = []; const y = document.createTreeWalker(p, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT, { acceptNode: (n) => (n.nodeType === 1 && n.getAttribute('contenteditable') === 'false' ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT) });
+    let son = -1;
+    while (y.nextNode()) {
+      const n = y.currentNode;
+      if (n.nodeType === 1) { if (n.tagName === 'BR' && n !== p.lastChild) c.push({ n: null, metin: '\n', r: son }); continue; }
+      let ust = n.parentNode; while (ust !== p && !(ust.dataset && ust.dataset.r != null)) ust = ust.parentNode;
+      if (ust !== p) son = Number(ust.dataset.r);
+      c.push({ n, metin: n.nodeValue, r: son });
+    }
+    return c;
+  };
+  const pUzunluk = (p) => metinDugumleri(p).reduce((t, d) => t + d.metin.length, 0);
+  function isle(p) {
+    const xp = p.x, runlar = p.runlar;
+    const yeni = runlar.map(() => ''); let bas = '';
+    for (const d of metinDugumleri(p)) { if (d.r < 0 || d.r >= runlar.length) bas += d.metin; else yeni[d.r] += d.metin; }
+    if (!runlar.length) {
+      if (!bas) return;
+      const r = yeniW('r'); const isaret = cocuk(cocuk(xp, 'pPr'), 'rPr'); if (isaret) { const rPr = yeniW('rPr'); for (const c of isaret.children) rPr.append(c.cloneNode(true)); r.append(rPr); }
+      runMetniKoy(r, bas); xp.append(r); p.runlar = [r];
+      // ekrandaki metni de yeni parçaya bağla
+      const konum = imlecOku(p); paragrafCiz(xp, p); numaralariYenile(); if (konum != null) imlecKoy(p, konum);
+      return;
+    }
+    if (bas) yeni[0] = bas + yeni[0];
+    runlar.forEach((r, i) => { if (runMetni(r) !== yeni[i]) runMetniKoy(r, yeni[i]); });
+  }
+  function imlecOku(p, uc = 'bas') {
+    const s = getSelection(); if (!s.rangeCount) return null;
+    const r = s.getRangeAt(0); const dugum = uc === 'bas' ? r.startContainer : r.endContainer, konum = uc === 'bas' ? r.startOffset : r.endOffset;
+    if (!p.contains(dugum)) return null;
+    const olcu = document.createRange(); olcu.setStart(p, 0); olcu.setEnd(dugum, konum);
+    let toplam = 0;
+    for (const d of metinDugumleri(p)) {
+      if (!d.n) { toplam += 1; continue; }
+      if (d.n === dugum) return toplam + konum;
+      if (olcu.comparePoint(d.n, d.metin.length) > 0) return toplam;
+      toplam += d.metin.length;
+    }
+    return toplam;
+  }
+  function imlecKoy(p, konum, son = null) {
+    const bul = (k) => { let t = 0; let sonDugum = null; for (const d of metinDugumleri(p)) { if (!d.n) { t += 1; continue; } sonDugum = d.n; if (k <= t + d.metin.length) return [d.n, k - t]; t += d.metin.length; } return sonDugum ? [sonDugum, sonDugum.nodeValue.length] : [p, 0]; };
+    const r = document.createRange(); const [n1, o1] = bul(konum); r.setStart(n1, Math.max(0, o1));
+    if (son != null) { const [n2, o2] = bul(son); r.setEnd(n2, Math.max(0, o2)); } else r.collapse(true);
+    const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    if (document.activeElement !== p) p.focus({ preventScroll: true });
+  }
+
+  // ---- geri alma: belgenin anlık kopyaları ----
+  const geri = []; let sonAnlik = 0, sonAnlikP = null;
+  const geriD = el('button', { type: 'button', metin: 'Geri al', title: 'Son değişikliği geri al', disabled: true });
+  const kaydetD = el('button', { type: 'button', sinif: 'vurgu', metin: 'Kaydet', title: 'Değişiklikleri ayrı bir kopya olarak kaydet (aslına dokunulmaz)', disabled: true });
+  const yaz = () => new XMLSerializer().serializeToString(belge);
+  function anlik(p = null, zorla = true) {
+    const simdi = Date.now();
+    if (!zorla && p === sonAnlikP && simdi - sonAnlik < 1500) { sonAnlik = simdi; return; }
+    geri.push(yaz()); if (geri.length > 40) geri.shift();
+    sonAnlik = simdi; sonAnlikP = p; geriD.disabled = false;
+  }
+  const degisti = () => { if (!sekme.degisti) { sekme.degisti = true; sekmeleriCiz(); } kaydetD.disabled = false; };
+  function geriAl() {
+    const x = geri.pop(); if (!x) return;
+    belge = new DOMParser().parseFromString(x, 'application/xml');
+    sonAnlikP = null; geriD.disabled = !geri.length; degisti(); hepsiniCiz();
+  }
+
+  // ---- paragraf bölme, birleştirme, biçim ----
+  const parcaBol = (xp, konum) => {
+    let t = 0;
+    for (const r of pRunlari(xp)) {
+      const m = runMetni(r);
+      if (konum > t && konum < t + m.length) { const k = r.cloneNode(true); for (const c of [...k.children]) if (['drawing', 'pict', 'object'].includes(c.localName)) c.remove(); runMetniKoy(r, m.slice(0, konum - t)); runMetniKoy(k, m.slice(konum - t)); r.after(k); return; }
+      t += m.length;
+    }
+  };
+  const xUzunluk = (dugum) => (dugum.localName === 'r' ? [dugum] : [...dugum.getElementsByTagNameNS(W_AD, 'r')]).reduce((t, r) => t + runMetni(r).length, 0);
+  function paragrafBol(p, konum) {
+    isle(p); anlik();
+    const xp = p.x; parcaBol(xp, konum);
+    const yeni = xp.cloneNode(false); const pPr = cocuk(xp, 'pPr'); if (pPr) { const k = pPr.cloneNode(true); const s = cocuk(k, 'sectPr'); if (s) s.remove(); yeni.append(k); }
+    let t = 0;
+    for (const c of [...xp.children]) { if (c.localName === 'pPr') continue; const u = xUzunluk(c); if (t >= konum && !(u === 0 && t === 0)) yeni.append(c); t += u; }
+    xp.after(yeni);
+    paragrafCiz(xp, p); const yp = paragrafCiz(yeni); p.after(yp);
+    numaralariYenile(); degisti(); say(); imlecKoy(yp, 0); yp.scrollIntoView({ block: 'nearest' });
+  }
+  function paragrafBirlestir(onceki, p) {
+    isle(onceki); isle(p); anlik();
+    const u = pUzunluk(onceki);
+    for (const c of [...p.x.children]) if (c.localName !== 'pPr') onceki.x.append(c);
+    p.x.remove(); p.remove();
+    paragrafCiz(onceki.x, onceki); numaralariYenile(); degisti(); say(); imlecKoy(onceki, u);
+  }
+  // Seçili paragrafları ve her birinde seçimin başını-sonunu bulur; seçim yoksa imlecin paragrafının tamamı
+  function secimAl() {
+    const s = getSelection(); if (!s.rangeCount) return [];
+    const r = s.getRangeAt(0); if (!sayfa.contains(r.commonAncestorContainer)) return [];
+    const liste = [];
+    for (const p of sayfa.querySelectorAll('.bp')) {
+      if (!r.intersectsNode(p)) continue;
+      const u = pUzunluk(p);
+      let bas = p.contains(r.startContainer) ? imlecOku(p, 'bas') : 0, son = p.contains(r.endContainer) ? imlecOku(p, 'son') : u;
+      if (r.collapsed) { bas = 0; son = u; }
+      liste.push({ p, bas: bas == null ? 0 : bas, son: son == null ? u : son });
+    }
+    return r.collapsed ? liste.slice(0, 1) : liste;
+  }
+  function bicimUygula(is) {
+    const liste = secimAl(); if (!liste.length) return bildir('Önce belgede bir yere tıkla ya da metin seç.');
+    liste.forEach((x) => isle(x.p)); anlik();
+    const hedefler = [];
+    for (const { p, bas, son } of liste) {
+      const xp = p.x; parcaBol(xp, bas); parcaBol(xp, son);
+      let t = 0;
+      for (const r of pRunlari(xp)) { const u = runMetni(r).length; if (u && t >= bas && t + u <= son) hedefler.push(r); t += u; }
+    }
+    if (!hedefler.length) return bildir('Biçim verilecek metin yok.');
+    is(hedefler.map((r) => cocuk(r, 'rPr') || r.insertBefore(yeniW('rPr'), r.firstChild)), hedefler);
+    for (const { p } of liste) paragrafCiz(p.x, p);
+    degisti();
+    const ilk = liste[0], sonuncu = liste[liste.length - 1];
+    if (ilk === sonuncu) imlecKoy(ilk.p, ilk.bas, ilk.son);
+  }
+  const etkin = (r, a) => { const xp = (() => { let u = r; while (u && u.localName !== 'p') u = u.parentNode; return u; })(); const z = stilZinciri(oz(cocuk(cocuk(xp, 'pPr'), 'pStyle'), 'val') || varsayilanStil); return rOzellik([varsayilanR, ...z.map((s) => cocuk(s, 'rPr')), cocuk(r, 'rPr')])[a]; };
+  const acKapa = (a) => bicimUygula((rPrler, runlar) => {
+    const hepsi = runlar.every((r) => etkin(r, a));
+    for (const rPr of rPrler) {
+      if (a === 'u') ozellikKoy(rPr, 'u', hepsi ? 'none' : 'single', RPR_SIRA);
+      else { ozellikKoy(rPr, a, hepsi ? '0' : true, RPR_SIRA); if (cocuk(rPr, a + 'Cs') || !hepsi) ozellikKoy(rPr, a + 'Cs', hepsi ? '0' : true, RPR_SIRA); }
+    }
+  });
+  const boyutKoy = (punto) => bicimUygula((rPrler) => { for (const rPr of rPrler) { ozellikKoy(rPr, 'sz', String(punto * 2), RPR_SIRA); ozellikKoy(rPr, 'szCs', String(punto * 2), RPR_SIRA); } });
+  const renkKoy = (renk) => bicimUygula((rPrler) => { for (const rPr of rPrler) ozellikKoy(rPr, 'color', renk.replace('#', '').toUpperCase(), RPR_SIRA); });
+  function hizala(jc) {
+    const liste = secimAl(); if (!liste.length) return bildir('Önce belgede bir paragrafa tıkla.');
+    liste.forEach((x) => isle(x.p)); anlik();
+    for (const { p } of liste) { const xp = p.x; const pPr = cocuk(xp, 'pPr') || xp.insertBefore(yeniW('pPr'), xp.firstChild); ozellikKoy(pPr, 'jc', jc, PPR_SIRA); paragrafCiz(xp, p); }
+    degisti(); imlecKoy(liste[0].p, liste[0].bas);
+  }
+
+  // ---- yazma olayları ----
+  sayfa.addEventListener('beforeinput', (e) => { const p = e.target.closest && e.target.closest('.bp'); if (p) anlik(p, false); });
+  sayfa.addEventListener('input', (e) => { const p = e.target.closest && e.target.closest('.bp'); if (!p) return; isle(p); degisti(); clearTimeout(sayZ); sayZ = setTimeout(say, 400); });
+  let sayZ = null;
+  sayfa.addEventListener('keydown', (e) => {
+    const p = e.target.closest && e.target.closest('.bp'); if (!p) return;
+    const komut = e.ctrlKey || e.metaKey;
+    if (komut && !e.altKey) {
+      const t = e.key.toLowerCase();
+      if (t === 'b' || t === 'i' || t === 'u') { e.preventDefault(); return acKapa(t); }
+      if (t === 'z') { e.preventDefault(); return geriAl(); }
+      if (t === 's') { e.preventDefault(); if (!kaydetD.disabled) kaydetYap(); return; }
+      return;
+    }
+    const s = getSelection(); const duz = s.rangeCount && s.getRangeAt(0).collapsed;
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (!duz) document.execCommand('delete');
+      isle(p); const k = imlecOku(p); paragrafBol(p, k == null ? pUzunluk(p) : k); return;
+    }
+    if (e.key === 'Enter' && e.shiftKey && duzenlenebilir !== 'plaintext-only') { e.preventDefault(); document.execCommand('insertText', false, '\n'); return; }
+    if (e.key === 'Backspace' && duz && imlecOku(p) === 0) {
+      const onceki = p.previousElementSibling;
+      if (onceki && onceki.classList.contains('bp')) { e.preventDefault(); paragrafBirlestir(onceki, p); } else if (onceki && onceki.classList.contains('sayfa-sonu')) { e.preventDefault(); }
+      return;
+    }
+    if (e.key === 'Delete' && duz && imlecOku(p) === pUzunluk(p)) {
+      const sonraki = p.nextElementSibling;
+      if (sonraki && sonraki.classList.contains('bp')) { e.preventDefault(); paragrafBirlestir(p, sonraki); }
+    }
+  });
+  if (duzenlenebilir !== 'plaintext-only') sayfa.addEventListener('paste', (e) => { e.preventDefault(); const t = (e.clipboardData || window.clipboardData).getData('text/plain'); if (t) document.execCommand('insertText', false, t.replace(/\r/g, '')); });
+  else sayfa.addEventListener('paste', (e) => { const t = e.clipboardData && e.clipboardData.getData('text/plain'); if (t && /[\r\n]/.test(t)) { e.preventDefault(); document.execCommand('insertText', false, t.replace(/\r\n?/g, '\n')); } });
+  sayfa.addEventListener('drop', (e) => { if (e.dataTransfer && [...e.dataTransfer.types].includes('Files')) return; e.preventDefault(); });
+
+  // ---- arama (bulunanlar mavi gölgelenir) ----
+  const ara = el('input', { type: 'search', placeholder: 'Belgede ara', 'aria-label': 'Belgede ara', autocomplete: 'off' });
+  const aramaBilgi = el('span', { sinif: 'bilgi' });
+  let bulunanlar = [], sira = -1;
+  const vurguVar = typeof Highlight !== 'undefined' && window.CSS && CSS.highlights;
+  function aramaYap(ileri) {
+    const q = ara.value.trim().toLocaleLowerCase('tr');
+    if (!q) { bulunanlar = []; sira = -1; aramaBilgi.textContent = ''; if (vurguVar) { CSS.highlights.delete('zabac-bul'); CSS.highlights.delete('zabac-bul-simdi'); } return; }
+    if (!ileri || !bulunanlar.length || bulunanlar.q !== q) {
+      bulunanlar = []; bulunanlar.q = q;
+      for (const p of sayfa.querySelectorAll('.bp')) {
+        const dugumler = metinDugumleri(p).filter((d) => d.n);
+        const tam = dugumler.map((d) => d.metin).join('').toLocaleLowerCase('tr');
+        let i = -1;
+        while ((i = tam.indexOf(q, i + 1)) >= 0) {
+          const r = document.createRange(); let t = 0, basladi = false;
+          for (const d of dugumler) { const u = d.metin.length; if (!basladi && i < t + u) { r.setStart(d.n, i - t); basladi = true; } if (basladi && i + q.length <= t + u) { r.setEnd(d.n, i + q.length - t); break; } t += u; }
+          if (basladi) bulunanlar.push(r);
+        }
+      }
+      sira = -1;
+      if (vurguVar) { CSS.highlights.set('zabac-bul', new Highlight(...bulunanlar)); CSS.highlights.delete('zabac-bul-simdi'); }
+    }
+    if (!bulunanlar.length) { aramaBilgi.textContent = 'bulunamadı'; return; }
+    sira = (sira + 1) % bulunanlar.length;
+    const r = bulunanlar[sira];
+    if (vurguVar) CSS.highlights.set('zabac-bul-simdi', new Highlight(r));
+    const k = r.getBoundingClientRect(), g = govde.getBoundingClientRect();
+    if (k.top < g.top + 20 || k.bottom > g.bottom - 20) govde.scrollTop += k.top - g.top - g.height / 3;
+    aramaBilgi.textContent = (sira + 1) + ' / ' + bulunanlar.length + ' eşleşme';
+  }
+  ara.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); aramaYap(true); } });
+  ara.addEventListener('input', () => { if (!ara.value.trim()) aramaYap(false); });
+
+  // ---- kaydetme ve yazdırma ----
+  async function kaydetYap() {
+    for (const p of sayfa.querySelectorAll('.bp')) isle(p);
+    let blob;
+    try {
+      const veri = new TextEncoder().encode(yaz());
+      const e = X.CFB.find(zip, '/word/document.xml'); e.content = veri; e.size = veri.length;
+      blob = new Blob([X.CFB.write(zip, { type: 'array', fileType: 'zip', compression: true })], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+    } catch (hata) { return bildir('Kaydedilemedi: ' + (hata && hata.message ? hata.message : 'bilinmeyen hata')); }
+    if (await farkliKaydet(blob, duzenlenmisAd(sekme.ad, 'docx'))) { sekme.degisti = false; kaydetD.disabled = true; sekmeleriCiz(); }
+  }
+  kaydetD.addEventListener('click', kaydetYap); geriD.addEventListener('click', geriAl);
+  sekme.yazdir = () => { const k = sayfa.cloneNode(true); k.removeAttribute('style'); for (const e of k.querySelectorAll('[contenteditable]')) e.removeAttribute('contenteditable'); for (const e of k.querySelectorAll('.sayfa-sonu')) e.textContent = '';
+    yazdir(sekme.ad, k, '@page{margin:18mm}body{margin:0;font:11pt Calibri,Arial,sans-serif;line-height:1.3}p{margin:0 0 8pt;white-space:pre-wrap;min-height:1em}table{width:100%;border-collapse:collapse;margin:6pt 0}td{border:1px solid #000;padding:3pt 5pt;font-size:inherit;vertical-align:top}table.kenarsiz td{border:0}.sayfa-sonu{break-after:page;height:0}.sayfa-basi{break-before:page}img{max-width:100%}'); };
+
+  hepsiniCiz();
+  const dugme = (metin, is, ek = {}) => { const d = el('button', { type: 'button', metin, ...ek }); d.addEventListener('mousedown', (e) => e.preventDefault()); d.addEventListener('click', is); return d; };
+  const boyutSec = el('select', { 'aria-label': 'Yazı boyutu', title: 'Seçili metnin yazı boyutu' }, el('option', { value: '', metin: 'Boyut' }), ...[8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 28, 36, 48].map((b) => el('option', { value: String(b), metin: String(b) })));
+  boyutSec.addEventListener('change', () => { const b = Number(boyutSec.value); boyutSec.value = ''; if (b) boyutKoy(b); });
+  const renk = el('input', { type: 'color', value: '#c00000', 'aria-label': 'Yazı rengi', title: 'Seçili metnin rengi' });
+  let renkSecim = null;
+  renk.addEventListener('pointerdown', () => { const s = getSelection(); renkSecim = s.rangeCount ? s.getRangeAt(0).cloneRange() : null; });
+  renk.addEventListener('change', () => { if (renkSecim) { const s = getSelection(); s.removeAllRanges(); s.addRange(renkSecim); } renkKoy(renk.value); });
+  const ortak = ortakDugmeler(sekme);
+  const arac = el('div', { sinif: 'arac' }, kaydetD, geriD,
+    dugme('K', () => acKapa('b'), { title: 'Kalın (Ctrl+B)', style: 'font-weight:800' }), dugme('T', () => acKapa('i'), { title: 'İtalik (Ctrl+I)', style: 'font-style:italic' }), dugme('A', () => acKapa('u'), { title: 'Altı çizili (Ctrl+U)', style: 'text-decoration:underline' }),
+    boyutSec, renk,
+    dugme('Sola', () => hizala('left'), { title: 'Sola hizala' }), dugme('Ortala', () => hizala('center'), { title: 'Ortala' }), dugme('Sağa', () => hizala('right'), { title: 'Sağa hizala' }), dugme('Yasla', () => hizala('both'), { title: 'İki yana yasla' }),
+    ara, el('button', { type: 'button', metin: 'Bul', onclick: () => aramaYap(true) }), aramaBilgi, durum, ...ortak);
+  const not = eskiDoc ? el('div', { sinif: 'belge-not', metin: 'Eski .doc dosyası: yalnızca metni okunabildi (biçim, tablo çizgileri ve resimler gösterilmez). Düzenleyip .docx olarak kaydedebilirsin.' }) : null;
+  return { kok: el('div', { sinif: 'gor' }, arac, not, govde), temizle: () => { adresler.forEach((a) => URL.revokeObjectURL(a)); clearTimeout(sayZ); if (vurguVar) { CSS.highlights.delete('zabac-bul'); CSS.highlights.delete('zabac-bul-simdi'); } } };
 }
 
 // ---------- klasör: içindeki dosyaları türüne göre ayırıp listeler ----------
@@ -727,12 +2177,13 @@ async function webGor(sekme) {
   const arac = el('div', { sinif: 'arac' },
     el('span', { sinif: 'bilgi', metin: 'Sayfa görünümü' }),
     el('button', { type: 'button', metin: 'Yenile', onclick: () => { cerceve.src = adres; } }),
+    el('button', { type: 'button', metin: 'Yazdır', title: 'Sayfayı yeni pencerede açıp yazdır', onclick: () => { const w = window.open(adres, '_blank'); if (!w) return bildir('Açılır pencere engellendi.'); w.addEventListener('load', () => setTimeout(() => { try { w.print(); } catch (e) { /* kullanıcı Ctrl+P ile yazdırır */ } }, 400)); } }),
     el('button', { type: 'button', metin: 'Kaynağı göster', title: 'HTML kodunu metin olarak aç ve düzenle', onclick: () => turDegistir(sekme, 'metin') }),
     ...ortakDugmeler(sekme));
   return { kok: el('div', { sinif: 'gor' }, arac, el('div', { sinif: 'govde web-govde' }, cerceve)), temizle: () => URL.revokeObjectURL(adres) };
 }
 
-const GORUCULER = { web: webGor, klasor: klasorGor, tablo: tabloGor, pdf: pdfGor, resim: resimGor, video: videoGor, ses: sesGor, metin: metinGor, diger: digerGor };
+const GORUCULER = { belge: belgeGor, resimduzen: resimDuzenGor, web: webGor, klasor: klasorGor, tablo: tabloGor, pdf: pdfGor, resim: resimGor, video: videoGor, ses: sesGor, metin: metinGor, diger: digerGor };
 
 // ---------- sekmeler ----------
 const sekmeler = [];
@@ -762,7 +2213,7 @@ function sekmeKapat(s) {
 async function gorucuKur(s) {
   const bekle = el('div', { sinif: 'gor' }, el('div', { sinif: 'yukleniyor', metin: 'Açılıyor…' }));
   if (s.kok) s.kok.replaceWith(bekle); else $('#alan').append(bekle);
-  s.kok = bekle; s.gosterildi = null; s.gizlendi = null;
+  s.kok = bekle; s.gosterildi = null; s.gizlendi = null; s.yazdir = null;
   bekle.hidden = aktif !== s;
   let sonuc;
   try { sonuc = await GORUCULER[s.tur](s); }
