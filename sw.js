@@ -1,5 +1,5 @@
 // ZABAC — hizmet betiği: uygulamayı internetsiz çalıştırır, paylaşılan dosyaları karşılar
-const ONBELLEK = 'zabac-v5';
+const ONBELLEK = 'zabac-v6';
 const PAYLASIM = 'zabac-paylasim';
 const DOSYALAR = ['./', './index.html', './manifest.webmanifest', './ikon-192.png', './ikon-512.png', './pdf.min.js', './pdf.worker.min.js', './xlsx.full.min.js'];
 

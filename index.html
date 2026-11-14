@@ -116,6 +116,7 @@ body.surukleniyor .birak { background: color-mix(in srgb, var(--sari) 22%, var(-
 .tablo td { cursor: cell; }
 .tablo td.secili, .tablo tbody tr:hover td.secili { box-shadow: inset 0 0 0 2px var(--sari-koyu); background: color-mix(in srgb, var(--sari) 18%, var(--kart)); }
 .tablo td.duzenleniyor { padding: 0; overflow: visible; }
+.tablo td.basvuru, .tablo tbody tr:hover td.basvuru { background: #dbeafe; box-shadow: inset 0 0 0 2px #2563eb; color: #0f172a; }
 .tablo td.duzenleniyor input { display: block; width: 100%; min-width: 120px; height: 30px; padding: 0 8px; border: 2px solid var(--sari-koyu); border-radius: 0; background: var(--kart); color: var(--yazi); font: inherit; outline: none; }
 .tablo-sar:focus { outline: none; }
 .arac .konum { min-width: 44px; padding: 0 6px; font-weight: 700; text-align: center; color: var(--yazi); }
@@ -209,7 +210,7 @@ body.surukleniyor .birak { background: color-mix(in srgb, var(--sari) 22%, var(-
       <p class="not" id="kur-bilgi">Bilgisayar ve Android: tarayıcı menüsünden "Uygulamayı yükle". iPhone: Safari'de Paylaş → "Ana Ekrana Ekle". Yüklendikten sonra internet gerekmez.</p>
       <button type="button" class="dugme" id="kur" hidden>Uygulamayı yükle</button>
     </div>
-    <p class="not" id="surum">Sürüm 5 · Word açma ve düzenleme</p>
+    <p class="not" id="surum">Sürüm 6 · Formülde hücreye tıklayarak seçme</p>
   </div>
 </main>
 
@@ -1149,7 +1150,8 @@ function formulMotoru(X, kitap) {
     }
     return { adet, desteksiz };
   }
-  return { hesapla };
+  const gecerli = (f) => { try { agac(f); return true; } catch (e) { return false; } };
+  return { hesapla, gecerli };
 }
 
 // ---------- tablo (Excel, CSV): görüntüleme ve düzenleme ----------
@@ -1252,6 +1254,8 @@ async function tabloGor(sekme) {
     if (t === '') return null;
     const bicim = (h) => { if (h.z) { try { h.w = X.SSF.format(h.z, h.v); } catch (e) { /* biçim uygulanamadı */ } } return h; };
     if (t[0] === '=' && t.length > 1) return { t: 'z', f: formulEnYap(t.slice(1)) };
+    // Excel'deki gibi + ya da - ile başlayan hesaplar da formül sayılır (+A1+B1). Düz sayılar ve +90… gibi metinler sayılmaz.
+    if ((t[0] === '+' || t[0] === '-') && t.length > 1 && !/^[+-]?[\d.,\s%]+$/.test(t)) { const f = formulEnYap(t); if (motor.gecerli(f)) return { t: 'z', f }; }
     const tarih = t.match(/^(\d{1,2})[./](\d{1,2})[./](\d{4})$/);
     if (tarih) {
       const g = +tarih[1], a = +tarih[2], y = +tarih[3];
@@ -1315,8 +1319,32 @@ async function tabloGor(sekme) {
     degisti();
     return true;
   }
+  // ---- formül yazarken hücre gösterme: tıklanan (ya da ok tuşuyla gidilen) hücrenin adresi formüle eklenir ----
+  const formulModu = () => !!duzen && /^\s*[=+\-]/.test(duzen.giris.value);
+  const basvuruTemizle = () => { for (const e of sar.querySelectorAll('td.basvuru')) e.classList.remove('basvuru'); };
+  // İmleç bir işlemden, parantezden ya da ayraçtan hemen sonra mı (ya da az önce eklenen adresin sonunda mı)?
+  function gostermeUygun() {
+    if (!formulModu()) return false;
+    const g = duzen.giris, n = duzen.nokta;
+    if (n && g.value.slice(n.bas, n.son) === n.metin && g.selectionStart === n.son && g.selectionEnd === n.son) return true;
+    const once = g.value.slice(0, g.selectionStart).replace(/\s+$/, '');
+    return /[=+\-*\/^&(;,:<>]$/.test(once);
+  }
+  function adresEkle(r1, c1, r2 = r1, c2 = c1) {
+    const g = duzen.giris, n = duzen.nokta;
+    const a1 = X.utils.encode_cell({ r: Math.min(r1, r2), c: Math.min(c1, c2) }), a2 = X.utils.encode_cell({ r: Math.max(r1, r2), c: Math.max(c1, c2) });
+    const metin = a1 === a2 ? a1 : a1 + ':' + a2;
+    const eskiyiDegistir = n && g.value.slice(n.bas, n.son) === n.metin && g.selectionStart === n.son && g.selectionEnd === n.son;
+    const bas = eskiyiDegistir ? n.bas : g.selectionStart, son = eskiyiDegistir ? n.son : g.selectionEnd;
+    g.value = g.value.slice(0, bas) + metin + g.value.slice(son);
+    duzen.nokta = { bas, son: bas + metin.length, metin, r: r2, c: c2, r0: r1, c0: c1 };
+    g.focus({ preventScroll: true }); g.setSelectionRange(bas + metin.length, bas + metin.length);
+    basvuruTemizle();
+    for (let r = Math.min(r1, r2); r <= Math.max(r1, r2) && r - Math.min(r1, r2) < 400; r++) for (let c = Math.min(c1, c2); c <= Math.max(c1, c2); c++) { const td = tdBul(r, c); if (td) td.classList.add('basvuru'); }
+  }
   function duzenBitir(kaydetsin) {
     if (!duzen) return;
+    basvuruTemizle();
     const { td, a, giris } = duzen; duzen = null;
     td.classList.remove('duzenleniyor');
     const sayfa = sayfaAl();
@@ -1335,7 +1363,9 @@ async function tabloGor(sekme) {
     const giris = el('input', { type: 'text', 'aria-label': a + ' hücresi', autocomplete: 'off', spellcheck: 'false' });
     giris.value = ilk != null ? ilk : duzenMetni(sayfaAl()[a]);
     td.classList.add('duzenleniyor'); td.replaceChildren(giris);
-    duzen = { td, a, giris };
+    // Yazarak başlanan düzenlemede ok tuşları hücre gösterir; çift tıklama/F2 ile açılanda ya da kutuya tıklanınca imleci oynatır
+    duzen = { td, a, giris, okGosterir: ilk != null || giris.value === '' };
+    giris.addEventListener('mousedown', () => { if (duzen) duzen.okGosterir = false; });
     giris.focus();
     if (ilk == null) giris.select();
     giris.addEventListener('keydown', (e) => {
@@ -1344,6 +1374,16 @@ async function tabloGor(sekme) {
       if (e.key === 'Enter') { e.preventDefault(); duzenBitir(true); sec_(k.r + 1, k.c); sar.focus({ preventScroll: true }); }
       else if (e.key === 'Tab') { e.preventDefault(); duzenBitir(true); sec_(k.r, Math.max(0, k.c + (e.shiftKey ? -1 : 1))); sar.focus({ preventScroll: true }); }
       else if (e.key === 'Escape') { e.preventDefault(); duzenBitir(false); sec_(k.r, k.c); sar.focus({ preventScroll: true }); }
+      else if ((e.key === 'Home' || e.key === 'End') && duzen) duzen.okGosterir = false;
+      else if (e.key.startsWith('Arrow') && !e.ctrlKey && !e.metaKey && !e.altKey && duzen && duzen.okGosterir && gostermeUygun()) {
+        // Ok tuşlarıyla hücre gösterme; Shift basılıyken alan seçilir
+        e.preventDefault();
+        const n = duzen.nokta && giris.value.slice(duzen.nokta.bas, duzen.nokta.son) === duzen.nokta.metin ? duzen.nokta : { r: k.r, c: k.c, r0: k.r, c0: k.c };
+        const dr = e.key === 'ArrowDown' ? 1 : e.key === 'ArrowUp' ? -1 : 0, dc = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        const r = Math.max(0, n.r + dr), c = Math.max(0, n.c + dc);
+        if (e.shiftKey) adresEkle(n.r0, n.c0, r, c); else adresEkle(r, c);
+        const hedef = tdBul(r, c); if (hedef) hedef.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      }
     });
     giris.addEventListener('blur', () => { if (duzen && duzen.giris === giris) duzenBitir(true); });
   }
@@ -1540,16 +1580,34 @@ async function tabloGor(sekme) {
     yazdir(sekme.ad + ' · ' + adlar[secili], el('table', {}, govde), '@page{size:landscape;margin:8mm}');
   };
 
+  // Formül yazılırken başka hücreye basmak o hücrenin adresini formüle ekler; sürükleyince alan (A1:B5) olur
+  let gosterilen = null;
+  sar.addEventListener('mousedown', (e) => {
+    const td = e.target.closest('td[data-a]');
+    if (!td || !duzen || duzen.td === td || e.button > 0 || !gostermeUygun()) return;
+    e.preventDefault();   // yazı kutusu odağını kaybetmesin
+    const k = X.utils.decode_cell(td.dataset.a);
+    gosterilen = { r: k.r, c: k.c, zaman: Date.now() };
+    adresEkle(k.r, k.c);
+  });
+  sar.addEventListener('mousemove', (e) => {
+    if (!gosterilen || !(e.buttons & 1) || !duzen) return;
+    const td = e.target.closest('td[data-a]'); if (!td || td === duzen.td) return;
+    const k = X.utils.decode_cell(td.dataset.a);
+    if (k.r !== gosterilen.sr || k.c !== gosterilen.sc) { gosterilen.sr = k.r; gosterilen.sc = k.c; adresEkle(gosterilen.r, gosterilen.c, k.r, k.c); }
+  });
   // Fare ve dokunma: ilk dokunuş seçer, seçili hücreye ikinci dokunuş yazmaya başlar
   sar.addEventListener('click', (e) => {
     const td = e.target.closest('td[data-a]');
+    if (gosterilen && Date.now() - gosterilen.zaman < 60000 && duzen) { gosterilen = null; return; }
+    gosterilen = null;
     if (!td || (duzen && duzen.td === td)) return;
     const k = X.utils.decode_cell(td.dataset.a);
     if (sec && sec.r === k.r && sec.c === k.c && !duzen) return duzenBasla(td);
     if (duzen) duzenBitir(true);
     sec_(k.r, k.c, false);
   });
-  sar.addEventListener('dblclick', (e) => { const td = e.target.closest('td[data-a]'); if (td && !(duzen && duzen.td === td)) { const k = X.utils.decode_cell(td.dataset.a); sec_(k.r, k.c, false); duzenBasla(td); } });
+  sar.addEventListener('dblclick', (e) => { const td = e.target.closest('td[data-a]'); if (td && !duzen) { const k = X.utils.decode_cell(td.dataset.a); sec_(k.r, k.c, false); duzenBasla(td); } });
   sar.addEventListener('keydown', (e) => {
     if (duzen) return;
     const komut = e.ctrlKey || e.metaKey;
